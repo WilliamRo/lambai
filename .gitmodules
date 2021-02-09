@@ -1,3 +1,6 @@
 [submodule "tframe"]
 	path = tframe
 	url = https://github.com/WilliamRo/tframe
+[submodule "lambo"]
+	path = lambo
+	url = https://github.com/WilliamRo/lambo

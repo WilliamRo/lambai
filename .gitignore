@@ -1,8 +1,17 @@
-# Ignore data folder
+# Ignore data folder and auto generated files
 data
+*.sum
+gather.txt
+checkpoints
 
 # Ignore PyCharm files
 .idea/
+
+# Testing scriptes
+scripts/
+
+
+## Automatically generated codes
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
