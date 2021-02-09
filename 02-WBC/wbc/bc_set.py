@@ -2,6 +2,7 @@ from tframe import console
 from tframe import pedia
 from tframe.data.images.ire_img import IrregularImageSet
 from tframe.utils.misc import convert_to_one_hot
+from tframe.utils.np_tools import pad_or_crop
 
 import numpy as np
 
@@ -102,11 +103,11 @@ class BloodCellSet(IrregularImageSet):
     for i, x in enumerate(self.features):
       # Shift each image so the min(image) is 0
       x -= np.min(x)
-      # Pad image
-      dH, dW = (H - x.shape[0]) / 2, (W - x.shape[1]) / 2
-      pwH = [int(w) for w in (np.floor(dH), np.ceil(dH))]
-      pwW = [int(w) for w in (np.floor(dW), np.ceil(dW))]
-      x = np.pad(x, (pwH, pwW), 'constant', constant_values=0)
+      # :: Pad or crop image
+      # (1) Height
+      x = pad_or_crop(x, axis=0, size=H)
+      # (2) Width
+      x = pad_or_crop(x, axis=1, size=W)
       self.features[i] = x
       # Show progress bar
       bar.show(i + 1)

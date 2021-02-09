@@ -10,40 +10,45 @@ from tframe.utils.misc import date_string
 # -----------------------------------------------------------------------------
 # Define model here
 # -----------------------------------------------------------------------------
-model_name = 'alex'
-id = 0
+model_name = 'resnet'
+id = 1
 def model(th):
-  """ Full version should be
-  input[350x320] => reshape(350x320x1)
-    => conv2d(3x3x64)->relu -> maxpool(2x2>2x2)
-    => conv2d(3x3x192)->relu -> maxpool(2x2>2x2)
-    => conv2d(3x3x384) -> relu
-    => conv2d(3x3x256) -> relu
-    => conv2d(3x3x256) -> relu -> maxpool(3x3>2x2) -> flatten(450560)
-    => (dense(2048)->relu)x2 => dense(4) -> softmax => output[4]
-  """
   assert isinstance(th, m.Config)
   model = m.get_container(th, flatten=False, add_last_dim=True)
 
-  # Build classic AlexNet
-  model.add(m.Conv2D(8, kernel_size=3, strides=1, activation='relu'))
-  model.add(m.MaxPool2D(2, strides=2))
+  # Section I
+  model.add(m.Conv2D(64, kernel_size=3, strides=2))
+  model.add(m.BatchNormalization())
+  model.add(m.Activation('relu'))
+  p1 = model.add(m.MaxPool2D(2, strides=2))
 
-  model.add(m.Conv2D(16, kernel_size=3, strides=1, activation='relu'))
-  model.add(m.MaxPool2D(2, strides=2))
+  model.add(m.Conv2D(64, kernel_size=3, strides=1))
+  model.add(m.BatchNormalization())
+  model.add(m.Activation('relu'))
+  model.add(m.Conv2D(64, kernel_size=3, strides=1))
+  model.add(m.ShortCut(p1, mode=m.ShortCut.Mode.SUM))
 
-  for filters in (32, 24, 24):
-    model.add(m.Conv2D(filters, kernel_size=3))
-    model.add(m.Activation('relu'))
+  model.add(m.BatchNormalization())
+  model.add(m.Activation('relu'))
 
-  model.add(m.MaxPool2D(3, strides=2))
-  model.add(m.Flatten())
+  # Section II
+  model.add(m.Conv2D(128, kernel_size=3, strides=2))
+  model.add(m.BatchNormalization())
+  model.add(m.Activation('relu'))
+  p1 = model.add(m.MaxPool2D(2, strides=2))
 
-  for dim in (128, 128):
-    if th.dropout > 0: model.add(m.Dropout(1. - th.dropout))
-    model.add(m.Dense(dim, activation='relu'))
+  model.add(m.Conv2D(64, kernel_size=3, strides=1))
+  model.add(m.BatchNormalization())
+  model.add(m.Activation('relu'))
+  model.add(m.Conv2D(64, kernel_size=3, strides=1))
+  model.add(m.ShortCut(p1, mode=m.ShortCut.Mode.SUM))
 
-  return m.finalize(th, model)
+  model.add(m.BatchNormalization())
+  model.add(m.Activation('relu'))
+  # TODO
+
+
+  return m.finalize(th, model, flatten=True)
 
 
 def main(_):

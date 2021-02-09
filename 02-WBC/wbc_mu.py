@@ -7,8 +7,12 @@ from tframe.layers.convolutional import Conv2D
 from tframe.layers.pooling import MaxPool2D
 from tframe.layers.advanced import Dense
 
+from tframe.layers.normalization import BatchNormalization
+from tframe.layers.common import Activation
 from tframe.layers.common import Dropout
 from tframe.layers.common import Reshape
+
+from tframe.layers.merge import ShortCut
 
 
 def get_container(th, flatten=False, add_last_dim=True):
@@ -22,8 +26,9 @@ def get_container(th, flatten=False, add_last_dim=True):
   return model
 
 
-def finalize(th, model, add_output_layer=True):
+def finalize(th, model, add_output_layer=True, flatten=False):
   assert isinstance(th, Config) and isinstance(model, Classifier)
+  if flatten: model.add(Flatten())
   # Add output layer
   if add_output_layer:
     model.add(Dense(num_neurons=th.num_classes))

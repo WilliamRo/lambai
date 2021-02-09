@@ -27,6 +27,5 @@ s.register('gpu_id', gpu_id)
 # -----------------------------------------------------------------------------
 s.register('lr', 0.001, 0.0001)
 s.register('batch_size', 64, 128)
-s.register('dropout', 0.3, 0.5)
 
 s.run(2)

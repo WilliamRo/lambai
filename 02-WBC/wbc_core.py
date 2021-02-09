@@ -25,11 +25,12 @@ th.job_dir = from_root('02-WBC')
 # Device configurations
 # -----------------------------------------------------------------------------
 th.allow_growth = False
-th.gpu_memory_fraction = 0.40
+th.gpu_memory_fraction = 0.30
 # -----------------------------------------------------------------------------
 # Set information about the data set
 # -----------------------------------------------------------------------------
-th.input_shape = [th.image_height, th.image_width]
+th.image_height = 350
+th.image_width = 320
 th.num_classes = du.BloodCellAgent.PROPERTIES[du.BloodCellSet.NUM_CLASSES]
 
 th.with_donor = True
@@ -61,9 +62,12 @@ th.evaluate_test_set = True
 
 
 def activate(export_false=False):
+  # Input shape should be determined here
+  th.input_shape = [th.image_height, th.image_width]
+
   # Load data (had been preprocessed)
   train_set, val_set, test_set = du.load_data(
-    th.data_dir, th.raw_data_dir, )
+    th.data_dir, th.raw_data_dir, H=th.image_height, W=th.image_width)
 
   if th.centralize_data:
     th.data_mean = train_set.feature_mean
