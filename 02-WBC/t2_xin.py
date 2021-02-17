@@ -17,13 +17,13 @@ def model(th):
   model = m.get_container(th, flatten=False, add_last_dim=True)
 
   # First block
-  model.add(m.Conv2D(64, kernel_size=3, strides=2))
+  filters = th.int_para_1
+  model.add(m.Conv2D(filters, kernel_size=3, strides=2))
   m.add_bn_relu(model)
   model.add(m.MaxPool2D(2, strides=2))
 
   # Parse architecture_string
   repetitions = [int(c) for c in th.archi_string.split('-')]
-  filters = th.int_para_1
 
   # Add residual blocks
   for block_id, r in enumerate(repetitions):

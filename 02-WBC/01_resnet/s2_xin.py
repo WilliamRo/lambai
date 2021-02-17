@@ -22,10 +22,13 @@ gpu_id = 0
 
 s.register('gather_summ_name', summ_name + '.sum')
 s.register('gpu_id', gpu_id)
+s.register('gpu_memory_fraction', 0.8)
 # -----------------------------------------------------------------------------
 # Set up your models and run
 # -----------------------------------------------------------------------------
-s.register('lr', 0.001, 0.0001)
-s.register('batch_size', 64, 128)
+s.register('archi_string', '1-2-1', '1-1-1', '1-2-2', '2-2-2')
+s.register('lr', 0.003, 0.0003)
+s.register('batch_size', 32, 64)
+s.register('int_para_1', 32, 64, 16)
 
-s.run(2)
+s.run(10)
