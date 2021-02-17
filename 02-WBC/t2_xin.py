@@ -16,38 +16,23 @@ def model(th):
   assert isinstance(th, m.Config)
   model = m.get_container(th, flatten=False, add_last_dim=True)
 
-  # Section I
+  # First block
   model.add(m.Conv2D(64, kernel_size=3, strides=2))
-  model.add(m.BatchNormalization())
-  model.add(m.Activation('relu'))
-  p1 = model.add(m.MaxPool2D(2, strides=2))
+  m.add_bn_relu(model)
+  model.add(m.MaxPool2D(2, strides=2))
 
-  model.add(m.Conv2D(64, kernel_size=3, strides=1))
-  model.add(m.BatchNormalization())
-  model.add(m.Activation('relu'))
-  model.add(m.Conv2D(64, kernel_size=3, strides=1))
-  model.add(m.ShortCut(p1, mode=m.ShortCut.Mode.SUM))
+  # Parse architecture_string
+  repetitions = [int(c) for c in th.archi_string.split('-')]
+  filters = th.int_para_1
 
-  model.add(m.BatchNormalization())
-  model.add(m.Activation('relu'))
+  # Add residual blocks
+  for block_id, r in enumerate(repetitions):
+    m.add_residual_unit(model, filters, repetitions=r, unit_id=block_id)
+    filters *= 2
 
-  # Section II
-  model.add(m.Conv2D(128, kernel_size=3, strides=2))
-  model.add(m.BatchNormalization())
-  model.add(m.Activation('relu'))
-  p1 = model.add(m.MaxPool2D(2, strides=2))
-
-  model.add(m.Conv2D(64, kernel_size=3, strides=1))
-  model.add(m.BatchNormalization())
-  model.add(m.Activation('relu'))
-  model.add(m.Conv2D(64, kernel_size=3, strides=1))
-  model.add(m.ShortCut(p1, mode=m.ShortCut.Mode.SUM))
-
-  model.add(m.BatchNormalization())
-  model.add(m.Activation('relu'))
-  # TODO
-
-
+  # Last building block
+  m.add_bn_relu(model)
+  model.add(m.GlobalAveragePooling2D())
   return m.finalize(th, model, flatten=True)
 
 
@@ -74,8 +59,10 @@ def main(_):
   # 2. model setup
   # ---------------------------------------------------------------------------
   th.model = model
+  th.archi_string = '1-2-1'
+  th.int_para_1 = 64  # Initial filters
 
-  th.dropout = 0.3
+  # th.dropout = 0.3
 
   # ---------------------------------------------------------------------------
   # 3. trainer setup
@@ -87,8 +74,9 @@ def main(_):
   th.optimizer = tf.train.AdamOptimizer
   th.learning_rate = 0.003
 
-  th.patience = 5
+  th.patience = 3
   th.early_stop = True
+  th.early_stop_metric = 'f1'
   # ---------------------------------------------------------------------------
   # 4. summary and note setup
   # ---------------------------------------------------------------------------
@@ -102,6 +90,8 @@ def main(_):
   th.mark = '{}lr{}bs{}dp{}'.format(
     model_name, th.learning_rate, th.batch_size, th.dropout)
   th.gather_summ_name = th.prefix + summ_name + th.suffix + '.sum'
+  # Use this line to avoid memory allocation error
+  th.val_batch_size = th.batch_size
   core.activate()
 
 

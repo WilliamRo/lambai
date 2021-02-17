@@ -4,7 +4,7 @@ from tframe.configs.config_base import Config
 from tframe.layers.preprocess import Normalize
 
 from tframe.layers.convolutional import Conv2D
-from tframe.layers.pooling import MaxPool2D
+from tframe.layers.pooling import MaxPool2D, GlobalAveragePooling2D
 from tframe.layers.advanced import Dense
 
 from tframe.layers.normalization import BatchNormalization
@@ -53,7 +53,35 @@ def typical(th, layers, flatten=False):
 
 # region: Converted from Xin's codes
 
+def add_bn_relu(model):
+  assert isinstance(model, Classifier)
+  model.add(BatchNormalization())
+  model.add(Activation.ReLU())
 
+
+def add_basic_block(
+    model, filters, kernel_size=3, init_strides=1, is_first_unit=False):
+  assert isinstance(model, Classifier)
+  h = model.last_function
+  if not is_first_unit: add_bn_relu(model)
+  model.add(Conv2D(filters, kernel_size, init_strides))
+  # Second part of [bn-relu-]conv
+  add_bn_relu(model)
+  model.add(Conv2D(filters, kernel_size, strides=1))
+  # Add shortcut
+  transforms = None if init_strides == 1 else [
+    [Conv2D(filters, kernel_size=1, strides=2)]]
+  model.add(ShortCut(h, mode=ShortCut.Mode.SUM, transforms=transforms))
+
+
+def add_residual_unit(
+    model, filters, repetitions, unit_id, kernel_size=3):
+  assert isinstance(model, Classifier)
+  is_first_unit = unit_id == 0
+  for i in range(repetitions):
+    init_strides = 2 if i == 0 and unit_id > 0 else 1
+    add_basic_block(
+      model, filters, kernel_size, init_strides, is_first_unit)
 
 # endregion: Converted from Xin's codes
 
