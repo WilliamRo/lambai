@@ -82,8 +82,9 @@ def main(_):
   th.optimizer = tf.train.AdamOptimizer
   th.learning_rate = 0.003
 
-  th.patience = 5
+  th.patience = 3
   th.early_stop = True
+  th.early_stop_metric = 'f1'
   # ---------------------------------------------------------------------------
   # 4. summary and note setup
   # ---------------------------------------------------------------------------

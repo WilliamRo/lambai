@@ -33,8 +33,13 @@ def finalize(th, model, add_output_layer=True, flatten=False):
   if add_output_layer:
     model.add(Dense(num_neurons=th.num_classes))
     model.add(Activation('softmax'))
-  model.build(th.get_optimizer(), metric=['accuracy', 'loss'],
-              batch_metric='accuracy', eval_metric='accuracy')
+  # Determine metric
+  assert th.early_stop_metric in ('f1', 'accuracy')
+  metric = ['f1', 'accuracy'] if th.early_stop_metric == 'f1' else [
+    'accuracy', 'f1']
+  # Build model
+  model.build(th.get_optimizer(), metric=metric,
+              batch_metric='accuracy', eval_metric=th.eval_metric)
   return model
 
 
@@ -44,4 +49,12 @@ def typical(th, layers, flatten=False):
   if not isinstance(layers, (list, tuple)): layers = [layers]
   for layer in layers: model.add(layer)
   return finalize(th, model)
+
+
+# region: Converted from Xin's codes
+
+
+
+# endregion: Converted from Xin's codes
+
 

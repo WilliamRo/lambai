@@ -31,17 +31,6 @@ class BloodCellSet(IrregularImageSet):
       groups.append(list(np.argwhere(self.donors == i).ravel()))
     return groups
 
-
-  @property
-  def dense_labels(self):
-    if self.DENSE_LABEL_KEY not in self.data_dict: return self.targets
-    else: return self.data_dict[self.DENSE_LABEL_KEY]
-
-
-  @dense_labels.setter
-  def dense_labels(self, val):
-    self.data_dict[self.DENSE_LABEL_KEY] = val
-
   # endregion: Properties
 
   # region: Public Methods
@@ -122,7 +111,7 @@ class BloodCellSet(IrregularImageSet):
 
   # region: Display
 
-  def view(self, shuffle=True):
+  def view(self, shuffle=False):
     from tframe.data.images.image_viewer import ImageViewer
     # Scale images to [0, 1]
     data_set = self[:]

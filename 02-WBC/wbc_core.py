@@ -56,6 +56,9 @@ th.validation_per_round = 2
 th.export_tensors_upon_validation = True
 
 th.eval_batch_size = 128
+th.eval_metric = 'f1'
+th.early_stop_metric = 'accuracy'
+
 th.evaluate_train_set = True
 th.evaluate_val_set = True
 th.evaluate_test_set = True
@@ -79,13 +82,22 @@ def activate(export_false=False):
   assert isinstance(model, Classifier)
 
   # Train or evaluate
-  if th.train:
-    model.train(
+  if th.train: model.train(
       train_set, validation_set=val_set, trainer_hub=th, test_set=test_set)
-  else:
-    model.evaluate_model(train_set)
-    model.evaluate_model(val_set)
-    model.evaluate_model(test_set, export_false=export_false)
+
+  # 'th.evaluate_[(train)|(val)|(test)]_set = True' will trigger
+  #   'model.agent.load()' so that codes below will evaluate the BEST model
+  #  Otherwise, 'model.agent.load()' should be manually called
+
+  # Evaluate model
+  model.evaluate_pro(train_set, batch_size=th.eval_batch_size, verbose=True)
+  model.evaluate_pro(val_set, batch_size=th.eval_batch_size, verbose=True)
+  _, false_set = model.evaluate_pro(
+    test_set, batch_size=th.eval_batch_size, verbose=True,
+    show_confusion_matrix=True, show_class_detail=True, export_false=True)
+
+  # Visualize false set
+  if not th.train and export_false: false_set.view()
 
   # End
   model.shutdown()
