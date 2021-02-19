@@ -8,6 +8,7 @@ from tframe.layers.pooling import MaxPool2D, GlobalAveragePooling2D
 from tframe.layers.advanced import Dense
 
 from tframe.layers.normalization import BatchNormalization
+from tframe.layers.normalization import LayerNormalization
 from tframe.layers.common import Activation
 from tframe.layers.common import Dropout
 from tframe.layers.common import Reshape

@@ -2,15 +2,14 @@ from wbc.bc_set import BloodCellSet
 from wbc.bc_agent import BloodCellAgent
 
 
-def load_data(data_dir, raw_data_dir, val_size_or_id=1,
-              test_size_or_id=2, with_donor=True, H=350, W=320):
-  """Load data, with-donor by default.
+def load_data(
+    data_dir, raw_data_dir, val_config='d-2', test_config='d-3', H=350, W=320):
+  """Load data, see BloodCellAgent.load
     Currently converting dense label to one-hot tensors is done during
     preprocessing before splitting dataset.
   """
   train_set, val_set, test_set = BloodCellAgent.load(
-    data_dir, raw_data_dir, val_size_or_id=val_size_or_id,
-    test_size_or_id=test_size_or_id, with_donor=with_donor, H=H, W=W)
+    data_dir, raw_data_dir, val_config, test_config, H=H, W=W)
   assert isinstance(train_set, BloodCellSet)
   assert isinstance(val_set, BloodCellSet)
   assert isinstance(test_set, BloodCellSet)
@@ -22,4 +21,4 @@ if __name__ == '__main__':
   from wbc_core import th
 
   train_set, val_set, test_set = load_data(th.data_dir, None)
-  test_set.view()
+  # test_set.view()

@@ -13,6 +13,22 @@ from wbc.bc_set import BloodCellSet
 
 
 class BloodCellAgent(DataAgent):
+  """Typical WBC3100(D) detail:
+    -------------------------------------------------------
+     Donor         B-Cell     T-Cell   Granuloc   Monocyte
+    =======================================================
+     1/6 HS1           19        161        167        121
+     2/6 HS2          115        102        114        133
+     3/6 HS3          140        107        111        137
+     4/6 HS5            0        182        249        242
+     5/6 HS6          365          0          0          0
+     6/6 WBC_Q          0        249        191        195
+    -------------------------------------------------------
+     Overall          639        801        832        828
+    -------------------------------------------------------
+     Totally 3100 images; Max HxW: 347x320
+    -------------------------------------------------------
+  """
 
   DATA_NAME = 'WBCAlpha'
 
@@ -23,13 +39,61 @@ class BloodCellAgent(DataAgent):
 
 
   @classmethod
-  def load(cls, data_dir, raw_data_dir, val_size_or_id=1,
-           test_size_or_id=2, with_donor=True, H=350, W=320, **kwargs):
+  def load(cls, data_dir, raw_data_dir, val_config='d-2', test_config='d-3',
+           H=350, W=320, **kwargs):
+    """Load train_set, val_set and test_set according to configuration strings.
+    test_set will be separated first, following val_set.
+    Remaining data will form the train_set.
+
+    Configuration string logic for val_config and test_config:
+    (1) Separate by donor indices:
+        d-id_1[,id_2,...,id_N], id_i \in (1, 2, ...) represents donor ID
+        e.g., 'd-2,3'
+    (2) Separate by image number (over each cell type)
+        [!]c-[!]r-num, where '!' denotes 'not', 'c' denotes 'over classes',
+                             'r' denotes 'random' and 'num' is image number
+        e.g., '!c-r-100', 'c-!r-200'
+
+    :param data_dir: directory to keep .tfdir files
+    :param raw_data_dir: directory containing raw images organized by donors
+    :param val_config: configuration string for validation set
+    :param test_config: configuration string for test set
+    :param H: image height for preprocessing
+    :param W: image width for preprocessing
+    :param kwargs: other parameters
+    :return: train_set, val_set and test_set
+    """
+    # Define configuration string logic
+    def _parse_config(config: str):
+      options = config.split('-')
+      assert len(options) > 1
+      num_or_indices, random, over_classes = None, None, None
+      if options[0] == 'd':
+        # (1) Separate by donor IDs
+        assert len(options) == 2
+        num_or_indices = [int(s) - 1 for s in options[1].split(',')]
+      elif options[0] in ('c', '!c'):
+        # (2) Separate by image number
+        assert len(options) == 3 and options[1] in ('r', '!r')
+        random = options[1] == 'r'
+        over_classes = options[0] == 'c'
+        num_or_indices = int(options[2])
+      else: raise ValueError(
+        '!! Unknown option {} for dataset separation'.format(options[0]))
+      return {'num_or_indices': num_or_indices, 'random': random,
+              'over_classes': over_classes}
+
     # This method is fixed for now
-    data_set = cls.load_as_tframe_data(data_dir, raw_data_dir, with_donor)
+    data_set = cls.load_as_tframe_data(data_dir, raw_data_dir, with_donor=True)
     data_set.preprocess(H, W)
-    data_sets = data_set.split_by_donor(val_size_or_id, test_size_or_id)
-    # Display details
+    # Separate test_set
+    test_set, train_val_set = data_set.separate(
+      name1='test_set', **_parse_config(test_config))
+    # Separate val_set
+    val_set, train_set = train_val_set.separate(
+      name1='val_set', name2='train_set', **_parse_config(val_config))
+    # Display details and return
+    data_sets = (train_set, val_set, test_set)
     for ds in data_sets: ds.report_data_details()
     return data_sets
 
@@ -174,18 +238,14 @@ class BloodCellAgent(DataAgent):
 
 
 if __name__ == '__main__':
-  with_donors = True
   raw_data_root = r'C:\Users\William\Dropbox\Shared\Share_Xin_William\Without Template'
-
-  if with_donors: raw_data_root += r'\Person'
-  else: raw_data_root += r'\All'
-
   data_dir = os.path.abspath(__file__)
   for _ in range(2): data_dir = os.path.dirname(data_dir)
   data_dir = os.path.join(data_dir, 'data')
-  data_set = BloodCellAgent.load(
-    data_dir, raw_data_root, with_donor=with_donors)
-
+  val_config = 'c-!r-100'
+  test_config = 'd-3'
+  train_set, val_set, test_set = BloodCellAgent.load(
+    data_dir, raw_data_root, val_config, test_config)
 
   # Show in image viewer
   # data_set.view()

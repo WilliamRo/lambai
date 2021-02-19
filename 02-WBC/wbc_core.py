@@ -35,8 +35,8 @@ th.num_classes = du.BloodCellAgent.PROPERTIES[du.BloodCellSet.NUM_CLASSES]
 
 th.with_donor = True
 
-th.val_token = 1
-th.test_token = 2
+th.val_config = 'd-2'
+th.test_config = 'd-3'
 # -----------------------------------------------------------------------------
 # Set common trainer configs
 # -----------------------------------------------------------------------------
@@ -70,7 +70,8 @@ def activate(export_false=False):
 
   # Load data (had been preprocessed)
   train_set, val_set, test_set = du.load_data(
-    th.data_dir, th.raw_data_dir, H=th.image_height, W=th.image_width)
+    th.data_dir, th.raw_data_dir, th.val_config, th.test_config,
+    H=th.image_height, W=th.image_width)
 
   if th.centralize_data:
     th.data_mean = train_set.feature_mean
