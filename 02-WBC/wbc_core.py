@@ -37,6 +37,9 @@ th.with_donor = True
 
 th.val_config = 'd-2'
 th.test_config = 'd-3'
+
+th.augmentation = True
+th.aug_config = 'flip|rotate'
 # -----------------------------------------------------------------------------
 # Set common trainer configs
 # -----------------------------------------------------------------------------
@@ -51,7 +54,7 @@ th.save_mode = SaveMode.ON_RECORD
 th.overwrite = True
 th.gather_note = True
 
-th.print_cycle = 5
+th.print_cycle = 4
 th.validation_per_round = 2
 th.export_tensors_upon_validation = True
 
@@ -71,7 +74,7 @@ def activate(export_false=False):
   # Load data (had been preprocessed)
   train_set, val_set, test_set = du.load_data(
     th.data_dir, th.raw_data_dir, th.val_config, th.test_config,
-    H=th.image_height, W=th.image_width)
+    H=th.image_height, W=th.image_width, data_config=th.data_config)
 
   if th.centralize_data:
     th.data_mean = train_set.feature_mean

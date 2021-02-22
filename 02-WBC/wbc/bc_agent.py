@@ -86,6 +86,10 @@ class BloodCellAgent(DataAgent):
     # This method is fixed for now
     data_set = cls.load_as_tframe_data(data_dir, raw_data_dir, with_donor=True)
     data_set.preprocess(H, W)
+    # Separate data_set if required
+    data_config = kwargs.get('data_config', None)
+    if isinstance(data_config, str):
+      data_set, _ = data_set.separate(**_parse_config(data_config))
     # Separate test_set
     test_set, train_val_set = data_set.separate(
       name1='test_set', **_parse_config(test_config))

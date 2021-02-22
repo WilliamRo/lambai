@@ -1,24 +1,31 @@
+import tframe as tfr
+from tframe.data.augment.img_aug import image_augmentation_processor
+
 from wbc.bc_set import BloodCellSet
 from wbc.bc_agent import BloodCellAgent
 
 
-def load_data(
-    data_dir, raw_data_dir, val_config='d-2', test_config='d-3', H=350, W=320):
+def load_data(data_dir, raw_data_dir, val_config='d-2', test_config='d-3',
+              H=350, W=320, data_config=None):
   """Load data, see BloodCellAgent.load
     Currently converting dense label to one-hot tensors is done during
     preprocessing before splitting dataset.
   """
   train_set, val_set, test_set = BloodCellAgent.load(
-    data_dir, raw_data_dir, val_config, test_config, H=H, W=W)
+    data_dir, raw_data_dir, val_config, test_config, H=H, W=W,
+    data_config=data_config)
   assert isinstance(train_set, BloodCellSet)
   assert isinstance(val_set, BloodCellSet)
   assert isinstance(test_set, BloodCellSet)
+  # Set batch_preprocessor for augmentation if required
+  if tfr.hub.augmentation:
+    train_set.batch_preprocessor = image_augmentation_processor
   return train_set, val_set, test_set
 
 
 if __name__ == '__main__':
-  from tframe.data.images.image_viewer import ImageViewer
   from wbc_core import th
 
-  train_set, val_set, test_set = load_data(th.data_dir, None)
-  # test_set.view()
+  train_set, val_set, test_set = load_data(
+    th.data_dir, th.raw_data_dir, data_config='d-1,2,3')
+  test_set.view()
