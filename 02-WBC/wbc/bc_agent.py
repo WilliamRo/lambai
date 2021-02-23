@@ -4,6 +4,7 @@ import scipy.io as scio
 
 from tframe import console
 from tframe import pedia
+from tframe import hub
 from tframe.data.base_classes import DataAgent
 from tframe.utils.local import walk
 
@@ -87,6 +88,10 @@ class BloodCellAgent(DataAgent):
     data_set = cls.load_as_tframe_data(
       data_dir, raw_data_dir, with_donor=True, H=H, W=W,
       save_HW_data=save_HW_data)
+
+    # Extract B/T cell images if required
+    if hub.only_BT: data_set = data_set.get_types((0, 1))
+
     # Separate data_set if required
     data_config = kwargs.get('data_config', None)
     if isinstance(data_config, str):

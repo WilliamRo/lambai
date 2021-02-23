@@ -45,6 +45,7 @@ th.aug_config = 'flip|rotate'
 # Set common trainer configs
 # -----------------------------------------------------------------------------
 th.show_structure_detail = True
+th.take_down_confusion_matrix = True
 
 th.early_stop = True
 th.patience = 5
@@ -68,9 +69,10 @@ th.evaluate_val_set = True
 th.evaluate_test_set = True
 
 
-def activate(export_false=False):
+def activate(visualize_false=False):
   # Input shape should be determined here
   th.input_shape = [th.image_height, th.image_width]
+  if th.only_BT: th.num_classes = 2
 
   # Load data (had been preprocessed)
   train_set, val_set, test_set = du.load_data(
@@ -89,20 +91,15 @@ def activate(export_false=False):
   # Train or evaluate
   if th.train: model.train(
       train_set, validation_set=val_set, trainer_hub=th, test_set=test_set)
-
-  # 'th.evaluate_[(train)|(val)|(test)]_set = True' will trigger
-  #   'model.agent.load()' so that codes below will evaluate the BEST model
-  #  Otherwise, 'model.agent.load()' should be manually called
-
-  # Evaluate model
-  model.evaluate_pro(train_set, batch_size=th.eval_batch_size, verbose=True)
-  model.evaluate_pro(val_set, batch_size=th.eval_batch_size, verbose=True)
-  _, false_set = model.evaluate_pro(
-    test_set, batch_size=th.eval_batch_size, verbose=True,
-    show_confusion_matrix=True, show_class_detail=True, export_false=True)
-
-  # Visualize false set
-  if not th.train and export_false: false_set.view()
+  else:
+    # Evaluate model
+    model.evaluate_pro(train_set, batch_size=th.eval_batch_size, verbose=True)
+    model.evaluate_pro(val_set, batch_size=th.eval_batch_size, verbose=True)
+    _, false_set = model.evaluate_pro(
+      test_set, batch_size=th.eval_batch_size, verbose=True,
+      show_confusion_matrix=True, show_class_detail=True, export_false=True)
+    # Visualize false set
+    if visualize_false: false_set.view()
 
   # End
   model.shutdown()

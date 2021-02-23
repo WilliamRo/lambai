@@ -16,6 +16,7 @@ class WBCHub(SmartTrainerHub):
   test_token = Flag.integer(None, 'Token for test set', is_key=None)
 
   loss_coef = Flag.float(1.0, 'Loss coefficient', is_key=None)
+  only_BT = Flag.boolean(False, 'Only classify T/B cells', is_key=None)
 
 
 # New hub class inherited from SmartTrainerHub must be registered

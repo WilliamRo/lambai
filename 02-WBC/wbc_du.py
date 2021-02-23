@@ -27,6 +27,7 @@ if __name__ == '__main__':
   from wbc_core import th
 
   th.raw_data_dir = r'C:\Users\William\Dropbox\Shared\Share_Xin_William\Without Template'
+  # th.only_BT = True
   train_set, val_set, test_set = load_data(
     th.data_dir, th.raw_data_dir, data_config='d-1,2,3')
   test_set.view()

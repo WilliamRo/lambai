@@ -41,6 +41,23 @@ class BloodCellSet(IrregularImageSet):
 
   # region: Public Methods
 
+  def get_types(self, class_indices):
+    """Get specific types of cell images"""
+    assert isinstance(class_indices, (tuple, list))
+    indices = []
+    for i in class_indices: indices += self.groups[i]
+    data_set = self[indices]
+    # Set corresponding properties
+    data_set.properties[self.NUM_CLASSES] = 2
+    # data_set is in one-hot format
+    data_set.targets = data_set.targets[:, np.array(class_indices)]
+    # Set group names
+    group_names = data_set.properties[pedia.classes]
+    data_set.properties[pedia.classes] = [group_names[i] for i in class_indices]
+    data_set.refresh_groups()
+    return data_set
+
+
   def separate(self, num_or_indices, random=True, over_classes=True,
                name1='separated_set', name2='remaining_set'):
     """Separate dataset by donor indices or images count.
