@@ -237,3 +237,42 @@ class BloodCellSet(IrregularImageSet):
     return bcs
 
   # endregion: Methods Overriding
+
+  # region: Evaluation
+
+  @staticmethod
+  def evaluate(trainer):
+    from tframe import hub as th
+    from tframe import Classifier
+    from tframe.trainers.trainer import Trainer
+    model = trainer.model
+    assert isinstance(trainer, Trainer) and isinstance(model, Classifier)
+    agent = model.agent
+
+    # Get test set
+    ds_dict = {'Train': trainer.training_set, 'Val': trainer.validation_set,
+               'Test': trainer.test_set}
+
+    for name, data_set in ds_dict.items():
+      assert isinstance(data_set, BloodCellSet)
+      cm = model.evaluate_pro(data_set, th.eval_batch_size)
+      metric_title = '{} F1'.format(name)
+      agent.put_down_criterion(metric_title, cm.macro_F1)
+      agent.take_notes('Confusion Matrix on {} Set:'.format(name), False)
+      agent.take_notes('\n' + cm.matrix_table().content, False)
+      agent.take_notes('Evaluation Result on {} Set:'.format(name), False)
+      agent.take_notes('\n' + cm.make_table().content, False)
+
+      # Additional information for test set
+      if name == 'Test':
+        # BT_F1
+        BT_F1 = np.average(cm.F1s[:2])
+        agent.put_down_criterion('Test B/T F1', BT_F1)
+        agent.take_notes('B/T Cell F1 on Test Set: {}'.format(
+          th.decimal_str(BT_F1)), False)
+        # BT Exchange
+        BT_exchange = cm.confusion_matrix[0, 1] + cm.confusion_matrix[1, 0]
+        agent.put_down_criterion('Test B/T Exchange', BT_exchange)
+        agent.take_notes('B/T Exchange: {}'.format(BT_exchange))
+
+  # endregion: Evaluation

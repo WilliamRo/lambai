@@ -45,7 +45,7 @@ th.aug_config = 'flip|rotate'
 # Set common trainer configs
 # -----------------------------------------------------------------------------
 th.show_structure_detail = True
-th.take_down_confusion_matrix = True
+# th.take_down_confusion_matrix = True  # evaluate method will handle it
 
 th.early_stop = True
 th.patience = 5
@@ -64,9 +64,9 @@ th.eval_batch_size = 128
 th.eval_metric = 'f1'
 th.early_stop_metric = 'accuracy'
 
-th.evaluate_train_set = True
-th.evaluate_val_set = True
-th.evaluate_test_set = True
+th.evaluate_train_set = False
+th.evaluate_val_set = False
+th.evaluate_test_set = False
 
 
 def activate(visualize_false=False):
@@ -90,7 +90,8 @@ def activate(visualize_false=False):
 
   # Train or evaluate
   if th.train: model.train(
-      train_set, validation_set=val_set, trainer_hub=th, test_set=test_set)
+    train_set, validation_set=val_set, trainer_hub=th, test_set=test_set,
+    evaluate=train_set.evaluate)
   else:
     # Evaluate model
     model.evaluate_pro(train_set, batch_size=th.eval_batch_size, verbose=True)
