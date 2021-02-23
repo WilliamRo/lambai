@@ -271,8 +271,11 @@ class BloodCellSet(IrregularImageSet):
         agent.take_notes('B/T Cell F1 on Test Set: {}'.format(
           th.decimal_str(BT_F1)), False)
         # BT Exchange
-        BT_exchange = cm.confusion_matrix[0, 1] + cm.confusion_matrix[1, 0]
-        agent.put_down_criterion('Test B/T Exchange', BT_exchange)
-        agent.take_notes('B/T Exchange: {}'.format(BT_exchange))
+        total = sum([cm.confusion_matrix[i, j] for i in (0, 1) for j in (0, 1)])
+        num_exchange = cm.confusion_matrix[0, 1] + cm.confusion_matrix[1, 0]
+        ratio = num_exchange / total
+        agent.put_down_criterion('Test B/T Exchange Ratio', ratio)
+        agent.take_notes(
+          'B/T Exchange Ratio: {}'.format(th.decimal_str(ratio)), False)
 
   # endregion: Evaluation

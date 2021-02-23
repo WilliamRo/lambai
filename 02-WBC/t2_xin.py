@@ -46,6 +46,13 @@ def main(_):
   th.image_height = 300
   th.image_width = 300
 
+  th.centralize_data = True
+  th.augmentation = True
+  th.aug_config = 'flip|rotate'
+
+  th.data_config = 'x'
+  th.val_config = 'd-2'
+  th.test_config = 'd-3'
   # ---------------------------------------------------------------------------
   # 1. folder/file names and device
   # ---------------------------------------------------------------------------
@@ -55,14 +62,13 @@ def main(_):
   th.suffix = '_t00'
   th.visible_gpu_id = 0
 
+  th.gpu_memory_fraction = 0.8
   # ---------------------------------------------------------------------------
   # 2. model setup
   # ---------------------------------------------------------------------------
   th.model = model
   th.archi_string = '1-2-1'
-  th.int_para_1 = 64  # Initial filters
-
-  # th.dropout = 0.3
+  th.int_para_1 = 32  # Initial filters
 
   # ---------------------------------------------------------------------------
   # 3. trainer setup
@@ -74,7 +80,7 @@ def main(_):
   th.optimizer = tf.train.AdamOptimizer
   th.learning_rate = 0.003
 
-  th.patience = 3
+  th.patience = 6
   th.early_stop = True
   th.early_stop_metric = 'f1'
   # ---------------------------------------------------------------------------
@@ -87,8 +93,7 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 5. other stuff and activate
   # ---------------------------------------------------------------------------
-  th.mark = '{}lr{}bs{}dp{}'.format(
-    model_name, th.learning_rate, th.batch_size, th.dropout)
+  th.mark = '{}({})_bs{}'.format(model_name, th.archi_string, th.batch_size)
   th.gather_summ_name = th.prefix + summ_name + th.suffix + '.sum'
   # Use this line to avoid memory allocation error
   th.val_batch_size = th.batch_size

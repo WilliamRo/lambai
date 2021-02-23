@@ -94,7 +94,7 @@ class BloodCellAgent(DataAgent):
 
     # Separate data_set if required
     data_config = kwargs.get('data_config', None)
-    if isinstance(data_config, str):
+    if isinstance(data_config, str) and not data_config in ('', 'x'):
       data_set, _ = data_set.separate(**_parse_config(data_config))
     # Separate test_set
     test_set, train_val_set = data_set.separate(
