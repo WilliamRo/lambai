@@ -15,14 +15,16 @@ from tframe.layers.common import Reshape
 
 from tframe.layers.merge import ShortCut
 
+from wbc_arch.rethinker import Rethinker
+
 
 def get_container(th, flatten=False, add_last_dim=True):
   assert isinstance(th, Config)
   model = Classifier(mark=th.mark)
   model.add(Input(sample_shape=th.input_shape))
+  if th.centralize_data: model.add(Normalize(mu=th.data_mean))
   if add_last_dim:
     model.add(Reshape(shape=th.input_shape + [1]))
-  if th.centralize_data: model.add(Normalize(mu=th.data_mean))
   if flatten: model.add(Flatten())
   return model
 

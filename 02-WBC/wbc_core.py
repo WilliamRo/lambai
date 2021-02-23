@@ -15,7 +15,7 @@ import wbc_du as du
 
 from_root = lambda path: os.path.join(ROOT, path)
 
-# -----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Initialize config and set data/job dir
 # -----------------------------------------------------------------------------
 th = WBCHub(as_global=True)
@@ -31,6 +31,7 @@ th.gpu_memory_fraction = 0.30
 # -----------------------------------------------------------------------------
 th.image_height = 350
 th.image_width = 320
+th.save_HW_data = True
 th.num_classes = du.BloodCellAgent.PROPERTIES[du.BloodCellSet.NUM_CLASSES]
 
 th.with_donor = True

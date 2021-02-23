@@ -40,7 +40,7 @@ class BloodCellAgent(DataAgent):
 
   @classmethod
   def load(cls, data_dir, raw_data_dir, val_config='d-2', test_config='d-3',
-           H=350, W=320, **kwargs):
+           H=350, W=320, save_HW_data=False, **kwargs):
     """Load train_set, val_set and test_set according to configuration strings.
     test_set will be separated first, following val_set.
     Remaining data will form the train_set.
@@ -84,8 +84,9 @@ class BloodCellAgent(DataAgent):
               'over_classes': over_classes}
 
     # This method is fixed for now
-    data_set = cls.load_as_tframe_data(data_dir, raw_data_dir, with_donor=True)
-    data_set.preprocess(H, W)
+    data_set = cls.load_as_tframe_data(
+      data_dir, raw_data_dir, with_donor=True, H=H, W=W,
+      save_HW_data=save_HW_data)
     # Separate data_set if required
     data_config = kwargs.get('data_config', None)
     if isinstance(data_config, str):
@@ -104,39 +105,66 @@ class BloodCellAgent(DataAgent):
 
   @classmethod
   def load_as_tframe_data(
-      cls, data_dir, raw_data_dir=None, with_donor=False, **kwargs):
+      cls, data_dir, raw_data_dir=None, with_donor=True,
+      H=None, W=None, save_HW_data=False, **kwargs):
+    """Load cell images arranged in tfd file.
+       If H and W have been specified, data_set will be preprocessed before
+       returning. Otherwise, an IrregularImageSet will be returned.
+    """
     if raw_data_dir is None: raw_data_dir = data_dir
+    with_size = all([H is not None, W is not None])
     # Load data directly if .tfdi file exists
-    file_path = os.path.join(data_dir, cls._get_file_name(with_donor))
+    file_path = os.path.join(data_dir, cls._get_file_name(with_donor, H, W))
     if os.path.exists(file_path): return BloodCellSet.load(file_path)
 
-    # Otherwise make a .tfdi file from raw data
-    console.show_status('Generating irregular dataset from raw data...')
-    if with_donor:
-      images, labels, donor_id, donors_list = cls.load_as_numpy_arrays(
-        raw_data_dir, with_donor=True, **kwargs)
-      properties = {BloodCellSet.DONOR_NAME_KEY: donors_list}
-      properties.update(cls.PROPERTIES)
-      data_set = BloodCellSet(
-        images, labels, name='WBCRaw(D)',
-        data_dict={BloodCellSet.DONOR_KEY: donor_id}, **properties)
-    else:
-      images, labels = cls.load_as_numpy_arrays(
-        raw_data_dir, with_donor=False, **kwargs)
-      data_set = BloodCellSet(images, labels, name='WBCRaw', **cls.PROPERTIES)
+    # Try to read data without being preprocessed
+    data_set = None
+    ir_file_path = os.path.join(data_dir, cls._get_file_name(with_donor))
+    if with_size:
+      if os.path.exists(ir_file_path):
+        data_set = BloodCellSet.load(ir_file_path)
+    if data_set is None:
+      # Otherwise make a .tfdi file from raw data
+      console.show_status('Generating irregular dataset from raw data...')
+      if with_donor:
+        images, labels, donor_id, donors_list = cls.load_as_numpy_arrays(
+          raw_data_dir, with_donor=True, **kwargs)
+        properties = {BloodCellSet.DONOR_NAME_KEY: donors_list}
+        properties.update(cls.PROPERTIES)
+        data_set = BloodCellSet(
+          images, labels, name='WBCRaw(D)',
+          data_dict={BloodCellSet.DONOR_KEY: donor_id}, **properties)
+      else:
+        images, labels = cls.load_as_numpy_arrays(
+          raw_data_dir, with_donor=False, **kwargs)
+        data_set = BloodCellSet(images, labels, name='WBCRaw', **cls.PROPERTIES)
 
-    # Generate groups
-    assert data_set.num_classes is not None
-    data_set.refresh_groups()
+      # Generate groups
+      assert data_set.num_classes is not None
+      data_set.refresh_groups()
 
-    # Show status
-    console.show_status('Successfully wrapped {} blood-cell images'.format(
-      data_set.size))
-    # Save data_set
-    console.show_status('Saving dataset ...')
-    data_set.save(file_path)
-    console.show_status('Dataset has been saved to {}'.format(file_path))
-    data_set.report_data_details()
+      # Show status
+      console.show_status('Successfully wrapped {} blood-cell images'.format(
+        data_set.size))
+      # Save data_set
+      console.show_status('Saving dataset ...')
+      data_set.save(ir_file_path)
+      console.show_status('Dataset has been saved to {}'.format(ir_file_path))
+      data_set.report_data_details()
+
+    # At this point we have
+    assert isinstance(data_set, BloodCellSet)
+
+    if not with_size: return data_set
+    # Preprocess and return
+    data_set.preprocess(H, W)
+    if save_HW_data:
+      console.show_status('Saving preprocessed dataset ...')
+      data_set.EXTENSION = 'tfd'
+      data_set.save(file_path)
+      console.show_status('Preprocessed dataset has been saved to {}'.format(
+        file_path))
+
     return data_set
 
 
@@ -234,10 +262,12 @@ class BloodCellAgent(DataAgent):
 
 
   @classmethod
-  def _get_file_name(cls, with_donor):
+  def _get_file_name(cls, with_donor, H=None, W=None):
     """Get .tfdir file name given setup details"""
     file_name = 'wbc-4-' + ('donor' if with_donor else 'all')
-    return file_name + '.tfdir'
+    with_size = all([H is not None, W is not None])
+    if with_size: file_name += '-{}x{}'.format(H, W)
+    return file_name + ('.tfd' if with_size else '.tfdir')
 
   # endregion: Private Methods
 

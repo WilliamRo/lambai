@@ -13,7 +13,7 @@ def load_data(data_dir, raw_data_dir, val_config='d-2', test_config='d-3',
   """
   train_set, val_set, test_set = BloodCellAgent.load(
     data_dir, raw_data_dir, val_config, test_config, H=H, W=W,
-    data_config=data_config)
+    data_config=data_config, save_HW_data=tfr.hub.save_HW_data)
   assert isinstance(train_set, BloodCellSet)
   assert isinstance(val_set, BloodCellSet)
   assert isinstance(test_set, BloodCellSet)
@@ -26,6 +26,7 @@ def load_data(data_dir, raw_data_dir, val_config='d-2', test_config='d-3',
 if __name__ == '__main__':
   from wbc_core import th
 
+  th.raw_data_dir = r'C:\Users\William\Dropbox\Shared\Share_Xin_William\Without Template'
   train_set, val_set, test_set = load_data(
     th.data_dir, th.raw_data_dir, data_config='d-1,2,3')
   test_set.view()

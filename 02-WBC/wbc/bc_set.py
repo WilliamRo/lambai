@@ -13,6 +13,7 @@ class BloodCellSet(IrregularImageSet):
   DONOR_KEY = 'donors'
   DONOR_NAME_KEY = 'donor_list'
   DENSE_LABEL_KEY = 'dense_labels'
+  EXTENSIONS = ['tfd', 'tfdir']
 
   # region: Properties
 
