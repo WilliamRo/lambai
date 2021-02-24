@@ -41,7 +41,7 @@ class BloodCellAgent(DataAgent):
 
   @classmethod
   def load(cls, data_dir, raw_data_dir, val_config='d-2', test_config='d-3',
-           H=350, W=320, save_HW_data=False, **kwargs):
+           H=350, W=320, pad_mode='constant', save_HW_data=False, **kwargs):
     """Load train_set, val_set and test_set according to configuration strings.
     test_set will be separated first, following val_set.
     Remaining data will form the train_set.
@@ -86,8 +86,8 @@ class BloodCellAgent(DataAgent):
 
     # This method is fixed for now
     data_set = cls.load_as_tframe_data(
-      data_dir, raw_data_dir, with_donor=True, H=H, W=W,
-      save_HW_data=save_HW_data)
+      data_dir, raw_data_dir, with_donor=True, H=H, W=W, pad_mode=pad_mode,
+      save_HW_data=save_HW_data, **kwargs)
 
     # Extract B/T cell images if required
     if hub.only_BT: data_set = data_set.get_types((0, 1))
@@ -111,21 +111,22 @@ class BloodCellAgent(DataAgent):
   @classmethod
   def load_as_tframe_data(
       cls, data_dir, raw_data_dir=None, with_donor=True,
-      H=None, W=None, save_HW_data=False, **kwargs):
+      H=None, W=None, pad_mode=None, save_HW_data=False, **kwargs):
     """Load cell images arranged in tfd file.
        If H and W have been specified, data_set will be preprocessed before
        returning. Otherwise, an IrregularImageSet will be returned.
     """
     if raw_data_dir is None: raw_data_dir = data_dir
-    with_size = all([H is not None, W is not None])
+    preprocess = all([H is not None, W is not None, pad_mode is not None])
     # Load data directly if .tfdi file exists
-    file_path = os.path.join(data_dir, cls._get_file_name(with_donor, H, W))
+    file_path = os.path.join(
+      data_dir, cls._get_file_name(with_donor, H, W, pad_mode))
     if os.path.exists(file_path): return BloodCellSet.load(file_path)
 
     # Try to read data without being preprocessed
     data_set = None
     ir_file_path = os.path.join(data_dir, cls._get_file_name(with_donor))
-    if with_size:
+    if preprocess:
       if os.path.exists(ir_file_path):
         data_set = BloodCellSet.load(ir_file_path)
     if data_set is None:
@@ -160,9 +161,9 @@ class BloodCellAgent(DataAgent):
     # At this point we have
     assert isinstance(data_set, BloodCellSet)
 
-    if not with_size: return data_set
+    if not preprocess: return data_set
     # Preprocess and return
-    data_set.preprocess(H, W)
+    data_set.preprocess(H, W, pad_mode=pad_mode)
     if save_HW_data:
       console.show_status('Saving preprocessed dataset ...')
       data_set.EXTENSION = 'tfd'
@@ -267,12 +268,12 @@ class BloodCellAgent(DataAgent):
 
 
   @classmethod
-  def _get_file_name(cls, with_donor, H=None, W=None):
+  def _get_file_name(cls, with_donor, H=None, W=None, pad_mode=None):
     """Get .tfdir file name given setup details"""
     file_name = 'wbc-4-' + ('donor' if with_donor else 'all')
-    with_size = all([H is not None, W is not None])
-    if with_size: file_name += '-{}x{}'.format(H, W)
-    return file_name + ('.tfd' if with_size else '.tfdir')
+    preprocess = all([H is not None, W is not None, pad_mode is not None])
+    if preprocess: file_name += '-{}x{}-{}'.format(H, W, pad_mode[:3])
+    return file_name + ('.tfd' if preprocess else '.tfdir')
 
   # endregion: Private Methods
 

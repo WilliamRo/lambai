@@ -132,9 +132,8 @@ class BloodCellSet(IrregularImageSet):
     return data_sets
 
 
-  def preprocess(self, H=350, W=320, pad_mode=0):
+  def preprocess(self, H=350, W=320, pad_mode='constant'):
     from tframe.utils.display.progress_bar import ProgressBar
-    assert pad_mode == 0
     # Preprocess one by one
     bar = ProgressBar(total=self.size)
     console.show_status('Preprocessing ...')
@@ -143,9 +142,9 @@ class BloodCellSet(IrregularImageSet):
       x -= np.min(x)
       # :: Pad or crop image
       # (1) Height
-      x = pad_or_crop(x, axis=0, size=H)
+      x = pad_or_crop(x, axis=0, size=H, pad_mode=pad_mode)
       # (2) Width
-      x = pad_or_crop(x, axis=1, size=W)
+      x = pad_or_crop(x, axis=1, size=W, pad_mode=pad_mode)
       self.features[i] = x
       # Show progress bar
       bar.show(i + 1)
@@ -162,6 +161,7 @@ class BloodCellSet(IrregularImageSet):
 
   def view(self, shuffle=False):
     from tframe.data.images.image_viewer import ImageViewer
+    from matplotlib import cm
     # Scale images to [0, 1]
     data_set = self[:]
     data_set.features = [x - np.min(x) for x in data_set.features]
@@ -173,7 +173,7 @@ class BloodCellSet(IrregularImageSet):
       data_set.features = [data_set.features[i] for i in indices]
       data_set.targets = data_set.targets[indices]
     # Show data using ImageViewer
-    viewer = ImageViewer(data_set)
+    viewer = ImageViewer(data_set, color_map=cm.gist_earth)
     viewer.show()
 
 
@@ -259,9 +259,9 @@ class BloodCellSet(IrregularImageSet):
       metric_title = '{} F1'.format(name)
       agent.put_down_criterion(metric_title, cm.macro_F1)
       agent.take_notes('Confusion Matrix on {} Set:'.format(name), False)
-      agent.take_notes('\n' + cm.matrix_table().content, False)
+      agent.take_notes(cm.matrix_table().content, False)
       agent.take_notes('Evaluation Result on {} Set:'.format(name), False)
-      agent.take_notes('\n' + cm.make_table().content, False)
+      agent.take_notes(cm.make_table().content, False)
 
       # Additional information for test set
       if name == 'Test':

@@ -25,15 +25,26 @@ class Rethinker(Layer):
     self.route_matrix = self.get_route_matrix()
 
     # If smart routing if turned off
-    if not tfr.hub.use_wise_man:
-      self.full_name = 'subconscious'
-      self.abbreviation = 'subcons'
+    try:
+      if not tfr.hub.use_wise_man:
+        self.full_name = 'subconscious'
+        self.abbreviation = 'subcons'
+    except:
+      pass
 
 
   def get_route_matrix(self):
-    """Generate route matrix based on index group"""
+    """Generate route matrix based on index group
+    TODO: deprecated
+    """
     m = np.eye(tfr.hub.num_classes, dtype=float)
-    for g in self.index_groups:
+    # Get indices left
+    grouped_indices = np.concatenate(self.index_groups)
+    indices_left = [
+      i for i in range(tfr.hub.num_classes) if i not in grouped_indices]
+    groups = list(self.index_groups) + [indices_left]
+    # Set route matrix
+    for g in groups:
       assert isinstance(g, (list, tuple))
       m[np.ix_(g, g)] = 1
     return tf.constant(m, name='route_matrix', dtype=tf.float32)
@@ -46,13 +57,14 @@ class Rethinker(Layer):
     p, q_logits = inputs
     assert all([isinstance(p, tf.Tensor), isinstance(q_logits, tf.Tensor)])
 
+    # Output directly if not use wise man
+    if not tfr.hub.use_wise_man: return p
+
     # Inject error to q
     tfr.hub.show_extra_loss_info = True
     if self.loss_coef > 0:
       self.q_logits = q_logits
       context.customized_loss_f_net = self.branch_loss
-    # Output directly if not use wise man
-    if not tfr.hub.use_wise_man: return p
 
     # Get rethink probabilities
     q = tf.nn.softmax(q_logits)
@@ -60,7 +72,9 @@ class Rethinker(Layer):
     # :: Output while not training
     # Find max index
     p_one_hot = tf.one_hot(tf.argmax(p, axis=-1), depth=tfr.hub.num_classes)
-    alpha = tf.matmul(p_one_hot, self.route_matrix)
+    # TODO: needs to be more general
+    alpha = tf.tile(tf.reduce_sum(p_one_hot[:, 2:], axis=-1, keepdims=True),
+                    (1, tfr.hub.num_classes))
     eval_output = alpha * p + (1 - alpha) * q_pad
 
     # Return
@@ -92,7 +106,15 @@ class Rethinker(Layer):
 if __name__ == '__main__':
   from tframe import console, hub
   console.suppress_logging()
-  hub.num_classes = 6
-  r = Rethinker((0, 1, 2), (3, 4))
+  hub.num_classes = 4
+  one_hot = tf.constant([[1, 0, 0, 0],
+                         [0, 0, 1, 0],
+                         [0, 0, 0, 1],
+                         [0, 0, 0, 1],
+                         [0, 1, 0, 0]], dtype=tf.float32)
+  # p = tf.constant([0, 2, 3, 3, 2])
   with tf.Session() as sess:
-    console.eval_show(r.route_matrix)
+    alpha = tf.tile(
+      tf.reduce_sum(one_hot[:, 2:], axis=-1, keepdims=True), (1, 4))
+    console.eval_show(one_hot)
+    console.eval_show(alpha)

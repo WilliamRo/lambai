@@ -30,6 +30,8 @@ default_inactive_criteria = (
   # 'Record',
   'SC(LCS)',
   'LC(SCS)',
+  'Best Accuracy',
+  'Best F1',
 )
 flags_to_ignore = (
   'use_conveyor',
