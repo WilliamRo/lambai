@@ -210,9 +210,11 @@ class BloodCellSet(IrregularImageSet):
 
     # Get size detail
     if isinstance(self.features, list):
-      H = np.max([img.shape[0] for img in self.features])
-      W = np.max([img.shape[1] for img in self.features])
-      size_detail = 'Max HxW: {}x{}'.format(H, W)
+      Hs, Ws = [[img.shape[i] for img in self.features] for i in (0, 1)]
+      H_max, H_min, W_max, W_min = (
+        np.max(Hs), np.min(Hs), np.max(Ws), np.min(Ws))
+      size_detail = 'Max HxW: {}x{}; Min HxW: {}x{}'.format(
+        H_max, W_max, H_min, W_min)
     else:
       assert isinstance(self.features, np.ndarray)
       shape = self.features.shape

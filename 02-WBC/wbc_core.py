@@ -11,6 +11,7 @@ from tframe import Classifier
 from wbc.wbc_hub import WBCHub
 
 import wbc_du as du
+import wbc_local
 
 
 from_root = lambda path: os.path.join(ROOT, path)
@@ -21,6 +22,7 @@ from_root = lambda path: os.path.join(ROOT, path)
 th = WBCHub(as_global=True)
 th.data_dir = from_root('02-WBC/data')
 th.job_dir = from_root('02-WBC')
+th.raw_data_dir = wbc_local.raw_data_dir
 # -----------------------------------------------------------------------------
 # Device configurations
 # -----------------------------------------------------------------------------

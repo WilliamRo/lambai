@@ -1,4 +1,5 @@
 from tframe import Classifier
+from tframe.nets.net import Net
 from tframe.layers import Input, Activation, Flatten
 from tframe.configs.config_base import Config
 from tframe.layers.preprocess import Normalize
@@ -16,6 +17,7 @@ from tframe.layers.common import Reshape
 from tframe.layers.merge import ShortCut
 
 from wbc_arch.rethinker import Rethinker
+from wbc.wbc_hub import WBCHub
 
 
 def get_container(th, flatten=False, add_last_dim=True):
@@ -52,6 +54,26 @@ def typical(th, layers, flatten=False):
   if not isinstance(layers, (list, tuple)): layers = [layers]
   for layer in layers: model.add(layer)
   return finalize(th, model)
+
+
+def add_rethink(th, model, fc_dims, index_group=(0, 1)):
+  assert isinstance(th, WBCHub) and isinstance(model, Classifier)
+  if th.use_wise_man:
+    rth = Rethinker(index_group, loss_coef=th.loss_coef)
+    fm = model.add_forkmerge(
+      rth, name='WiseMan', stop_gradient_at=['branch'] if th.stop_grad else [])
+
+  for branch_key in ('main', 'branch') if th.use_wise_man else ('main',):
+    add = ((lambda l: fm.add_to_branch(branch_key, l))
+         if th.use_wise_man else model.add)
+    for dim in fc_dims:
+      if th.dropout > 0: add(Dropout(1. - th.dropout))
+      add(Dense(dim, activation=th.activation))
+    # Add softmax units
+    num = th.num_classes if branch_key == 'main' else len(index_group)
+    add(Dense(num))
+    # Only add softmax to main branch
+    if branch_key == 'main': add(Activation('softmax'))
 
 
 # region: Converted from Xin's codes

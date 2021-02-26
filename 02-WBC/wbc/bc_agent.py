@@ -176,7 +176,7 @@ class BloodCellAgent(DataAgent):
 
   @classmethod
   def load_as_numpy_arrays(
-      cls, data_dir, with_donor=False, mat_key='seg_phase_rtg'):
+      cls, data_dir, with_donor=False, mat_key='seg_phase_rtg', **kwargs):
     data_dir = os.path.join(data_dir, 'Person' if with_donor else 'ALL')
     if with_donor: return cls._load_cell4_with_donor(data_dir, mat_key)
     else: return cls._load_cell4_all(data_dir, mat_key)
