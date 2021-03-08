@@ -1,0 +1,1780 @@
+[21-Mar-08 15:30:36] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP (init: 5, prior: gp, acq: gp_hedge, acq_opt: auto) 
+  Run # 1
+  Next config: OrderedDict([('lr', 0.0006501017258058921), ('batch_size', 121), ('kernel_size', 5), ('patience', 10), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 15:26:42] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP (init: 5, prior: gp, acq: gp_hedge, acq_opt: auto) 
+  Run # 1
+  Next config: OrderedDict([('lr', 0.0006732242387461129), ('batch_size', 123), ('kernel_size', 3), ('patience', 8), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 15:25:00] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP (init: 5, prior: gp, acq: gp_hedge, acq_opt: auto) 
+  Run # 1
+  Next config: OrderedDict([('lr', 0.001), ('batch_size', 64), ('kernel_size', 4), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 15:08:32] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP (init: 5, prior: gp, acq: gp_hedge, acq_opt: lbfgs) 
+  Run # 1 | Observed 7: (1) 62.320, (2) 48.750, (3) 50.640, (4) 55.290, (5) 45.650, (6) 45.320, (7) 47.120 | BEST: 62.320 | fit time: 0.39 sec
+  Next config: OrderedDict([('lr', 0.001050559111473497), ('batch_size', 80), ('kernel_size', 5), ('patience', 6), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 11:01:04] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP (init: 5, prior: gp, acq: gp_hedge, acq_opt: lbfgs) 
+  Run # 1 | Observed 7: (1) 62.320, (2) 48.750, (3) 50.640, (4) 55.290, (5) 45.650, (6) 45.320, (7) 47.120 | BEST: 62.320 | fit time: 0.28 sec
+  Next config sampled: OrderedDict([('lr', 0.00030000000000000014), ('batch_size', 125), ('kernel_size', 4), ('patience', 10), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 10:46:01] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 1 | Observed 7: (1) 62.320, (2) 48.750, (3) 50.640, (4) 55.290, (5) 45.650, (6) 45.320, (7) 47.120 | BEST: 62.320 | fit time: 0.18 sec
+  Next config sampled: OrderedDict([('lr', 0.00036322580310901034), ('batch_size', 62), ('kernel_size', 5), ('patience', 8), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 10:41:23] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 7, observed 1: (1) 47.120. BEST: 62.320
+  Next config sampled: OrderedDict([('lr', 0.0003111017538592497), ('batch_size', 106), ('kernel_size', 5), ('patience', 7), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 10:41:13] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 6, observed 1: (1) 45.320. BEST: 62.320
+  Next config sampled: OrderedDict([('lr', 0.002921696265228819), ('batch_size', 128), ('kernel_size', 4), ('patience', 10), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 10:41:03] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 5, observed 1: (1) 45.650. BEST: 62.320
+  Next config sampled: OrderedDict([('lr', 0.0007026874042335927), ('batch_size', 117), ('kernel_size', 4), ('patience', 10), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 10:40:53] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 4, observed 1: (1) 55.290. BEST: 62.320
+  Next config sampled: OrderedDict([('lr', 0.0006918410064019971), ('batch_size', 97), ('kernel_size', 4), ('patience', 9), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 10:40:44] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 3, observed 1: (1) 50.640. BEST: 62.320
+  Next config sampled: OrderedDict([('lr', 0.0016683567433331456), ('batch_size', 95), ('kernel_size', 3), ('patience', 9), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 10:40:34] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 2, observed 1: (1) 48.750. BEST: 62.320
+  Next config sampled: OrderedDict([('lr', 0.0006768633999496526), ('batch_size', 77), ('kernel_size', 4), ('patience', 8), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 10:40:23] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 1, observed 1: (1) 62.320. BEST: 62.320
+  Next config sampled: OrderedDict([('lr', 0.0014993485395888959), ('batch_size', 55), ('kernel_size', 3), ('patience', 6), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 10:35:20] summ: 0308_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 1
+  Next config sampled: OrderedDict([('lr', 0.0015012025531592047), ('batch_size', 28), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 10:15:06]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 145
+  3 new observations have been told.
+  ys: [52.52000093460083, 59.57000255584717, 58.06000232696533]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 10:13:15] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 139
+  1 new observations have been told.
+  ys: [59.57000255584717]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 10:08:26] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 138
+  2 new observations have been told.
+  ys: [55.59999942779541, 52.52000093460083]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 10:08:16]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 144
+  2 new observations have been told.
+  ys: [56.55999779701233, 55.59999942779541]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 10:04:34] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 137
+  2 new observations have been told.
+  ys: [58.57999920845032, 56.55999779701233]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 10:02:23]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 143
+  2 new observations have been told.
+  ys: [57.67999887466431, 58.57999920845032]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 09:59:52] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 136
+  2 new observations have been told.
+  ys: [59.46999788284302, 57.67999887466431]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 09:56:40]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 142
+  1 new observations have been told.
+  ys: [59.46999788284302]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 09:53:00] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 135
+  1 new observations have been told.
+  ys: [54.19999957084656]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 09:50:23]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 141
+  2 new observations have been told.
+  ys: [59.90999937057495, 54.19999957084656]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 09:47:38] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 134
+  3 new observations have been told.
+  ys: [60.2400004863739, 52.85000205039978, 59.90999937057495]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 09:46:57]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 140
+  1 new observations have been told.
+  ys: [52.85000205039978]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 09:42:46]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 139
+  2 new observations have been told.
+  ys: [59.049999713897705, 60.2400004863739]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 09:39:52] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 133
+  1 new observations have been told.
+  ys: [59.049999713897705]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 09:36:53]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 138
+  1 new observations have been told.
+  ys: [57.70000219345093]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 09:33:30] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 132
+  2 new observations have been told.
+  ys: [56.18000030517578, 57.70000219345093]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 09:29:17]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 137
+  2 new observations have been told.
+  ys: [57.819998264312744, 56.18000030517578]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 09:29:05] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 131
+  2 new observations have been told.
+  ys: [57.46999979019165, 57.819998264312744]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 09:24:04]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 136
+  3 new observations have been told.
+  ys: [55.33999800682068, 56.81999921798706, 57.46999979019165]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 09:24:00] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 130
+  1 new observations have been told.
+  ys: [56.81999921798706]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 09:18:53] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 129
+  2 new observations have been told.
+  ys: [59.09000039100647, 55.33999800682068]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 09:17:40]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 135
+  2 new observations have been told.
+  ys: [56.49999976158142, 59.09000039100647]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 09:14:21] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 128
+  1 new observations have been told.
+  ys: [56.49999976158142]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 09:09:45]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 134
+  1 new observations have been told.
+  ys: [60.00000238418579]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 09:07:47] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 127
+  2 new observations have been told.
+  ys: [60.08999943733215, 60.00000238418579]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 09:02:57]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 133
+  2 new observations have been told.
+  ys: [58.02000164985657, 60.08999943733215]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 09:00:41] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 126
+  2 new observations have been told.
+  ys: [53.82000207901001, 58.02000164985657]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 08:56:07]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 132
+  2 new observations have been told.
+  ys: [58.490002155303955, 53.82000207901001]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 08:53:38] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 125
+  1 new observations have been told.
+  ys: [58.490002155303955]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 08:51:43]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 131
+  1 new observations have been told.
+  ys: [60.9499990940094]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 08:45:33] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 124
+  2 new observations have been told.
+  ys: [60.269999504089355, 60.9499990940094]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 08:43:56]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 130
+  1 new observations have been told.
+  ys: [60.269999504089355]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 08:38:51]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 129
+  1 new observations have been told.
+  ys: [57.70999789237976]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 08:38:27] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 123
+  2 new observations have been told.
+  ys: [58.81999731063843, 57.70999789237976]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 08:32:09]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 128
+  2 new observations have been told.
+  ys: [54.75999712944031, 58.81999731063843]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 08:31:37] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 122
+  1 new observations have been told.
+  ys: [54.75999712944031]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 08:27:45] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 121
+  1 new observations have been told.
+  ys: [59.31000113487244]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 08:26:43]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 127
+  1 new observations have been told.
+  ys: [59.31000113487244]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 08:19:52]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 126
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 08:19:18] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 120
+  1 new observations have been told.
+  ys: [57.840001583099365]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 08:12:20]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 125
+  1 new observations have been told.
+  ys: [57.840001583099365]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 08:11:59] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 119
+  1 new observations have been told.
+  ys: [58.45000147819519]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 08:07:39]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 124
+  1 new observations have been told.
+  ys: [58.45000147819519]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 08:03:49] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 118
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 08:01:53]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 123
+  1 new observations have been told.
+  ys: [61.34999990463257]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 07:58:22] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 117
+  3 new observations have been told.
+  ys: [54.989999532699585, 55.229997634887695, 61.34999990463257]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 07:56:40]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 122
+  1 new observations have been told.
+  ys: [55.229997634887695]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 07:51:35]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 121
+  2 new observations have been told.
+  ys: [56.34999871253967, 54.989999532699585]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 07:50:04] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 116
+  1 new observations have been told.
+  ys: [56.34999871253967]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 07:47:28]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 120
+  1 new observations have been told.
+  ys: [59.65999960899353]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 07:43:08] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 115
+  2 new observations have been told.
+  ys: [59.769999980926514, 59.65999960899353]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 07:40:23]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 119
+  2 new observations have been told.
+  ys: [54.739999771118164, 59.769999980926514]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 07:35:39] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 114
+  2 new observations have been told.
+  ys: [56.459999084472656, 54.739999771118164]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 07:33:02]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 118
+  2 new observations have been told.
+  ys: [55.68000078201294, 56.459999084472656]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 07:30:12] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 113
+  1 new observations have been told.
+  ys: [55.68000078201294]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 07:28:24]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 117
+  2 new observations have been told.
+  ys: [57.38999843597412, 58.45999717712402]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 07:26:47] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 112
+  1 new observations have been told.
+  ys: [58.45999717712402]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 07:19:26] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 111
+  2 new observations have been told.
+  ys: [56.41999840736389, 57.38999843597412]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 07:18:20]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 116
+  2 new observations have been told.
+  ys: [56.370002031326294, 56.41999840736389]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 07:14:54] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 110
+  2 new observations have been told.
+  ys: [59.99000072479248, 56.370002031326294]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 07:14:05]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 115
+  1 new observations have been told.
+  ys: [59.99000072479248]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 07:09:16] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 109
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 07:05:56]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 114
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 07:03:04] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 108
+  1 new observations have been told.
+  ys: [57.8000009059906]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 06:59:11]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 113
+  2 new observations have been told.
+  ys: [59.539997577667236, 57.8000009059906]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 06:57:21] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 107
+  2 new observations have been told.
+  ys: [58.61999988555908, 59.539997577667236]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 06:52:38]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 112
+  2 new observations have been told.
+  ys: [58.82999897003174, 58.61999988555908]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 06:48:25] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 106
+  2 new observations have been told.
+  ys: [57.05000162124634, 58.82999897003174]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 06:46:30]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 111
+  2 new observations have been told.
+  ys: [55.570000410079956, 57.05000162124634]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 06:41:51] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 105
+  1 new observations have been told.
+  ys: [55.570000410079956]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 06:41:02]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 110
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 06:37:12] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 104
+  1 new observations have been told.
+  ys: [55.239999294281006]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 06:33:07]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 109
+  2 new observations have been told.
+  ys: [60.339999198913574, 55.239999294281006]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 06:30:26] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 103
+  2 new observations have been told.
+  ys: [59.289997816085815, 60.339999198913574]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 06:28:44]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 108
+  2 new observations have been told.
+  ys: [52.6199996471405, 59.289997816085815]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 06:22:40] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 102
+  2 new observations have been told.
+  ys: [58.03999900817871, 52.6199996471405]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 06:22:20]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 107
+  1 new observations have been told.
+  ys: [58.03999900817871]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 06:18:59] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 101
+  2 new observations have been told.
+  ys: [60.7200026512146, 56.11000061035156]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 06:17:34]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 106
+  1 new observations have been told.
+  ys: [56.11000061035156]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 06:12:48]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 105
+  3 new observations have been told.
+  ys: [56.9599986076355, 60.659998655319214, 60.7200026512146]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 06:11:56] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 100
+  1 new observations have been told.
+  ys: [60.659998655319214]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 06:06:06] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 99
+  1 new observations have been told.
+  ys: [56.9599986076355]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 06:05:27]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 104
+  1 new observations have been told.
+  ys: [57.73000121116638]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 06:00:22] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 98
+  3 new observations have been told.
+  ys: [57.74000287055969, 56.519997119903564, 57.73000121116638]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 05:59:45]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 103
+  1 new observations have been told.
+  ys: [56.519997119903564]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 05:54:10]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 102
+  2 new observations have been told.
+  ys: [60.03999710083008, 57.74000287055969]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 05:53:28] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 97
+  2 new observations have been told.
+  ys: [55.650001764297485, 60.03999710083008]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 05:48:35]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 101
+  1 new observations have been told.
+  ys: [55.650001764297485]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 05:46:25] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 96
+  1 new observations have been told.
+  ys: [61.36999726295471]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 05:43:00]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 100
+  3 new observations have been told.
+  ys: [56.67999982833862, 56.08999729156494, 61.36999726295471]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 05:39:47] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 95
+  1 new observations have been told.
+  ys: [56.08999729156494]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 05:35:58] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 94
+  3 new observations have been told.
+  ys: [58.090001344680786, 55.65999746322632, 56.67999982833862]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 05:35:01]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 99
+  1 new observations have been told.
+  ys: [55.65999746322632]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 05:30:23]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 98
+  2 new observations have been told.
+  ys: [59.96999740600586, 58.090001344680786]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 05:30:17] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 93
+  2 new observations have been told.
+  ys: [55.559998750686646, 59.96999740600586]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 05:24:47]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 97
+  2 new observations have been told.
+  ys: [59.25999879837036, 55.559998750686646]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 05:23:55] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 92
+  2 new observations have been told.
+  ys: [57.910001277923584, 59.25999879837036]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 05:20:05]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 96
+  1 new observations have been told.
+  ys: [57.910001277923584]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 05:15:52] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 91
+  1 new observations have been told.
+  ys: [59.950000047683716]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 05:13:01]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 95
+  2 new observations have been told.
+  ys: [61.330002546310425, 59.950000047683716]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 05:10:34] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 90
+  2 new observations have been told.
+  ys: [58.49999785423279, 61.330002546310425]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 05:07:51]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 94
+  1 new observations have been told.
+  ys: [58.49999785423279]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 05:01:18]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 93
+  1 new observations have been told.
+  ys: [56.779998540878296]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 05:00:57] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 89
+  1 new observations have been told.
+  ys: [56.779998540878296]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 04:55:10] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 88
+  2 new observations have been told.
+  ys: [54.909998178482056, 56.48999810218811]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 04:54:16]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 92
+  1 new observations have been told.
+  ys: [56.48999810218811]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 04:49:01]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 91
+  2 new observations have been told.
+  ys: [59.24000144004822, 54.909998178482056]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 04:47:00] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 87
+  2 new observations have been told.
+  ys: [56.97000026702881, 59.24000144004822]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 04:42:50]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 90
+  2 new observations have been told.
+  ys: [56.08000159263611, 56.97000026702881]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 04:39:31] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 86
+  2 new observations have been told.
+  ys: [53.32000255584717, 56.08000159263611]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 04:35:12]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 89
+  2 new observations have been told.
+  ys: [58.96000266075134, 53.32000255584717]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 04:32:44] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 85
+  3 new observations have been told.
+  ys: [57.96999931335449, 58.410000801086426, 58.96000266075134]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 04:32:04]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 88
+  1 new observations have been told.
+  ys: [58.410000801086426]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 04:25:55]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 87
+  3 new observations have been told.
+  ys: [57.08000063896179, 56.449997425079346, 57.96999931335449]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 04:25:15] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 84
+  1 new observations have been told.
+  ys: [56.449997425079346]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 04:22:06] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 83
+  1 new observations have been told.
+  ys: [57.08000063896179]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 04:20:56]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 86
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 04:16:30] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 82
+  1 new observations have been told.
+  ys: [59.380000829696655]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 04:14:10]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 85
+  2 new observations have been told.
+  ys: [58.56999754905701, 59.380000829696655]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 04:11:12] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 81
+  2 new observations have been told.
+  ys: [55.150002241134644, 58.56999754905701]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 04:05:46]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 84
+  2 new observations have been told.
+  ys: [57.52999782562256, 55.150002241134644]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 04:05:15] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 80
+  2 new observations have been told.
+  ys: [55.640000104904175, 57.52999782562256]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 04:00:52]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 83
+  2 new observations have been told.
+  ys: [57.1399986743927, 55.640000104904175]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 03:59:25] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 79
+  2 new observations have been told.
+  ys: [55.330002307891846, 57.1399986743927]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 03:55:27]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 82
+  2 new observations have been told.
+  ys: [59.859997034072876, 55.330002307891846]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 03:54:40] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 78
+  2 new observations have been told.
+  ys: [59.5300018787384, 59.859997034072876]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 03:49:11]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 81
+  2 new observations have been told.
+  ys: [60.13000011444092, 59.5300018787384]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 03:45:10] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 77
+  2 new observations have been told.
+  ys: [58.25999975204468, 60.13000011444092]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 03:39:06]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 80
+  2 new observations have been told.
+  ys: [57.419997453689575, 58.25999975204468]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 03:36:14] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 76
+  2 new observations have been told.
+  ys: [57.3199987411499, 57.419997453689575]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 03:34:21]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 79
+  2 new observations have been told.
+  ys: [54.339998960494995, 57.3199987411499]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 03:28:54] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 75
+  2 new observations have been told.
+  ys: [59.119999408721924, 54.339998960494995]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 03:28:22]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 78
+  2 new observations have been told.
+  ys: [58.789998292922974, 59.119999408721924]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 03:24:34] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 74
+  3 new observations have been told.
+  ys: [57.48000144958496, 56.98999762535095, 58.789998292922974]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 03:22:26]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 77
+  1 new observations have been told.
+  ys: [56.98999762535095]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 03:18:34]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 76
+  2 new observations have been told.
+  ys: [57.77000188827515, 57.48000144958496]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 03:18:10] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 73
+  2 new observations have been told.
+  ys: [58.799999952316284, 57.77000188827515]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 03:14:13]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 75
+  1 new observations have been told.
+  ys: [58.799999952316284]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 03:10:59] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 72
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 03:06:46]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 74
+  1 new observations have been told.
+  ys: [59.10999774932861]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 03:04:23] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 71
+  2 new observations have been told.
+  ys: [59.210002422332764, 59.10999774932861]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 03:00:09]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 73
+  2 new observations have been told.
+  ys: [56.300002336502075, 59.210002422332764]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 02:59:46] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 70
+  2 new observations have been told.
+  ys: [59.42000150680542, 56.300002336502075]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 02:53:39]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 72
+  2 new observations have been told.
+  ys: [60.07000207901001, 59.42000150680542]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 02:52:59] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 69
+  2 new observations have been told.
+  ys: [58.31000208854675, 60.07000207901001]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 02:45:39]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 71
+  2 new observations have been told.
+  ys: [58.27999711036682, 58.31000208854675]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 02:45:30] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 68
+  1 new observations have been told.
+  ys: [58.27999711036682]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 02:39:17]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 70
+  2 new observations have been told.
+  ys: [56.31999969482422, 54.4700026512146]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 02:37:23] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 67
+  1 new observations have been told.
+  ys: [54.4700026512146]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 02:32:46] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 66
+  2 new observations have been told.
+  ys: [58.6899995803833, 56.31999969482422]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 02:32:32]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 69
+  2 new observations have been told.
+  ys: [59.24999713897705, 58.6899995803833]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 02:29:06] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 65
+  1 new observations have been told.
+  ys: [59.24999713897705]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 02:26:58]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 68
+  1 new observations have been told.
+  ys: [54.47999835014343]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 02:22:21] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 64
+  2 new observations have been told.
+  ys: [58.60000252723694, 54.47999835014343]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 02:22:14]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 67
+  1 new observations have been told.
+  ys: [58.60000252723694]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 02:17:05] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 63
+  2 new observations have been told.
+  ys: [55.77999949455261, 53.31000089645386]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 02:16:41]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 66
+  1 new observations have been told.
+  ys: [53.31000089645386]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 02:12:53]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 65
+  3 new observations have been told.
+  ys: [58.85999798774719, 53.39000225067139, 55.77999949455261]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 02:09:31] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 62
+  1 new observations have been told.
+  ys: [53.39000225067139]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 02:06:16] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 61
+  2 new observations have been told.
+  ys: [57.55000114440918, 58.85999798774719]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 02:05:13]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 64
+  2 new observations have been told.
+  ys: [55.50000071525574, 57.55000114440918]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 02:00:26] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 60
+  2 new observations have been told.
+  ys: [56.66000247001648, 55.50000071525574]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:59:09]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 63
+  2 new observations have been told.
+  ys: [59.130001068115234, 56.66000247001648]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 01:55:01] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 59
+  2 new observations have been told.
+  ys: [55.12999892234802, 59.130001068115234]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:54:32]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 62
+  2 new observations have been told.
+  ys: [59.630000591278076, 55.12999892234802]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 01:52:12] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 58
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 01:49:21] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 57
+  3 new observations have been told.
+  ys: [58.53999853134155, 58.12000036239624, 59.630000591278076]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:48:54]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 61
+  1 new observations have been told.
+  ys: [58.12000036239624]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:42:40]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 60
+  2 new observations have been told.
+  ys: [59.2199981212616, 58.53999853134155]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 01:42:10] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 56
+  2 new observations have been told.
+  ys: [59.97999906539917, 59.2199981212616]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:39:43]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 59
+  2 new observations have been told.
+  ys: [57.41000175476074, 59.97999906539917]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 01:39:25] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 55
+  2 new observations have been told.
+  ys: [56.81999921798706, 57.41000175476074]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:37:09]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 58
+  2 new observations have been told.
+  ys: [58.56999754905701, 56.81999921798706]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 01:34:18] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 54
+  2 new observations have been told.
+  ys: [58.740001916885376, 58.56999754905701]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:33:31]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 57
+  2 new observations have been told.
+  ys: [59.700000286102295, 58.740001916885376]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 01:31:28] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 53
+  3 new observations have been told.
+  ys: [56.19000196456909, 57.48000144958496, 59.700000286102295]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:29:33]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 56
+  1 new observations have been told.
+  ys: [57.48000144958496]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:25:10]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 55
+  2 new observations have been told.
+  ys: [61.260002851486206, 56.19000196456909]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 01:23:33] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 52
+  2 new observations have been told.
+  ys: [54.53000068664551, 61.260002851486206]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:22:14]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 54
+  2 new observations have been told.
+  ys: [58.85999798774719, 54.53000068664551]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 01:20:52] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 51
+  2 new observations have been told.
+  ys: [58.78000259399414, 58.85999798774719]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:17:44]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 53
+  2 new observations have been told.
+  ys: [58.420002460479736, 58.78000259399414]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 01:17:17] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 50
+  3 new observations have been told.
+  ys: [60.519999265670776, 56.690001487731934, 58.420002460479736]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:14:49]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 52
+  1 new observations have been told.
+  ys: [56.690001487731934]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:12:26]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 51
+  2 new observations have been told.
+  ys: [57.349997758865356, 60.519999265670776]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 01:09:54] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 49
+  2 new observations have been told.
+  ys: [58.389997482299805, 57.349997758865356]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 01:06:27]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 50
+  2 new observations have been told.
+  ys: [56.91999793052673, 58.389997482299805]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 01:03:31] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 48
+  2 new observations have been told.
+  ys: [58.89999866485596, 56.91999793052673]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:59:18]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 49
+  2 new observations have been told.
+  ys: [59.74000096321106, 58.89999866485596]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:57:25] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 47
+  2 new observations have been told.
+  ys: [55.47000169754028, 59.74000096321106]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:53:20]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 48
+  2 new observations have been told.
+  ys: [57.3199987411499, 55.47000169754028]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:49:31] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 46
+  2 new observations have been told.
+  ys: [61.69999837875366, 57.3199987411499]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:48:58]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 47
+  2 new observations have been told.
+  ys: [57.22000002861023, 61.69999837875366]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:46:34] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 45
+  2 new observations have been told.
+  ys: [60.019999742507935, 57.22000002861023]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:45:30]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 46
+  2 new observations have been told.
+  ys: [59.359997510910034, 60.019999742507935]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:41:30] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 44
+  3 new observations have been told.
+  ys: [56.529998779296875, 57.109999656677246, 59.359997510910034]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:38:53]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 45
+  1 new observations have been told.
+  ys: [57.109999656677246]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:34:38]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 44
+  2 new observations have been told.
+  ys: [59.20000076293945, 56.529998779296875]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:33:42] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 43
+  3 new observations have been told.
+  ys: [56.55999779701233, 55.86000084877014, 59.20000076293945]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:28:16]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 43
+  1 new observations have been told.
+  ys: [55.86000084877014]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:24:00]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 42
+  3 new observations have been told.
+  ys: [59.17999744415283, 59.83999967575073, 56.55999779701233]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:23:55] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 42
+  1 new observations have been told.
+  ys: [59.83999967575073]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:20:46] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 41
+  2 new observations have been told.
+  ys: [58.420002460479736, 59.17999744415283]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:20:11]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 41
+  2 new observations have been told.
+  ys: [58.890002965927124, 58.420002460479736]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:17:11] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 40
+  2 new observations have been told.
+  ys: [57.920002937316895, 58.890002965927124]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:17:04]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 40
+  2 new observations have been told.
+  ys: [60.280001163482666, 57.920002937316895]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:13:52] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 39
+  2 new observations have been told.
+  ys: [56.80000185966492, 60.280001163482666]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:13:44]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 39
+  2 new observations have been told.
+  ys: [59.630000591278076, 56.80000185966492]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:11:14] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 38
+  2 new observations have been told.
+  ys: [56.23999834060669, 59.630000591278076]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:10:16]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 38
+  2 new observations have been told.
+  ys: [54.19999957084656, 56.23999834060669]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:07:09] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 37
+  2 new observations have been told.
+  ys: [58.719998598098755, 54.19999957084656]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-08 00:06:57]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 37
+  3 new observations have been told.
+  ys: [61.260002851486206, 56.9599986076355, 58.719998598098755]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:03:59] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 36
+  1 new observations have been told.
+  ys: [56.9599986076355]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-08 00:00:07] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 35
+  3 new observations have been told.
+  ys: [57.53999948501587, 57.85999894142151, 61.260002851486206]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 23:59:30]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 36
+  1 new observations have been told.
+  ys: [57.85999894142151]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 23:52:44]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 35
+  2 new observations have been told.
+  ys: [59.3999981880188, 57.53999948501587]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 23:52:35] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 34
+  2 new observations have been told.
+  ys: [57.590001821517944, 59.3999981880188]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 23:47:12]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 34
+  2 new observations have been told.
+  ys: [60.930001735687256, 57.590001821517944]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 23:45:49] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 33
+  2 new observations have been told.
+  ys: [56.09999895095825, 60.930001735687256]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 23:43:17]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 33
+  2 new observations have been told.
+  ys: [58.799999952316284, 56.09999895095825]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 23:37:59] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 32
+  2 new observations have been told.
+  ys: [58.230000734329224, 58.799999952316284]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 23:37:01]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 32
+  2 new observations have been told.
+  ys: [59.81000065803528, 58.230000734329224]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 23:35:29] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 31
+  2 new observations have been told.
+  ys: [57.13000297546387, 59.81000065803528]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 23:31:47]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 31
+  2 new observations have been told.
+  ys: [57.35999941825867, 57.13000297546387]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 23:26:42] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 30
+  2 new observations have been told.
+  ys: [56.36000037193298, 57.35999941825867]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 23:24:43]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 30
+  2 new observations have been told.
+  ys: [54.94999885559082, 56.36000037193298]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 23:20:34] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 29
+  3 new observations have been told.
+  ys: [58.810001611709595, 57.35999941825867, 54.94999885559082]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 23:19:41]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 29
+  1 new observations have been told.
+  ys: [57.35999941825867]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 23:16:37]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 28
+  3 new observations have been told.
+  ys: [58.59000086784363, 59.3999981880188, 58.810001611709595]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 23:16:28] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 28
+  1 new observations have been told.
+  ys: [59.3999981880188]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 23:14:01] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 27
+  2 new observations have been told.
+  ys: [58.67000222206116, 58.59000086784363]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 23:13:43]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 27
+  2 new observations have been told.
+  ys: [59.58999991416931, 58.67000222206116]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 23:10:58] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 26
+  3 new observations have been told.
+  ys: [59.96999740600586, 56.15000128746033, 59.58999991416931]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 23:06:35]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 26
+  1 new observations have been told.
+  ys: [56.15000128746033]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 23:01:35]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 25
+  4 new observations have been told.
+  ys: [57.95999765396118, 59.57000255584717, 55.79000115394592, 59.96999740600586]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 23:01:05] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 25
+  1 new observations have been told.
+  ys: [55.79000115394592]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 22:56:22] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 24
+  1 new observations have been told.
+  ys: [59.57000255584717]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 22:52:18] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 23
+  2 new observations have been told.
+  ys: [59.22999978065491, 57.95999765396118]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 10), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 22:51:10]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 24
+  2 new observations have been told.
+  ys: [60.43999791145325, 59.22999978065491]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 10), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 22:48:45] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 22
+  3 new observations have been told.
+  ys: [56.70999884605408, 57.819998264312744, 60.43999791145325]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 22:46:55]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 23
+  1 new observations have been told.
+  ys: [57.819998264312744]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 22:42:42]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 22
+  2 new observations have been told.
+  ys: [59.64999794960022, 56.70999884605408]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 22:42:00] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 21
+  2 new observations have been told.
+  ys: [57.200002670288086, 59.64999794960022]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 22:40:25]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 21
+  2 new observations have been told.
+  ys: [58.78000259399414, 57.200002670288086]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 22:38:24] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 20
+  2 new observations have been told.
+  ys: [60.47999858856201, 58.78000259399414]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 22:36:51]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 20
+  2 new observations have been told.
+  ys: [59.619998931884766, 60.47999858856201]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 22:30:44] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 19
+  2 new observations have been told.
+  ys: [57.01000094413757, 59.619998931884766]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 22:30:21]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 19
+  2 new observations have been told.
+  ys: [56.44000172615051, 57.01000094413757]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 22:24:30] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 18
+  2 new observations have been told.
+  ys: [56.01000189781189, 56.44000172615051]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 22:22:38]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 18
+  2 new observations have been told.
+  ys: [54.180002212524414, 56.01000189781189]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 22:17:59] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 17
+  2 new observations have been told.
+  ys: [58.74999761581421, 54.180002212524414]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 22:17:06]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 17
+  2 new observations have been told.
+  ys: [59.57000255584717, 58.74999761581421]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 22:12:55] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 16
+  2 new observations have been told.
+  ys: [60.62999963760376, 59.57000255584717]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 22:06:13]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 16
+  2 new observations have been told.
+  ys: [60.53000092506409, 60.62999963760376]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 10), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 22:02:03] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 15
+  3 new observations have been told.
+  ys: [68.30999851226807, 61.47000193595886, 60.53000092506409]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 10), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 22:01:44]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 15
+  1 new observations have been told.
+  ys: [61.47000193595886]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 31), ('kernel_size', 5), ('patience', 6), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:59:09]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 14
+  4 new observations have been told.
+  ys: [60.07999777793884, 67.04000234603882, 64.19000029563904, 68.30999851226807]
+  Next config sampled: OrderedDict([('lr', 0.0018898806594075672), ('batch_size', 16), ('kernel_size', 5), ('patience', 9), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:58:52] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 14
+  1 new observations have been told.
+  ys: [64.19000029563904]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:58:05] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 13
+  1 new observations have been told.
+  ys: [67.04000234603882]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 128), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:55:41] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 12
+  3 new observations have been told.
+  ys: [58.969998359680176, 55.010002851486206, 60.07999777793884]
+  Next config sampled: OrderedDict([('lr', 0.00030000000000000014), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:53:49]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 13
+  1 new observations have been told.
+  ys: [55.010002851486206]
+  Next config sampled: OrderedDict([('lr', 0.00030000000000000014), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:49:29]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 12
+  2 new observations have been told.
+  ys: [56.11000061035156, 58.969998359680176]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:48:47] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 11
+  2 new observations have been told.
+  ys: [60.85000038146973, 56.11000061035156]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:46:40]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 11
+  2 new observations have been told.
+  ys: [61.250001192092896, 60.85000038146973]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:45:45] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 10
+  2 new observations have been told.
+  ys: [63.70999813079834, 61.250001192092896]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 5), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:44:48]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 10
+  2 new observations have been told.
+  ys: [61.809998750686646, 63.70999813079834]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 3), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:44:01] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 9
+  2 new observations have been told.
+  ys: [60.589998960494995, 61.809998750686646]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 3), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:42:57]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 9
+  2 new observations have been told.
+  ys: [65.39000272750854, 60.589998960494995]
+  Next config sampled: OrderedDict([('lr', 0.003), ('batch_size', 16), ('kernel_size', 3), ('patience', 6), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:42:09] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 8
+  2 new observations have been told.
+  ys: [65.42999744415283, 65.39000272750854]
+  Next config sampled: OrderedDict([('lr', 0.0029745638354206237), ('batch_size', 16), ('kernel_size', 3), ('patience', 6), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:40:43]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 8
+  2 new observations have been told.
+  ys: [63.81000280380249, 65.42999744415283]
+  Next config sampled: OrderedDict([('lr', 0.0028948385485915037), ('batch_size', 16), ('kernel_size', 3), ('patience', 6), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:40:32] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 7
+  2 new observations have been told.
+  ys: [63.94000053405762, 63.81000280380249]
+  Next config sampled: OrderedDict([('lr', 0.00030000000000000014), ('batch_size', 128), ('kernel_size', 3), ('patience', 9), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:39:32]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 7
+  3 new observations have been told.
+  ys: [68.01999807357788, 65.23000001907349, 63.94000053405762]
+  Next config sampled: OrderedDict([('lr', 0.00036377044599316197), ('batch_size', 128), ('kernel_size', 3), ('patience', 9), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:39:27] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 6
+  1 new observations have been told.
+  ys: [65.23000001907349]
+  Next config sampled: OrderedDict([('lr', 0.00033867720922364065), ('batch_size', 128), ('kernel_size', 3), ('patience', 10), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:38:03] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 5
+  3 new observations have been told.
+  ys: [68.51999759674072, 66.21999740600586, 68.01999807357788]
+  Next config sampled: OrderedDict([('lr', 0.00032964469642506446), ('batch_size', 128), ('kernel_size', 4), ('patience', 10), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:38:01]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 6
+  1 new observations have been told.
+  ys: [66.21999740600586]
+  Next config sampled: OrderedDict([('lr', 0.00031010997588047987), ('batch_size', 128), ('kernel_size', 3), ('patience', 10), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:35:24]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 5
+  2 new observations have been told.
+  ys: [64.24000263214111, 68.51999759674072]
+  Next config sampled: OrderedDict([('lr', 0.00030000000000000014), ('batch_size', 16), ('kernel_size', 3), ('patience', 10), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:32:50] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 4
+  2 new observations have been told.
+  ys: [62.92999982833862, 64.24000263214111]
+  Next config sampled: OrderedDict([('lr', 0.0005313328613346575), ('batch_size', 16), ('kernel_size', 3), ('patience', 10), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:31:38]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 4
+  2 new observations have been told.
+  ys: [65.70000052452087, 62.92999982833862]
+  Next config sampled: OrderedDict([('lr', 0.0005197869921129549), ('batch_size', 128), ('kernel_size', 4), ('patience', 10), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:31:09] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 3
+  2 new observations have been told.
+  ys: [65.53999781608582, 65.70000052452087]
+  Next config sampled: OrderedDict([('lr', 0.00030000000000000014), ('batch_size', 31), ('kernel_size', 3), ('patience', 7), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:30:15]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 3
+  2 new observations have been told.
+  ys: [64.92000222206116, 65.53999781608582]
+  Next config sampled: OrderedDict([('lr', 0.00035613593527966924), ('batch_size', 127), ('kernel_size', 3), ('patience', 10), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:29:43] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 2
+  2 new observations have been told.
+  ys: [66.25999808311462, 64.92000222206116]
+  Next config sampled: OrderedDict([('lr', 0.00030352491908462026), ('batch_size', 126), ('kernel_size', 4), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:29:06]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 2
+  1 new observations have been told.
+  ys: [66.25999808311462]
+  Next config sampled: OrderedDict([('lr', 0.00040036284564975733), ('batch_size', 126), ('kernel_size', 3), ('patience', 5), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[21-Mar-07 21:28:51] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 1
+  4 new observations have been told.
+  ys: [65.57000279426575, 66.20000004768372, 64.96000289916992, 66.839998960495]
+  Next config sampled: OrderedDict([('lr', 0.000806066344052461), ('batch_size', 106), ('kernel_size', 3), ('patience', 6), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:27:48]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 1
+  4 new observations have been told.
+  ys: [65.57000279426575, 66.20000004768372, 64.96000289916992, 66.839998960495]
+  Next config sampled: OrderedDict([('lr', 0.0011957746053710267), ('batch_size', 82), ('kernel_size', 4), ('patience', 6), ('augmentation', False)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:26:19]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 1
+  4 new observations have been told.
+  ys: [65.57000279426575, 66.20000004768372, 64.96000289916992, 66.839998960495]
+  Next config sampled: OrderedDict([('lr', 0.0021218669338541707), ('batch_size', 79), ('kernel_size', 3), ('patience', 6), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:26:00]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 1
+  4 new observations have been told.
+  ys: [65.57000279426575, 66.20000004768372, 64.96000289916992, 66.839998960495]
+  Next config sampled: OrderedDict([('lr', 0.0018923381253593847), ('batch_size', 77), ('kernel_size', 5), ('patience', 9), ('augmentation', True)])
+-------------------------------------------------------------------------------
+[[21-Mar-07 21:25:14]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 5
+  1 new observations have been told.
+  ys: [66.839998960495]
+  Next config sampled: OrderedDict([('lr', 0.0003113506621110869), ('batch_size', 46), ('kernel_size', 4), ('patience', 8), ('augmentation', True)])
+-------------------------------------------------------------------------------[[21-Mar-07 21:24:16]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 4
+  1 new observations have been told.
+  ys: [64.96000289916992]
+  Next config sampled: OrderedDict([('lr', 0.0006962231174729869), ('batch_size', 124), ('kernel_size', 5), ('patience', 7), ('augmentation', False)])
+-------------------------------------------------------------------------------[[21-Mar-07 21:23:18]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 3
+  1 new observations have been told.
+  ys: [66.20000004768372]
+  Next config sampled: OrderedDict([('lr', 0.0021237477247245716), ('batch_size', 51), ('kernel_size', 3), ('patience', 8), ('augmentation', False)])
+-------------------------------------------------------------------------------[[21-Mar-07 21:20:34]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 2
+  1 new observations have been told.
+  ys: [65.57000279426575]
+  Next config sampled: OrderedDict([('lr', 0.0013859291645913123), ('batch_size', 92), ('kernel_size', 5), ('patience', 9), ('augmentation', True)])
+-------------------------------------------------------------------------------[[21-Mar-07 21:18:33]] summ: 0307_s81_lenet_00.sum, scroll: SK-BOGP 
+  Run # 1
+  Next config sampled: OrderedDict([('lr', 0.0025300636270199563), ('batch_size', 39), ('kernel_size', 3), ('patience', 7), ('augmentation', True)])
+-------------------------------------------------------------------------------

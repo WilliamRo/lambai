@@ -6,50 +6,31 @@ import tensorflow as tf
 from tframe import console
 from tframe.utils.misc import date_string
 
+from tframe.nets.classic.conv_nets.lenet import LeNet
+
 
 # -----------------------------------------------------------------------------
 # Define model here
 # -----------------------------------------------------------------------------
-model_name = 'seedling'
+model_name = 'seed'
 id = 0
 def model(th):
   assert isinstance(th, m.Config)
   model = m.get_container(th, flatten=False, add_last_dim=True)
 
-  # Parse archi_string
-  nums = [int(s) for s in th.archi_string.split('-')]
+  # Parse
+  conv_list, fc_list = LeNet.parse_archi_string(th.archi_string)
 
-  # Build classic AlexNet
-  model.add(m.Conv2D(nums[0], kernel_size=3, strides=1, activation='relu'))
-  model.add(m.MaxPool2D(2, strides=2))
-
-  model.add(m.Conv2D(nums[1], kernel_size=3, strides=1, activation='relu'))
-  model.add(m.MaxPool2D(2, strides=2))
-
-  for filters in nums[2:]:
-    model.add(m.Conv2D(filters, kernel_size=3))
-    if th.use_batchnorm: model.add(m.BatchNormalization())
-    model.add(m.Activation('relu'))
-
-  if 'gap' in th.developer_code: model.add(m.GlobalAveragePooling2D())
-  else: model.add(m.MaxPool2D(3, strides=2))
+  # Add conv layers
+  for filters in conv_list: model.add(m.Conv2D(
+      filters, th.kernel_size, th.strides, activation=th.activation))
+  # Add flatten layer
   model.add(m.Flatten())
+  # Add fully-connected layers
+  m.add_rethink(th, model, fc_list, index_group=(0, 1))
 
   # Add re-thinker structure
-  index_group = [0, 1]
-  rth = m.Rethinker(index_group)
-  fm = model.add_forkmerge(rth, name='wiseman')
-  for branch_key in ('main', 'branch'):
-    for dim in (64, 32):
-      fm.add_to_branch(branch_key, m.Dense(dim, activation='relu'))
-    # Add softmax units
-    num = th.num_classes if branch_key == 'main' else len(index_group)
-    fm.add_to_branch(branch_key, m.Dense(num))
-    # Only add softmax to main branch
-    if branch_key == 'main':
-      fm.add_to_branch(branch_key, m.Activation('softmax'))
-
-  return m.finalize(th, model, False, False)
+  return m.finalize(th, model, add_output_layer=False, flatten=False)
 
 
 def main(_):
@@ -64,8 +45,8 @@ def main(_):
   th.centralize_data = True
 
   th.data_config = 'x'
-  th.val_config = 'd-2'
-  th.test_config = 'd-3'
+  th.val_config = 'c-!r-100'
+  th.test_config = 'c-!r-100'
 
   th.augmentation = True
   th.aug_config = 'flip|rotate'
@@ -84,13 +65,12 @@ def main(_):
   # 2. model setup
   # ---------------------------------------------------------------------------
   th.model = model
-  th.archi_string = '8-16-24-18'
-  th.developer_code = ''
+  th.archi_string = '12-16-24-32=32-16'
+  th.kernel_size = 5
+  th.strides = 3
+  th.activation = 'tanh'
 
   th.use_wise_man = True
-  th.use_batchnorm = False
-
-  th.dropout = 0.0
   # ---------------------------------------------------------------------------
   # 3. trainer setup
   # ---------------------------------------------------------------------------
@@ -98,9 +78,9 @@ def main(_):
   th.batch_size = 32
 
   th.optimizer = tf.train.AdamOptimizer
-  th.learning_rate = 0.0003
+  th.learning_rate = 0.003
 
-  th.patience = 5
+  th.patience = 7
   th.early_stop_metric = 'f1'
 
   th.train = True
@@ -124,7 +104,6 @@ if __name__ == '__main__':
 
 """
 Best HPs:
-  th.archi_string = '8-16-24-18'
 
 """
 

@@ -265,6 +265,9 @@ class BloodCellSet(IrregularImageSet):
       agent.take_notes('Evaluation Result on {} Set:'.format(name), False)
       agent.take_notes(cm.make_table().content, False)
 
+      # Add cm to note for future analysis
+      agent.add_to_note_misc('{} CM'.format(name), cm)
+
       # Additional information for test set
       if name == 'Test':
         # BT_F1

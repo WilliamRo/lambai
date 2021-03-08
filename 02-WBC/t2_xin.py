@@ -43,8 +43,7 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 0. date set setup
   # ---------------------------------------------------------------------------
-  th.image_height = 300
-  th.image_width = 300
+  th.image_side_length = 300
 
   th.centralize_data = True
   th.augmentation = True

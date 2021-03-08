@@ -11,7 +11,7 @@ s.register_flags(WBCHub)
 # -----------------------------------------------------------------------------
 # Configure data set here
 # -----------------------------------------------------------------------------
-s.register('epoch', 100)
+s.register('epoch', 1)
 
 # -----------------------------------------------------------------------------
 # Specify summary file name and GPU ID here
@@ -26,9 +26,10 @@ s.register('gpu_memory_fraction', 0.8)
 # -----------------------------------------------------------------------------
 # Set up your models and run
 # -----------------------------------------------------------------------------
-s.register('archi_string', '1-2-1', '1-1-1', '1-2-2', '2-2-2')
+s.register('archi_string', '1-1')
 s.register('lr', 0.003, 0.0003)
-s.register('batch_size', 32, 64)
-s.register('int_para_1', 32, 64, 16)
+s.register('batch_size', 32, 50, 64)
+s.constrain({'lr': 0.003}, {'batch_size': (32, 50)})
+s.constrain({'lr': 0.0003}, {'batch_size': 64})
 
 s.run(10)

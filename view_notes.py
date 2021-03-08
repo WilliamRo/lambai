@@ -50,7 +50,6 @@ flags_to_ignore = (
   'early_stop_on_loss',
   'clip_method',
   'data_config',
-  'patience',
   'radical_penalty',
   'base_weight',
   'beta',

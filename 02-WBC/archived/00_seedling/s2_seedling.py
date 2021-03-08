@@ -11,24 +11,30 @@ s.register_flags(WBCHub)
 # -----------------------------------------------------------------------------
 # Configure data set here
 # -----------------------------------------------------------------------------
-s.register('epoch', 100)
-
 # -----------------------------------------------------------------------------
 # Specify summary file name and GPU ID here
 # -----------------------------------------------------------------------------
 summ_name = s.default_summ_name
-suffix = '_s00'
+summ_suffix = '_small'
 gpu_id = 0
 
-s.register('gather_summ_name', summ_name + '.sum')
+s.register('gather_summ_name', summ_name + summ_suffix + '.sum')
 s.register('gpu_id', gpu_id)
 s.register('gpu_memory_fraction', 0.8)
 # -----------------------------------------------------------------------------
 # Set up your models and run
 # -----------------------------------------------------------------------------
-# s.register('lr', 0.003, 0.0003)
-# s.register('batch_size', 32)
-# s.register('augmentation', False, True)
-s.register('loss_coef', 1.0, 0.0)
+s.register('use_batchnorm', False)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+s.register('archi_string', '8-16-24-18')
+
+s.register('epoch', 100)
+
+s.register('lr', 0.0003)
+s.register('batch_size', 32)
+s.register('val_config', 'd-2')
+
+s.register('use_wise_man', True, False)
+s.register('image_side_length', 250, 300)
 
 s.run(20)

@@ -25,8 +25,10 @@ s.register('gpu_id', gpu_id)
 # -----------------------------------------------------------------------------
 # Set up your models and run
 # -----------------------------------------------------------------------------
-s.register('lr', 0.001, 0.0001)
-s.register('batch_size', 64, 128)
-s.register('dropout', 0.3, 0.5)
+s.register('lr', 0.003, 0.005)
+s.register('batch_size', 64, 32)
+s.register('augmentation', False, True)
+s.register('dropout', 0.0, 0.2)
+s.register('val_config', 'c-!r-100', 'd-2')
 
-s.run(2)
+s.run(10)
