@@ -3,6 +3,8 @@ data
 *.sum
 gather.txt
 checkpoints
+*.txt
+mascot.py
 
 # Ignore PyCharm files
 .idea/

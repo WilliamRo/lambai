@@ -34,6 +34,7 @@ default_inactive_criteria = (
   'Best F1',
 )
 flags_to_ignore = (
+  'lr',
   'use_conveyor',
   'hyper_kernel',
   'horizon',

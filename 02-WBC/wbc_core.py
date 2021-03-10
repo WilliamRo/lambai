@@ -58,7 +58,7 @@ th.save_mode = SaveMode.ON_RECORD
 th.overwrite = True
 th.gather_note = True
 
-th.print_cycle = 4
+th.print_cycle = 20
 th.validation_per_round = 2
 th.export_tensors_upon_validation = True
 

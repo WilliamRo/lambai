@@ -16,6 +16,7 @@ from tframe.layers.common import Reshape
 
 from tframe.layers.merge import ShortCut
 
+from wbc_core import th
 from wbc_arch.rethinker import Rethinker
 from wbc.wbc_hub import WBCHub
 
@@ -109,5 +110,17 @@ def add_residual_unit(
       model, filters, kernel_size, init_strides, is_first_unit)
 
 # endregion: Converted from Xin's codes
+
+# region: Simple NAS
+
+def get_archi_string():
+  """Get archi_string based on th.dim{i], {i} = 1, 2, ..."""
+  dim_group_1 = (th.dim1, th.dim2, th.dim3, th.dim4)
+  dim_group_2 = (th.dim5, th.dim6, th.dim7, th.dim8)
+  conv = '-'.join([str(d) for d in dim_group_1 if d and d > 0])
+  fc = '-'.join([str(d) for d in dim_group_2 if d and d > 0])
+  return '{}={}'.format(conv, fc)
+
+# endregion: Simple NAS
 
 

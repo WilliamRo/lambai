@@ -23,6 +23,15 @@ class WBCHub(SmartTrainerHub):
   stop_grad = Flag.boolean(
     False, 'Whether to stop branch gradient', is_key=None)
 
+  dim1 = Flag.integer(None, '...', is_key=None)
+  dim2 = Flag.integer(None, '...', is_key=None)
+  dim3 = Flag.integer(None, '...', is_key=None)
+  dim4 = Flag.integer(None, '...', is_key=None)
+  dim5 = Flag.integer(None, '...', is_key=None)
+  dim6 = Flag.integer(None, '...', is_key=None)
+  dim7 = Flag.integer(None, '...', is_key=None)
+  dim8 = Flag.integer(None, '...', is_key=None)
+
 
 # New hub class inherited from SmartTrainerHub must be registered
 WBCHub.register()

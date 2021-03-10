@@ -132,19 +132,21 @@ class BloodCellSet(IrregularImageSet):
     return data_sets
 
 
-  def preprocess(self, H=350, W=320, pad_mode='constant'):
+  def preprocess(self, H=350, W=320, pad_mode='constant', template_size=350):
     from tframe.utils.display.progress_bar import ProgressBar
+    import cv2
     # Preprocess one by one
     bar = ProgressBar(total=self.size)
     console.show_status('Preprocessing ...')
     for i, x in enumerate(self.features):
       # Shift each image so the min(image) is 0
-      x -= np.min(x)
-      # :: Pad or crop image
-      # (1) Height
-      x = pad_or_crop(x, axis=0, size=H, pad_mode=pad_mode)
-      # (2) Width
-      x = pad_or_crop(x, axis=1, size=W, pad_mode=pad_mode)
+      # x -= np.min(x)
+      x = np.abs(x)
+      # :: Put image to template
+      x = pad_or_crop(x, axis=0, size=template_size, pad_mode=pad_mode)
+      x = pad_or_crop(x, axis=1, size=template_size, pad_mode=pad_mode)
+      # Shrink image to H x W
+      x = cv2.resize(x, dsize=(H, W))
       self.features[i] = x
       # Show progress bar
       bar.show(i + 1)

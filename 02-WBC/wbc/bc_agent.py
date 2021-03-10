@@ -41,7 +41,7 @@ class BloodCellAgent(DataAgent):
 
   @classmethod
   def load(cls, data_dir, raw_data_dir, val_config='d-2', test_config='d-3',
-           H=350, W=320, pad_mode='constant', save_HW_data=False, **kwargs):
+           H=300, W=300, pad_mode='constant', save_HW_data=False, **kwargs):
     """Load train_set, val_set and test_set according to configuration strings.
     test_set will be separated first, following val_set.
     Remaining data will form the train_set.
@@ -272,7 +272,7 @@ class BloodCellAgent(DataAgent):
     """Get .tfdir file name given setup details"""
     file_name = 'wbc-4-' + ('donor' if with_donor else 'all')
     preprocess = all([H is not None, W is not None, pad_mode is not None])
-    if preprocess: file_name += '-{}x{}-{}'.format(H, W, pad_mode[:3])
+    if preprocess: file_name += '-{}x{}-{}-t-abs'.format(H, W, pad_mode[:3])
     return file_name + ('.tfd' if preprocess else '.tfdir')
 
   # endregion: Private Methods
