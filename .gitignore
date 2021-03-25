@@ -4,7 +4,7 @@ data
 gather.txt
 checkpoints
 *.txt
-mascot.py
+*mascot*.py
 
 # Ignore PyCharm files
 .idea/

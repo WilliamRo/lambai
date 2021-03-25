@@ -2,3 +2,5 @@ Dependencies:
 
 1. cv2: pip install opencv-python
    This package is for reading tif image.
+
+2. py-roma: pip install py-roma
