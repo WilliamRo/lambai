@@ -15,6 +15,12 @@ class PRConfig(SmartTrainerHub):
 
   pr_dev_code = Flag.string('-', 'Developer code', is_key=None)
 
+  mask_min = Flag.float(0.1, 'Minimum value for loss mask', is_key=None)
+  mask_alpha = Flag.float(
+    0.1, 'Parameter alpha used in generating soft mask', is_key=None)
+
+  win_size = Flag.integer(None, 'Random window size', is_key=None)
+
 
   def train_val_test_indices(self):
     def _parse(indices_string: str) -> tuple:

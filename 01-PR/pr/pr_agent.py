@@ -8,6 +8,8 @@ from tframe import console
 from tframe.data.base_classes import DataAgent
 from tframe.utils.local import walk
 
+from typing import Optional
+
 from pr.pr_set import PhaseSet
 
 
@@ -20,11 +22,17 @@ class PRAgent(DataAgent):
 
   @classmethod
   def load(cls, data_dir, train_indices, val_indices, test_indices,
-           radius: int, **kwargs):
+           radius: int, win_size: Optional[int] = None, **kwargs):
     # Load complete dataset
     data_set = cls.load_as_tframe_data(data_dir, radius=radius)
     data_set.add_channel()
-    # Get datasets
+
+    # Set batch_postprocessor if required
+    if win_size is not None:
+      data_set.batch_preprocessor = PhaseSet.random_window_preprocessor(
+        [win_size, win_size])
+
+    # Split datasets
     datasets = [data_set.get_subset_by_sample_indices(indices, name)
                 for indices, name in zip(
         (train_indices, val_indices, test_indices),
@@ -48,7 +56,8 @@ class PRAgent(DataAgent):
     console.show_status('Retrieving phase ...')
     tic = time.time()
     for i, ig in enumerate(interferograms):
-      targets.append(ig.unwrapped)
+      assert isinstance(ig, Interferogram)
+      targets.append(ig.flattened_phase)
       console.print_progress(i + 1, len(interferograms), start_time=tic)
     targets = np.stack(targets, axis=0)
 

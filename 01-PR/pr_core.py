@@ -44,8 +44,10 @@ th.gpu_memory_fraction = 0.30
 # -----------------------------------------------------------------------------
 # Set information about the data set
 # -----------------------------------------------------------------------------
-th.input_shape = [1024, 1280, 1]
+th.input_shape = [None, None, 1]
 th.radius = 70
+
+th.win_size = 256
 
 th.train_indices = '1,2'
 th.val_indices = '3'
@@ -59,6 +61,8 @@ th.patience = 5
 th.print_cycle = 1
 th.validation_per_round = 2
 
+th.val_batch_size = 1
+th.val_progress_bar = True
 th.eval_batch_size = 1
 th.evaluate_train_set = False
 th.evaluate_val_set = False
@@ -79,7 +83,7 @@ def activate():
     model.train(train_set, validation_set=val_set, test_set=test_set,
                 trainer_hub=th)
   else:
-    pass
+    test_set.evaluate_model(model)
 
   # End
   model.shutdown()

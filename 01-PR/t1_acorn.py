@@ -17,7 +17,11 @@ def model():
   th = core.th
   model = m.get_container()
 
-  model.add(m.m.Conv2D(10, 3, activation='tanh'))
+  model.add(m.m.Conv2D(16, 3, activation='relu'))
+  model.add(m.m.Conv2D(32, 3, activation='relu'))
+  model.add(m.m.Conv2D(96, 3, activation='relu'))
+  model.add(m.m.Conv2D(32, 3, activation='relu'))
+  model.add(m.m.Conv2D(16, 3, activation='relu'))
 
   return m.finalize(model)
 
@@ -29,6 +33,7 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 0. date set setup
   # ---------------------------------------------------------------------------
+  th.win_size = 256
 
   # ---------------------------------------------------------------------------
   # 1. folder/file names and device
@@ -39,6 +44,8 @@ def main(_):
   th.suffix = ''
 
   th.pr_dev_code = 'dev.0'
+
+  th.gpu_memory_fraction = 0.4
   # ---------------------------------------------------------------------------
   # 2. model setup
   # ---------------------------------------------------------------------------
@@ -47,23 +54,23 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 3. trainer setup
   # ---------------------------------------------------------------------------
-  th.epoch = 10
-  th.batch_size = 1
-  th.validation_per_round = 2
+  th.epoch = 1000
+  th.batch_size = 10
+  th.validation_per_round = 1
 
-  th.optimizer = 'sgd'
-  th.learning_rate = 0.00001
+  th.optimizer = 'adam'
+  th.learning_rate = 0.00003
 
   th.patience = 15
-  th.early_stop = False
-  th.save_model = False
+  th.early_stop = True
+  th.save_model = True
 
   th.train = True
   th.overwrite = True
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------
-  th.print_cycle = 5
+  th.print_cycle = 1
 
   th.mark = '{}_{}'.format(model_name, th.pr_dev_code)
   th.gather_summ_name = th.prefix + summ_name + th.suffix + '.sum'

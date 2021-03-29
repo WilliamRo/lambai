@@ -1,6 +1,8 @@
+from typing import Union
 from collections import OrderedDict
 
 from lambo.data_obj.interferogram import Interferogram
+from lambo.maths.random.window import random_window
 from tframe import console
 from tframe.data.dataset import DataSet
 
@@ -64,8 +66,11 @@ class PhaseSet(DataSet):
     for i, y in enumerate(self.targets):
       y = y - np.min(y)
       self.targets[i] = y / np.max(y)
-    viewer = ImageViewer(ds, horizontal_list=['targets', 'features'],
-                         color_map='gist_earth')
+    horizontal_list = ['targets', 'features']
+    if 'predicted' in self.data_dict:
+      horizontal_list.append('predicted')
+    viewer = ImageViewer(
+      ds, horizontal_list=horizontal_list, color_map='gist_earth')
     viewer.show()
 
   def report_data_details(self):
@@ -91,3 +96,40 @@ class PhaseSet(DataSet):
     return subset
 
   # endregion: Public Methods
+
+  # region: APIs
+
+  def evaluate_model(self, model):
+    from tframe import Predictor
+    assert isinstance(model, Predictor)
+    console.show_status('Predicting {} ...'.format(self.name))
+    y = model.predict(self, batch_size=1, verbose=True)
+    self.data_dict['predicted'] = y
+    self.view()
+
+  @staticmethod
+  def random_window(batch: DataSet, is_training: bool,
+                    shape: Union[tuple, list]):
+    if not is_training: return batch
+    h, w = shape
+
+    full_shape = batch.features.shape[1:3]
+    features, targets = [], []
+    for x, y in zip(batch.features, batch.targets):
+      i, j = random_window(shape, full_shape)
+      features.append(x[i:i+h, j:j+w])
+      targets.append(y[i:i+h, j:j+w])
+
+    # Set features and targets back
+    batch.features = np.stack(features, axis=0)
+    batch.targets = np.stack(targets, axis=0)
+
+    return batch
+
+  @staticmethod
+  def random_window_preprocessor(shape: Union[tuple, list]):
+    return lambda batch, is_training: PhaseSet.random_window(
+      batch, is_training, shape)
+
+  # endregion: APIs
+
