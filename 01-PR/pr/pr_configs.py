@@ -4,6 +4,11 @@ from tframe.configs.config_base import Flag
 
 class PRConfig(SmartTrainerHub):
 
+  class PRKeys(object):
+    prior = 'PR_PRIOR'
+
+  feature_type = Flag.integer(
+    1, '1 for interferogram, 2 for 2-D extracted image', is_key=None)
   radius = Flag.integer(None, '$k_0 \cdot NA$', is_key=None)
 
   fn_pattern = Flag.string(None, 'Pattern filter for data folders', is_key=None)
@@ -49,6 +54,19 @@ class PRConfig(SmartTrainerHub):
   test_probe_ids = Flag.string(None, 'Sample indices in test set for probing')
 
   epoch_per_probe = Flag.integer(2, 'Epoch per probe')
+
+  # TODO: BETA
+  use_prior = Flag.boolean(False, 'Whether to use prior', is_key=None)
+  prior_size = Flag.integer(None, 'Size of prior map', is_key=None)
+  hyper_filter_size = Flag.integer(3, 'Hyper filter size', is_key=None)
+  prior_key = Flag.string('cube', r'\in (`cube`, `dettol`)', is_key=None)
+  prior_format = Flag.string('real', r'\in (`real`, `complex`)', is_key=None)
+
+  kon_activation = Flag.string(
+    None, 'activation function used in konjac', is_key=None)
+
+  kon_omega = Flag.integer(30, '...', is_key=None)
+  kon_rs = Flag.list(None, '...')
 
 
   def train_val_test_indices(self):

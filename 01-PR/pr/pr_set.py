@@ -20,8 +20,18 @@ class PhaseSet(DataSet):
   FLATNESS = 'flatness'
   EVAL_DETAILS = 'eval-details'
   WMAE = 'wmae'
+  PRIOR = 'prior'
 
   # region: Properties
+
+  @property
+  def prior(self) -> np.ndarray:
+    return self[self.PRIOR]
+
+  @prior.setter
+  def prior(self, val: np.ndarray):
+    assert len(val) == len(self.features)
+    self.data_dict[self.PRIOR]  = val
 
   @property
   def inter_rep(self) -> Interferogram:
@@ -78,27 +88,47 @@ class PhaseSet(DataSet):
 
   # region: Public Methods
 
+  def set_prior(self, angle=0):
+    from pr_core import th
+    assert th.use_prior
+    if th.prior_key == 'cube':
+      self.prior = np.stack([
+        ig.get_fourier_prior(th.prior_size, angle=angle)
+        for ig in self.interferograms])
+    elif th.prior_key == 'dettol':
+      self.prior = np.stack([
+        ig.get_fourier_prior_stack(
+          th.prior_size, angle=angle, omega=th.kon_omega, rs=th.kon_rs,
+          fmt=th.prior_format)
+        for ig in self.interferograms])
+    else: raise KeyError
+
+  def reset_feature(self, feature_type):
+    assert feature_type in (2, 3)
+    console.show_status('Resetting feature type ...')
+    features = np.stack(
+      [ig.get_model_input(feature_type) for ig in self.interferograms], axis=0)
+    self.features = features
+    console.show_status('Feature reset to type {}'.format(feature_type))
+
   def add_channel(self):
     if len(self.features.shape) == 3:
-      assert len(self.targets.shape) == 3
       self.features = np.expand_dims(self.features, axis=-1)
+    assert len(self.features.shape) == 4
+
+    if len(self.targets.shape) == 3:
       self.targets = np.expand_dims(self.targets, axis=-1)
+    assert len(self.targets.shape) == 4
 
   def normalize_features(self):
     x = self.features
-    assert len(x.shape) == 3
+    assert len(x.shape) == 4
 
-    shape = [len(x), 1, 1]
+    shape = [len(x), 1, 1, x.shape[3]]
     mu = np.mean(x, axis=(1, 2)).reshape(shape)
     sigma = np.std(x, axis=(1, 2)).reshape(shape)
     # Set back features
     self.features = (x - mu) / sigma
-
-    # TODO: test
-    # from sklearn import preprocessing
-    # for i in range(self.size):
-    #   x[i] = preprocessing.StandardScaler().fit_transform(x[i])
-    # self.features = x
 
   def squash_target(self, truncate_at=12.0):
     assert truncate_at > 0
@@ -114,23 +144,62 @@ class PhaseSet(DataSet):
     for i, y in enumerate(self.targets):
       # y = y - np.min(y)
       y_max = np.max(y)
-      self.targets[i] = y / y_max
+      ds.targets[i] = y / y_max
       # Rescale predicted results if necessary
       if self.PREDICTED_KEY in self.data_dict:
         pred = self.data_dict[self.PREDICTED_KEY][i]
-        self.data_dict[self.PREDICTED_KEY][i] = pred / np.max(pred)
+        ds.data_dict[self.PREDICTED_KEY][i] = pred / np.max(pred)
       if self.DELTA_KEY in self.data_dict:
         delta = self.data_dict[self.DELTA_KEY][i]
-        self.data_dict[self.DELTA_KEY][i] = delta / np.max(delta)
+        ds.data_dict[self.DELTA_KEY][i] = delta / np.max(delta)
 
-    horizontal_list = ['targets', 'features']
+    # Set features accordingly
+    x = self.features
+    assert len(x.shape) == 4 and x.shape[-1] in (1, 2)
+    if x.shape[-1] == 1:
+      horizontal_list = ['targets', 'features']
+    else:
+      horizontal_list = ['targets', 'features[0]', 'features[1]']
+      x0, x1 = x[:, :, :, 0], x[:, :, :, 1]
+      x0, x1 = x0 - np.min(x0), x1 - np.min(x1)
+      ds.data_dict['features[0]'] = x0 / np.max(x0)
+      ds.data_dict['features[1]'] = x1 / np.max(x1)
+
     if self.DELTA_KEY in self.data_dict:
       horizontal_list.append(self.DELTA_KEY)
     if self.PREDICTED_KEY in self.data_dict:
       horizontal_list.append(self.PREDICTED_KEY)
+    if self.PRIOR in self.data_dict:
+      horizontal_list.append(self.PRIOR)
+
     viewer = ImageViewer(
       ds, horizontal_list=horizontal_list, color_map='gist_earth')
     viewer.show()
+
+  def view_aberration(self):
+    from lambo.gui.vinci.vinci import DaVinci
+
+    da = DaVinci('Aberration Viewer')
+    da.keep_3D_view_angle = True
+    da.z_lim = (-50, 30)
+    da.objects = self.interferograms
+
+    def _plot_aberration(x, ax, bg=False, plot3d=False):
+      assert isinstance(x, Interferogram)
+      ig = x._backgrounds[0] if bg else x
+      im = ig.extracted_angle_unwrapped
+      # im = ig.extracted_angle
+      title = 'Background' if bg else 'Sample'
+      title += ', peak at {}'.format(ig.peak_index)
+      # Plot accordingly
+      if plot3d: da.plot3d(im, ax, title=title)
+      else: da.imshow(im, ax, color_bar=True, title=title)
+
+    da.add_plotter(_plot_aberration)
+    da.add_plotter(lambda x, ax: _plot_aberration(x, ax, True))
+    da.add_plotter(lambda x, ax3d: _plot_aberration(x, ax3d, plot3d=True))
+    da.add_plotter(lambda x, ax3d: _plot_aberration(x, ax3d, True, plot3d=True))
+    da.show()
 
   def report_data_details(self):
     console.show_info('Detail of {}'.format(self.name))
@@ -211,24 +280,39 @@ class PhaseSet(DataSet):
   # region: APIs
 
   def rotation_test(
-      self, model, angle_step=10, index=0, variation_diagram=False):
+      self, model, angle_step=10, index=0, variation_diagram=False,
+      data_leak=False):
+    from pr_core import th
+
     # Get the designated interferogram and ground truth
     x, y = self.features[index], self.targets[index]
-    features, targets = [], []
+    features, targets, priors = [], [], []
 
     # Fill in data
-    extract = lambda im, a: Interferogram.get_downtown_area(
-      Interferogram.rotate_image(im, a), p2=3)
+    extract = lambda im, a, p2=3: Interferogram.get_downtown_area(
+      Interferogram.rotate_image(im, a), p2=p2)
     angles = list(range(0, 360, angle_step))
     for angle in angles:
       features.append(extract(x, angle))
       targets.append(extract(y, angle))
+
+      # Rotate prior if necessary
+      if th.use_prior:
+        ig = self.interferograms[index]
+        if th.prior_key == 'dettol':
+          priors.append(ig.get_fourier_prior_stack(
+            th.prior_size, angle, th.kon_omega, th.kon_rs))
+        else: priors.append(ig.get_fourier_prior(th.prior_size, angle))
 
     # Get dataset
     features, targets = np.stack(features), np.stack(targets)
     dataset = PhaseSet(features, targets, name='Rotation-step-{}'.format(
       angle_step))
 
+    # Set prior if necessary
+    if th.use_prior: dataset.prior = np.stack(priors)
+
+    if data_leak: return dataset
     # Evaluate model
     dataset.evaluate_model(model)
 
@@ -274,6 +358,7 @@ class PhaseSet(DataSet):
   def _snapshot(self, model, index=0, folder_path=None, save_input=False,
                 save_ground_truth=True, pred_suffix=''):
     from tframe import Predictor
+    from pr_core import th
     import os
     import matplotlib.pyplot as plt
 
@@ -281,7 +366,10 @@ class PhaseSet(DataSet):
     y = model.predict(self[index], batch_size=1, verbose=False)
     y = np.reshape(y, y.shape[1:3])
     gt = self.targets[index].reshape(y.shape)
-    x = self.features[index].reshape(y.shape)
+    if th.feature_type == 1:
+      x = self.features[index].reshape(y.shape)
+    else:
+      x = self.features[index][:, :, 0].reshape(y.shape)
 
     # Save input (if required), prediction and ground truth
     if folder_path is None: folder_path = model.agent.ckpt_dir
@@ -303,18 +391,32 @@ class PhaseSet(DataSet):
   def random_window(batch: DataSet, is_training: bool,
                     shape: Union[tuple, list], num: int = 1,
                     rotate: bool = False):
-    if not is_training: return batch
+    assert isinstance(batch, PhaseSet)
+    from pr_core import th
+
+    if not is_training:
+      # For validation and test set
+      if th.use_prior:
+        batch.prior = batch.prior[:, :th.prior_size, :th.prior_size]
+      return batch
     h, w = shape
 
     full_shape = batch.features.shape[1:3]
-    features, targets = [], []
-    for x, y in zip(batch.features, batch.targets):
+    features, targets, priors = [], [], []
+    for i, (x, y) in enumerate(zip(batch.features, batch.targets)):
       # Rotate if required
+      p = batch.prior[i] if th.use_prior else None
       if rotate:
         angle = np.random.rand() * 360
-        x, y = [Interferogram.get_downtown_area(Interferogram.rotate(im, angle))
-                for im in (x, y)]
+        x, y = [Interferogram.get_downtown_area(
+          Interferogram.rotate_image(im, angle)) for im in (x, y)]
         full_shape = x.shape[0:2]
+
+        # Rotate prior if used (at this time prior is not cropped yet)
+        if p is not None:
+          # Retrieve the interferogram
+          ig = batch.interferograms[i]
+          p = ig.get_fourier_prior(th.prior_size, angle)
 
       # Choose the one among `num` regions which contains largest sample area
       ijs = [random_window(shape, full_shape) for _ in range(num)]
@@ -328,9 +430,15 @@ class PhaseSet(DataSet):
       features.append(x[i:i+h, j:j+w])
       targets.append(y[i:i+h, j:j+w])
 
+      # Set prior if necessary
+      if th.use_prior: priors.append(p[:th.prior_size, :th.prior_size])
+
     # Set features and targets back
     batch.features = np.stack(features, axis=0)
     batch.targets = np.stack(targets, axis=0)
+
+    # Set prior if necessary
+    if th.use_prior: batch.prior = np.stack(priors, axis=0)
 
     return batch
 
@@ -366,4 +474,9 @@ class PhaseSet(DataSet):
     return 'Snapshot saved to checkpoint folder.'
 
   # endregion: APIs
+
+  # region: Model Visualization
+
+
+  # endregion: Model Visualization
 

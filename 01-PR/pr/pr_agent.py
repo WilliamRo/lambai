@@ -24,22 +24,35 @@ class PRAgent(DataAgent):
   @classmethod
   def load(cls, data_dir, train_indices, val_indices, test_indices,
            radius: int, win_size: Optional[int] = None,
-           truncate_at: float = 12.0, win_num: int = 1,
+           truncate_at: float = 12.0, win_num: int = 1, feature_type: int = 1,
            fn_pattern='*[0-5][0-9]-*', **kwargs) -> List[PhaseSet]:
+    """feature_type must be
+          1: for raw interferogram
+          2: for 2-D extracted image, real+imag
+          3: for 2-D extracted image, amplitude+phase
+    """
+
+    from pr_core import th
+
+    # Get some beta options
+    random_rotate = kwargs.get('random_rotate', False)
+
     # Load complete dataset
     data_set = cls.load_as_tframe_data(
-      data_dir, radius=radius, fn_pattern=fn_pattern)
+      data_dir, radius=radius, fn_pattern=fn_pattern, feature_type=feature_type)
 
     # Do some preprocess
+    if feature_type in (2, 3): data_set.reset_feature(feature_type)
+    data_set.add_channel()
     data_set.normalize_features()
     data_set.squash_target(truncate_at)
-    data_set.add_channel()
+    if th.use_prior: data_set.set_prior()
 
     # Set window_postprocessor if required
     if win_size is not None:
       data_set.append_batch_preprocessor(
         PhaseSet.random_window_preprocessor(
-          [win_size, win_size], win_num, random_rotate=th.random_rotate))
+          [win_size, win_size], win_num, random_rotate=random_rotate))
 
     # Check batch_preprocessor
     assert callable(data_set.batch_preprocessor)
@@ -56,6 +69,7 @@ class PRAgent(DataAgent):
   @classmethod
   def load_as_tframe_data(cls, data_dir: str, radius: int,
                           fn_pattern='*[0-5][0-9]-*', **kwargs) -> PhaseSet:
+
     # Check fn_pattern first
     fn_pattern = cls._check_fn_pattern(fn_pattern)
     # Load data directly if .tfd file exists
@@ -66,7 +80,8 @@ class PRAgent(DataAgent):
     # Load interferograms from given directory
     interferograms = cls.load_as_interferograms(data_dir, radius, fn_pattern)
     # Wrap them into PhaseSet
-    features = np.stack([ig.img for ig in interferograms], axis=0)
+    features = np.stack(
+      [ig.get_model_input(1) for ig in interferograms], axis=0)
     # .. Calculate target one by one
     targets = []
     slopes, flatness = [], []
@@ -150,7 +165,7 @@ class PRAgent(DataAgent):
         os.path.join(path, fn) for fn in ('sample', 'bg')]
       # Scan all sample files in sample folder
       for sample_path in walk(
-          sample_folder, type_filter='file', pattern='*.tif'):
+          sample_folder, type_filter='file', pattern='*.tif*'):
         fn = os.path.basename(sample_path)
         bg_path = os.path.join(bg_folder, fn)
         if not os.path.exists(bg_path): console.warning(
