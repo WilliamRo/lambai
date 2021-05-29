@@ -49,7 +49,7 @@ if __name__ == '__main__':
   th.fn_pattern = '0[45]-'
   # th.fn_pattern = '*62-'
 
-  # th.feature_type = 1
+  th.feature_type = 9
 
   # th.train_indices = '4'
   # th.val_indices = '4'
@@ -66,8 +66,8 @@ if __name__ == '__main__':
   assert isinstance(train_set, PhaseSet)
   assert isinstance(val_set, PhaseSet)
   assert isinstance(test_set, PhaseSet)
-  test_set.view_aberration()
-  # train_set.view()
+  # test_set.view_aberration()
+  train_set.view()
 
   # win_num = 10
   # win_size = 512

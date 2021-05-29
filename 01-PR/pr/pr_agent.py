@@ -42,7 +42,7 @@ class PRAgent(DataAgent):
       data_dir, radius=radius, fn_pattern=fn_pattern, feature_type=feature_type)
 
     # Do some preprocess
-    if feature_type in (2, 3): data_set.reset_feature(feature_type)
+    # if feature_type in (2, 3, 9): data_set.reset_feature(feature_type)
     data_set.add_channel()
     data_set.normalize_features()
     data_set.squash_target(truncate_at)
@@ -67,32 +67,34 @@ class PRAgent(DataAgent):
 
 
   @classmethod
-  def load_as_tframe_data(cls, data_dir: str, radius: int,
+  def load_as_tframe_data(cls, data_dir: str, radius: int, feature_type: int,
                           fn_pattern='*[0-5][0-9]-*', **kwargs) -> PhaseSet:
 
     # Check fn_pattern first
     fn_pattern = cls._check_fn_pattern(fn_pattern)
     # Load data directly if .tfd file exists
     file_path = os.path.join(data_dir, cls._get_file_name(
-      radius=radius, data_dir=data_dir, fn_pattern=fn_pattern))
+      radius=radius, data_dir=data_dir, fn_pattern=fn_pattern,
+      feature_type=feature_type))
     if os.path.exists(file_path): return PhaseSet.load(file_path)
 
     # Load interferograms from given directory
     interferograms = cls.load_as_interferograms(data_dir, radius, fn_pattern)
     # Wrap them into PhaseSet
-    features = np.stack(
-      [ig.get_model_input(1) for ig in interferograms], axis=0)
     # .. Calculate target one by one
-    targets = []
+    features, targets = [], []
     slopes, flatness = [], []
     console.show_status('Retrieving phase ...')
     tic = time.time()
     for i, ig in enumerate(interferograms):
       assert isinstance(ig, Interferogram)
+      features.append(ig.get_model_input(feature_type))
       targets.append(ig.flattened_phase)
       slopes.append(ig.bg_slope)
       flatness.append(ig.bg_flatness)
       console.print_progress(i + 1, len(interferograms), start_time=tic)
+
+    features = np.stack(features, axis=0)
     targets = np.stack(targets, axis=0)
 
     # TODO: It is risky to put interferograms into `data_dict`
@@ -218,9 +220,11 @@ class PRAgent(DataAgent):
     radius = kwargs.get('radius')
     data_dir = kwargs.get('data_dir')
     fn_pattern = kwargs.get('fn_pattern')
+    feature_type = kwargs.get('feature_type')
+    token = '' if feature_type == 1 else '->{}'.format(feature_type)
     # Generate md5 suffix
     folders = walk(data_dir, 'folder', return_basename=True, pattern=fn_pattern)
-    suffix = encrypt_md5('='.join(folders), digit=4)
+    suffix = encrypt_md5('='.join(folders) + token, digit=4)
     return 'PR-r{}-{}.tfd'.format(radius, suffix)
 
 

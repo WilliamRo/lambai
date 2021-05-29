@@ -43,7 +43,7 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 0. date set setup
   # ---------------------------------------------------------------------------
-  th.feature_type = 1
+  th.feature_type = 9
   th.win_size = 512
   th.win_num = 1
 
@@ -116,7 +116,7 @@ def main(_):
   # Commander Center
   th.eval_rotation = False
   th.train = True
-  th.overwrite = False
+  th.overwrite = True
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------
@@ -130,6 +130,9 @@ def main(_):
   th.suffix = '_tl' + ''.join(th.train_indices.split(','))
   th.suffix += '(' + th.train_config + ')'
   th.suffix += '_' + th.loss_string.replace(':', '')
+
+  th.script_suffix = ''
+  th.suffix += th.script_suffix
   if th.feature_type != 1: th.suffix += '_ft{}'.format(th.feature_type)
   if th.random_rotate: th.suffix += '_rotate'
 
@@ -138,7 +141,7 @@ def main(_):
   th.gather_summ_name = th.prefix + summ_name + '.sum'
 
   # For test
-  if True:
+  if False:
     # th.feature_type = 1
     th.prefix = '0515_'
     th.train = False

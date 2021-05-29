@@ -104,7 +104,7 @@ class PhaseSet(DataSet):
     else: raise KeyError
 
   def reset_feature(self, feature_type):
-    assert feature_type in (2, 3)
+    assert feature_type in (2, 3, 9)
     console.show_status('Resetting feature type ...')
     features = np.stack(
       [ig.get_model_input(feature_type) for ig in self.interferograms], axis=0)

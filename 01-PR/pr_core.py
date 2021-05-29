@@ -77,7 +77,7 @@ th.evaluate_test_set = True
 def activate():
   if not th.allow_activation: return
 
-  th.input_shape = [None, None, 1 if th.feature_type == 1 else 2]
+  th.input_shape = [None, None, 1 if th.feature_type in (1, 9) else 2]
 
   # Load data
   train_set, val_set, test_set = du.load_data()
