@@ -3,9 +3,13 @@ data
 *.sum
 gather.txt
 checkpoints
+checkpoint
 *.txt
 *mascot*.py
 *.zip
+tests
+*deprecated*
+tmp
 
 # Ignore PyCharm files
 .idea/
