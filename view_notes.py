@@ -11,6 +11,13 @@ from tframe.utils.summary_viewer import main_frame
 from tframe import local
 
 
+current_dir = os.path.dirname(FILE_PATH)
+if len(sys.argv) == 2:
+  path = sys.argv[1]
+  if os.path.exists(path):
+    current_dir = path
+
+
 default_inactive_flags = (
   # 'patience',
   'shuffle',
@@ -79,7 +86,7 @@ flags_to_ignore = (
 while True:
   try:
     summ_path = local.wizard(extension='sum', max_depth=3,
-                             current_dir=os.path.dirname(FILE_PATH),
+                             current_dir=current_dir,
                              # input_with_enter=True)
                              input_with_enter=False)
 

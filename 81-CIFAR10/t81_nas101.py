@@ -6,19 +6,22 @@ import tensorflow as tf
 from tframe import console
 from tframe.utils.misc import date_string
 from tframe.utils.organizer.task_tools import update_job_dir
-from tframe.nets.classic.conv_nets.lenet import LeNet
+
+from tframe import mu
 
 
 # -----------------------------------------------------------------------------
 # Define model here
 # -----------------------------------------------------------------------------
-model_name = 'lenet'
-id = 1
+model_name = 'nas101'
+id = 7
 def model():
   th = core.th
-  model = m.get_container(flatten=False)
-  LeNet(archi_string=th.archi_string, kernel_size=th.kernel_size,
-        strides=th.strides, activation=th.activation).add_to(model)
+  model = m.get_container()
+  mu.NAS101(vertices=th.vertices.split(','), edges=th.adj_matrix,
+            num_stacks=th.num_stacks, stem_channels=th.filters,
+            cells_per_stack=th.module_per_stack, use_batchnorm=th.use_batchnorm,
+            input_projection=th.input_projection).add_to(model)
   return m.finalize(model)
 
 
@@ -42,37 +45,57 @@ def main(_):
   th.suffix = '_t00'
 
   th.visible_gpu_id = 0
+  th.allow_growth = True
   # ---------------------------------------------------------------------------
   # 2. model setup
   # ---------------------------------------------------------------------------
   th.model = model
 
-  th.archi_string = '64-32=120-84'
-  th.kernel_size = 4
-  th.strides = 2
-  th.activation = 'relu'
+  # th.vertices, th.adj_matrix = mu.NAS101.Shelf.CIFAR10.NAS101Best
+  th.vertices = 'b3'
+  th.adj_matrix = '1;11'
+  th.filters = 128
+  th.num_stacks = 3
+  th.module_per_stack = 2
+  th.input_projection = False
+  th.use_batchnorm = True
 
+  th.bn_momentum = 0.99
+  th.bn_epsilon = 0.00001
   # ---------------------------------------------------------------------------
   # 3. trainer setup
   # ---------------------------------------------------------------------------
-  th.epoch = 2
-  th.batch_size = 64
+  th.epoch = 500
+  th.batch_size = 128
+  th.val_batch_size = 100
+  th.eval_batch_size = 100
   th.validation_per_round = 2
 
   th.optimizer = tf.train.AdamOptimizer
-  th.learning_rate = 0.0003
+  th.learning_rate = 0.002
 
-  th.patience = 5
+  th.patience = 10
   th.early_stop = True
   th.save_model = True
 
-  th.train = False
+  # th.lives = 1
+  # th.lr_decay = 0.4
+  # th.global_l2_penalty = 0.0001
+
+  th.train = True
   th.overwrite = True
+  th.val_progress_bar = True
+  th.progress_bar = True
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------
-  th.mark = '{}({})_{}_s{}_k{}'.format(
-    model_name, th.archi_string, th.activation, th.strides, th.kernel_size)
+  # Make vertices and edge string shorter to avoid invalid checkpoint path issue
+  vertices_str = ''.join(v[0] + v[-1] for v in th.vertices.split(','))
+  edge_str = ''.join([str(int(n, 2)) for n in th.adj_matrix.split(';')])
+
+  th.mark = '{}({}-{}-{}-{}-{})'.format(
+    model_name, vertices_str, edge_str, th.filters, th.num_stacks,
+    th.module_per_stack)
   th.gather_summ_name = th.prefix + summ_name + th.suffix + '.sum'
   core.activate(True)
 

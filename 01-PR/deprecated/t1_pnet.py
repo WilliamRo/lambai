@@ -1,7 +1,7 @@
 import pr_core as core
 import pr_mu as m
 
-import tensorflow as tf
+from tframe import tf
 
 from tframe import console
 from tframe.utils.misc import date_string
@@ -12,7 +12,7 @@ from tframe.utils.organizer.task_tools import update_job_dir
 # Define model here
 # -----------------------------------------------------------------------------
 model_name = 'pnet'
-id = 6
+id = 7
 def model():
   th = core.th
 
@@ -51,7 +51,8 @@ def main(_):
   th.prior_size = 11
   th.prior_key = 'dettol'
 
-  th.kon_rs = [0.5, 0.7, 1.0, 1.2]
+  th.kon_rs_str = '0.5,0.7,1.0,1.2'
+  th.kon_rs = [float(s) for s in th.kon_rs_str.split(',')]
   th.kon_omega = 10
 
   th.win_size = 512

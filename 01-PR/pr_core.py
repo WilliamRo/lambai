@@ -19,7 +19,7 @@ DIR_DEPTH = 2
 ROOT = os.path.abspath(__file__)
 for _ in range(DIR_DEPTH):
   ROOT = os.path.dirname(ROOT)
-  sys.path.insert(0, ROOT)
+  if sys.path[0] != ROOT: sys.path.insert(0, ROOT)
 # =============================================================================
 from tframe import console
 from tframe import Predictor
@@ -48,7 +48,9 @@ th.input_shape = [None, None, 1]
 th.radius = 80
 th.truncate_at = 12.0
 
+th.feature_type = 1
 th.win_size = 512
+th.win_num = 1
 th.aug_config = '-'
 
 th.train_indices = '1,2'
@@ -57,14 +59,18 @@ th.test_indices = '4'
 # -----------------------------------------------------------------------------
 # Set common trainer configs
 # -----------------------------------------------------------------------------
+th.alpha = 0
+th.suffix = ''
+
+th.epoch = 50000
 th.early_stop = True
 th.patience = 5
 # th.export_tensors_upon_validation = True
 th.sample_num = 3
 
-th.print_cycle = 2
-th.updates_per_round = 20
-th.validation_per_round = 2
+th.print_cycle = 1
+th.updates_per_round = 30
+th.validation_per_round = 1
 
 th.val_batch_size = 1
 th.val_progress_bar = True
@@ -73,33 +79,48 @@ th.evaluate_train_set = False
 th.evaluate_val_set = False
 th.evaluate_test_set = True
 
+th.tic_toc = True
+
 
 def activate():
   if not th.allow_activation: return
 
   th.input_shape = [None, None, 1 if th.feature_type in (1, 9) else 2]
 
-  # Load data
-  train_set, val_set, test_set = du.load_data()
+  # This block solves shape issue such as DUC
+  if th.use_duc: th.fix_input_size = True
+  if th.fix_input_size:
+    th.input_shape[0] = th.input_shape[1] = th.win_size
+    th.non_train_input_shape = [1024, 1280, th.input_shape[-1]]
 
   # Build model
   assert callable(th.model)
-  model = th.model()
+  model: Predictor = th.model()
   assert isinstance(model, Predictor)
+  if th.rehearse:
+    model.rehearse(export_graph=True, build_model=False,
+                   path=model.agent.ckpt_dir, mark='model')
+    return
+
+  # Load data
+  train_set, val_set, test_set = du.load_data()
 
   # Train or evaluate
   th.probe_cycle = th.updates_per_round * th.epoch_per_probe
   th.note_cycle = th.probe_cycle
 
+  # ! Uncomment the line below to export 'predicted angle'
   from tframe import context
-  context.tensors_to_export['predicted angle'] = model.outputs.tensor
+  # context.tensors_to_export['predicted angle'] = model.outputs.tensor
 
   if th.train:
     model.train(train_set, validation_set=val_set, test_set=test_set,
                 trainer_hub=th, probe=du.PhaseSet.probe)
-    train_set.snapshot(model, 0)
-    val_set.snapshot(model, 0)
-    # test_set.snapshot(model, 3)
+    train_set.snapshot(model, 0, over_trial=True)
+    # val_set.snapshot(model, 0)
+    test_set.snapshot(model, 0, over_trial=True)
+    # Dump note.misc
+    train_set.dump_package(model)
   else:
     data_set = test_set
     if th.visualize_tensors:
@@ -108,8 +129,9 @@ def activate():
       else:
         data_set = data_set[0:20:5]
 
-      model.visualize_tensors(data_set, max_tensors=10, max_channels=16,
-                              visualize_kernels=th.visualize_kernels)
+      model.visualize_tensors(data_set, max_tensors=None, max_channels=50,
+                              visualize_kernels=th.visualize_kernels,
+                              tensor_dict=th.tensor_dict)
     elif th.eval_rotation:
       data_set.rotation_test(model, variation_diagram=True, index=6)
       # test_set.rotation_test(model)

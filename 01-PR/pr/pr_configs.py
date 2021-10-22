@@ -1,17 +1,24 @@
 from tframe.trainers import SmartTrainerHub
 from tframe.configs.config_base import Flag
 
+from roma import console
+
 
 class PRConfig(SmartTrainerHub):
 
   class PRKeys(object):
     prior = 'PR_PRIOR'
 
+  fix_input_size = Flag.boolean(
+    False, 'Whether to fix the size of input image')
+
   feature_type = Flag.integer(
     1, '1 for interferogram, 2 for 2-D extracted image', is_key=None)
   radius = Flag.integer(None, '$k_0 \cdot NA$', is_key=None)
 
   fn_pattern = Flag.string(None, 'Pattern filter for data folders', is_key=None)
+  re_pattern = Flag.string(None, 'RE Pattern filter for data folders',
+                           is_key=None)
 
   train_indices = Flag.string(
     None, 'Sample indices for training set', is_key=None)
@@ -36,6 +43,7 @@ class PRConfig(SmartTrainerHub):
   use_maxpool = Flag.boolean(
     None, 'Whether to use maxpool for contracting', is_key=None)
   bridges = Flag.string(None, 'Link indices used in UNet2D', is_key=None)
+  guest_first = Flag.boolean(False, 'Used in bridge')
 
   # Data
   truncate_at = Flag.float(12, 'Max value of targets')
@@ -61,12 +69,30 @@ class PRConfig(SmartTrainerHub):
   hyper_filter_size = Flag.integer(3, 'Hyper filter size', is_key=None)
   prior_key = Flag.string('cube', r'\in (`cube`, `dettol`)', is_key=None)
   prior_format = Flag.string('real', r'\in (`real`, `complex`)', is_key=None)
+  rotundity = Flag.boolean(False, '...', is_key=None)
 
   kon_activation = Flag.string(
     None, 'activation function used in konjac', is_key=None)
 
   kon_omega = Flag.integer(30, '...', is_key=None)
   kon_rs = Flag.list(None, '...')
+  kon_rs_str = Flag.string(None, '...', is_key=None)
+  kon_rad = Flag.float(1.0, 'Pupil radius percentage', is_key=None)
+
+  use_dual_conv = Flag.boolean(
+    False, 'Whether to use dual convolution', is_key=None)
+
+  hyper_dual_num = Flag.integer(0, 'Currently should be 0', is_key=None)
+
+  n2o = Flag.float(1.0, 'Pupil booster', is_key=None)
+
+  local_activation = Flag.string('-', 'Naphtali local activation', is_key=None)
+  global_activation = Flag.string(
+    '-', 'Naphtali global activation', is_key=None)
+  nap_merge = Flag.string('concat', 'Naphtali merge method', is_key=None)
+  nap_token = Flag.string('alpha', 'Naphtali block type', is_key=None)
+
+  # final_activation = Flag.
 
 
   def train_val_test_indices(self):
@@ -91,6 +117,86 @@ class PRConfig(SmartTrainerHub):
       assert len(indices) == len(set(indices))
 
     return train_indices, val_indices, test_indices
+
+  def data_setup(self, token='alpha'):
+    from pr_core import th
+    if token == 'alpha':
+      th.fn_pattern = '0[45]-'
+      indices = '1,2'
+      th.train_indices = indices
+      th.val_indices = indices
+      th.test_indices = indices
+
+      th.train_config = 't5'
+      th.val_config = self.train_config
+      th.test_config = '-5t'
+    else: raise NotImplementedError
+    console.show_status(f'Applied data setup {token}.', 'yellow')
+
+  def trainer_setup(self, token='alpha'):
+    from pr_core import th
+    if token == 'alpha':
+      th.loss_string = 'xmae' if 0 < th.alpha < 1 else 'wmae:0.0001'
+
+      th.epoch = 50000
+      th.updates_per_round = 30
+      th.batch_size = 16
+      th.validation_per_round = 1
+
+      th.optimizer = 'adam'
+      th.learning_rate = 0.0001
+
+      th.patience = 30
+      th.early_stop = True
+      th.save_model = True
+      th.epoch_per_probe = 10
+
+      #
+      th.print_cycle = 1
+      th.train_probe_ids = '0'
+      th.test_probe_ids = '0'
+
+      # th.script_suffix = ''
+      # if th.suffix is None: th.suffix = ''
+      # th.suffix += th.script_suffix
+    else: raise NotImplementedError
+    console.show_status(f'Applied trainer setup {token}.', 'yellow')
+
+  def unet_setup(self, f=8, cks=3, eks=3, act='relu', bn=True,
+                 bri='a', h=4, thk=2, duc=False, mp=False):
+    from pr_core import th
+    th.filters = f
+    th.contraction_kernel_size = cks
+    th.expansion_kernel_size = eks
+    th.activation = act
+    th.bottle_neck = bn
+    th.bridges = bri
+    th.half_height = h
+    th.thickness = thk
+    th.use_duc = duc
+    th.use_maxpool = mp
+    console.show_status(f'UNet has been setup', 'yellow')
+
+  def dual_setup(self):
+    from pr_core import th
+    if not th.use_dual_conv: return
+    th.use_prior = True
+    th.prior_size = 25
+    th.prior_key = 'dual'
+    th.kon_rs_str = '0.5'
+    th.kon_rs = [float(s) for s in th.kon_rs_str.split(',')]
+    th.kon_omega = 10
+    th.kon_rad = 0.9
+    th.n2o = 10.0
+    console.show_status(f'DualConv has been setup', 'yellow')
+
+  def dual_suffix(self):
+    if self.hyper_dual_num > 0:
+      return f'(hd-{self.hyper_dual_num})'
+    else: return '({})'.format('-'.join(
+      [f'L-{self.prior_size}',
+        f'omega-{self.kon_omega}',
+       'rs-{}'.format('-'.join([str(r) for r in self.kon_rs]))]))
 
 
 # New hub class inherited from SmartTrainerHub must be registered

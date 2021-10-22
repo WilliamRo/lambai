@@ -13,14 +13,15 @@ from tframe import mu
 # -----------------------------------------------------------------------------
 # Define model here
 # -----------------------------------------------------------------------------
-model_name = 'nas101'
-id = 7
+model_name = 'seed'
+id = 2
 def model():
   th = core.th
   model = m.get_container()
   mu.NAS101(vertices=th.vertices.split(','), edges=th.adj_matrix,
             num_stacks=th.num_stacks, stem_channels=th.filters,
-            cells_per_stack=th.module_per_stack).add_to(model)
+            cells_per_stack=th.module_per_stack,
+            input_projection=th.input_projection).add_to(model)
   return m.finalize(model)
 
 
@@ -35,6 +36,8 @@ def main(_):
 
   th.augmentation = True
   th.aug_config = 'flip:True;False'
+
+  th.developer_code = '-'
   # ---------------------------------------------------------------------------
   # 1. folder/file names and device
   # ---------------------------------------------------------------------------
@@ -45,6 +48,7 @@ def main(_):
 
   th.visible_gpu_id = 0
   th.allow_growth = True
+  th.gpu_memory_fraction = 0.8
   # ---------------------------------------------------------------------------
   # 2. model setup
   # ---------------------------------------------------------------------------
@@ -52,20 +56,28 @@ def main(_):
 
   th.vertices = 'conv3x3,maxpool3x3,conv3x3,conv1x1,conv3x3'
   th.adj_matrix = '1;01;001;1000;10011;100001'
+  # th.vertices = 'b3'
+  # th.adj_matrix = '1;11'
   th.filters = 64
-  th.num_stacks = 2
-  th.module_per_stack = 2
+  th.num_stacks = 3
+  th.module_per_stack = 1
+
+  th.input_projection = True
+  th.use_batchnorm = True
+
+  # th.global_l2_penalty = 0.0001
+  # th.decoupled_l2_penalty = 0.000000001
   # ---------------------------------------------------------------------------
   # 3. trainer setup
   # ---------------------------------------------------------------------------
   th.epoch = 500
-  th.batch_size = 128
+  th.batch_size = 96
   th.val_batch_size = 100
   th.eval_batch_size = 100
   th.validation_per_round = 2
 
-  th.optimizer = tf.train.AdamOptimizer
-  th.learning_rate = 0.002
+  th.optimizer = 'adam'
+  th.learning_rate = 0.003
 
   th.patience = 10
   th.early_stop = True
@@ -76,8 +88,6 @@ def main(_):
 
   th.train = True
   th.overwrite = True
-  th.val_progress_bar = True
-  th.progress_bar = True
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------

@@ -90,7 +90,7 @@ class BloodCellAgent(DataAgent):
       save_HW_data=save_HW_data, **kwargs)
 
     # Extract B/T cell images if required
-    if hub.only_BT: data_set = data_set.get_types((0, 1))
+    if hub.only_BT: data_set = data_set.get_classes(0, 1)
 
     # Separate data_set if required
     data_config = kwargs.get('data_config', None)

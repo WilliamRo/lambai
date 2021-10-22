@@ -13,8 +13,8 @@ def load_data() -> [PhaseSet, PhaseSet, PhaseSet]:
   datasets = PRAgent.load(
     th.data_dir, *th.train_val_test_indices(), radius=th.radius,
     win_size=th.win_size, truncate_at=th.truncate_at, win_num=th.win_num,
-    fn_pattern=th.fn_pattern, random_rotate=th.random_rotate,
-    feature_type=th.feature_type)
+    fn_pattern=th.fn_pattern, re_pattern=th.re_pattern,
+    random_rotate=th.random_rotate, feature_type=th.feature_type)
 
   # Call dev0 manipulator if required
   if 'dev0' in th.pr_dev_code: datasets = _dev0_loader(datasets)
@@ -45,11 +45,12 @@ if __name__ == '__main__':
 
   th.train_indices = '1'
   th.val_indices = '1'
-  th.test_indices = '2'
+  th.test_indices = '1'
   th.fn_pattern = '0[45]-'
+  th.fn_pattern = '01-'
   # th.fn_pattern = '*62-'
 
-  th.feature_type = 9
+  th.feature_type = 1
 
   # th.train_indices = '4'
   # th.val_indices = '4'
@@ -67,7 +68,8 @@ if __name__ == '__main__':
   assert isinstance(val_set, PhaseSet)
   assert isinstance(test_set, PhaseSet)
   # test_set.view_aberration()
-  train_set.view()
+  # train_set.view()
+  test_set.view()
 
   # win_num = 10
   # win_size = 512

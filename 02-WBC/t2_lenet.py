@@ -17,7 +17,8 @@ def model(th):
   assert isinstance(th, m.Config)
   model = m.get_container(th, flatten=False, add_last_dim=True)
   LeNet(archi_string=th.archi_string, kernel_size=th.kernel_size,
-        strides=th.strides, activation=th.activation).add_to(model)
+        strides=th.strides, activation=th.activation,
+        padding=th.padding).add_to(model)
   return m.finalize(th, model)
 
 
@@ -32,8 +33,10 @@ def main(_):
   th.image_width = 300
 
   th.centralize_data = True
-  th.val_config = 'd-2'
   th.test_config = 'd-3'
+  th.val_config = 'd-2'
+  th.test_config = 'c-!r-100'
+  th.val_config = 'c-!r-100'
 
   th.augmentation = True
   th.aug_config = 'flip|rotate'
@@ -52,10 +55,11 @@ def main(_):
   th.model = model
 
   # th.archi_string = '6-16-24=120-84'
-  th.archi_string = '6-16-24=64-32'
+  th.archi_string = '12-16-24-32=32-16'
   th.kernel_size = 5
-  th.strides = 4
-  th.activation = 'tanh'
+  th.strides = 3
+  th.activation = 'relu'
+  th.padding = 'same'
 
   # ---------------------------------------------------------------------------
   # 3. trainer setup
@@ -67,7 +71,7 @@ def main(_):
   th.optimizer = tf.train.AdamOptimizer
   th.learning_rate = 0.0003
 
-  th.patience = 5
+  th.patience = 7
   th.early_stop = True
   th.early_stop_metric = 'f1'
   # ---------------------------------------------------------------------------

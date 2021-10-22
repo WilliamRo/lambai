@@ -1,13 +1,13 @@
 import numpy as np
 import os
-import time
 
 from collections import OrderedDict
 from lambo.data_obj.interferogram import Interferogram
-from tframe import console
+from lambo.analyzer.retriever import Retriever
+from roma import console
 from tframe.data.augment.img_aug import image_augmentation_processor
 from tframe.data.base_classes import DataAgent
-from tframe.utils.local import walk
+from roma import finder
 
 from typing import Optional, List
 
@@ -25,7 +25,8 @@ class PRAgent(DataAgent):
   def load(cls, data_dir, train_indices, val_indices, test_indices,
            radius: int, win_size: Optional[int] = None,
            truncate_at: float = 12.0, win_num: int = 1, feature_type: int = 1,
-           fn_pattern='*[0-5][0-9]-*', **kwargs) -> List[PhaseSet]:
+           fn_pattern='*[0-5][0-9]-*', re_pattern=None,
+           **kwargs) -> List[PhaseSet]:
     """feature_type must be
           1: for raw interferogram
           2: for 2-D extracted image, real+imag
@@ -39,7 +40,8 @@ class PRAgent(DataAgent):
 
     # Load complete dataset
     data_set = cls.load_as_tframe_data(
-      data_dir, radius=radius, fn_pattern=fn_pattern, feature_type=feature_type)
+      data_dir, radius=radius, fn_pattern=fn_pattern, re_pattern=re_pattern,
+      feature_type=feature_type)
 
     # Do some preprocess
     # if feature_type in (2, 3, 9): data_set.reset_feature(feature_type)
@@ -68,31 +70,30 @@ class PRAgent(DataAgent):
 
   @classmethod
   def load_as_tframe_data(cls, data_dir: str, radius: int, feature_type: int,
-                          fn_pattern='*[0-5][0-9]-*', **kwargs) -> PhaseSet:
+                          fn_pattern='[0-5][0-9]-', re_pattern=None,
+                          **kwargs) -> PhaseSet:
 
     # Check fn_pattern first
     fn_pattern = cls._check_fn_pattern(fn_pattern)
     # Load data directly if .tfd file exists
     file_path = os.path.join(data_dir, cls._get_file_name(
       radius=radius, data_dir=data_dir, fn_pattern=fn_pattern,
-      feature_type=feature_type))
+      re_pattern=re_pattern, feature_type=feature_type))
     if os.path.exists(file_path): return PhaseSet.load(file_path)
 
     # Load interferograms from given directory
-    interferograms = cls.load_as_interferograms(data_dir, radius, fn_pattern)
+    interferograms = cls.load_as_interferograms(
+      data_dir, radius, fn_pattern, re_pattern)
     # Wrap them into PhaseSet
-    # .. Calculate target one by one
+    console.show_status('Creating phase set ...')
     features, targets = [], []
     slopes, flatness = [], []
-    console.show_status('Retrieving phase ...')
-    tic = time.time()
     for i, ig in enumerate(interferograms):
       assert isinstance(ig, Interferogram)
       features.append(ig.get_model_input(feature_type))
       targets.append(ig.flattened_phase)
       slopes.append(ig.bg_slope)
       flatness.append(ig.bg_flatness)
-      console.print_progress(i + 1, len(interferograms), start_time=tic)
 
     features = np.stack(features, axis=0)
     targets = np.stack(targets, axis=0)
@@ -100,7 +101,7 @@ class PRAgent(DataAgent):
     # TODO: It is risky to put interferograms into `data_dict`
     ps = PhaseSet(name='PhaseSet', data_dict={
       'features': features, 'targets': targets,
-      'interferograms': interferograms})
+      'interferograms': [ig.clone for ig in interferograms]})
     ps.data_dict[ps.SLOPE] = slopes
     ps.data_dict[ps.FLATNESS] = flatness
 
@@ -113,7 +114,8 @@ class PRAgent(DataAgent):
 
 
   @classmethod
-  def load_as_interferograms(cls, data_dir: str, radius: int, fn_pattern: str):
+  def load_as_interferograms(cls, data_dir: str, radius: int, fn_pattern: str,
+                             re_pattern: Optional[str] = None):
     """Each folder in `data_dir` contains images and the corresponding
      backgrounds of a certain sample taken from one specific DPM system setup.
      `radius` denotes $k_0 \cdot NA$
@@ -122,27 +124,21 @@ class PRAgent(DataAgent):
     interferograms = []
 
     # Search all folders inside given `data_dir`
-    folder_paths = walk(data_dir, type_filter='folder', pattern=fn_pattern)
+    folder_paths = finder.walk(
+      data_dir, type_filter='folder', pattern=fn_pattern, re_pattern=re_pattern)
     for k, folder_path in enumerate(folder_paths):
+
       # Get sample name
       sample_name = os.path.basename(folder_path)
-      # Get path list for sample and bg pairs
-      pairs = cls.get_sample_bg_paths(folder_path)
       # Show status
       console.show_status(
-        '[{}/{}] Reading {} interferograms from `{}` ...'.format(
-          k + 1, len(folder_paths), len(pairs), sample_name))
-      # Wrap each pair into Interferogram instances
-      for i, (sample_file_path, bg_file_path) in enumerate(pairs):
-        # Read sample and bg and do phase retrieval
-        ig = Interferogram.imread(
-          sample_file_path, bg_path=bg_file_path, radius=radius)
-        # Assign sample name and setup token
-        ig.sample_token = sample_name
-        ig.setup_token = '-'
-        interferograms.append(ig)
-        # Show progress bar
-        console.print_progress(i + 1, len(pairs))
+        '[{}/{}] Scanning `{}` using lambo.Retriever ...'.format(
+          k + 1, len(folder_paths), sample_name))
+
+      # Load interferograms using lambo.Retriever
+      interferograms.extend(Retriever.read_interferograms(
+        folder_path, radius, seq_id=1, save=True,
+        save_keys=('flattened_phase',)))
 
     console.show_status('{} interferograms read.'.format(len(interferograms)))
     return interferograms
@@ -160,13 +156,13 @@ class PRAgent(DataAgent):
     """
     pairs = []
 
-    subfolders = walk(path, type_filter='folder', return_basename=True)
+    subfolders = finder.walk(path, type_filter='folder', return_basename=True)
     if 'sample' in subfolders and 'bg' in subfolders:
       # Case (1)
       sample_folder, bg_folder = [
         os.path.join(path, fn) for fn in ('sample', 'bg')]
       # Scan all sample files in sample folder
-      for sample_path in walk(
+      for sample_path in finder.walk(
           sample_folder, type_filter='file', pattern='*.tif*'):
         fn = os.path.basename(sample_path)
         bg_path = os.path.join(bg_folder, fn)
@@ -175,7 +171,7 @@ class PRAgent(DataAgent):
         else: pairs.append((sample_path, bg_path))
     else:
       # Case (2)
-      file_list = walk(
+      file_list = finder.walk(
         path, type_filter='file', pattern='*.tif', return_basename=True)
       while len(file_list) > 0:
         fn = file_list.pop(0)
@@ -207,7 +203,7 @@ class PRAgent(DataAgent):
   def read_interferogram(cls, data_dir:str, trial_ID=1, sample_ID=1,
                          radius=80, pattern=None) -> Interferogram:
     if pattern is not None: pattern = cls._check_fn_pattern(pattern)
-    trial_paths = walk(data_dir, type_filter='folder', pattern=pattern)
+    trial_paths = finder.walk(data_dir, type_filter='folder', pattern=pattern)
     sample_bg_paths = cls.get_sample_bg_paths(trial_paths[trial_ID - 1])
     sample_path, bg_path = sample_bg_paths[sample_ID - 1]
     return Interferogram.imread(sample_path, bg_path, radius=radius)
@@ -220,18 +216,21 @@ class PRAgent(DataAgent):
     radius = kwargs.get('radius')
     data_dir = kwargs.get('data_dir')
     fn_pattern = kwargs.get('fn_pattern')
+    re_pattern = kwargs.get('re_pattern')
     feature_type = kwargs.get('feature_type')
-    token = '' if feature_type == 1 else '->{}'.format(feature_type)
+    token = '' if feature_type == 1 else '-ft{}'.format(feature_type)
     # Generate md5 suffix
-    folders = walk(data_dir, 'folder', return_basename=True, pattern=fn_pattern)
-    suffix = encrypt_md5('='.join(folders) + token, digit=4)
+    folders = finder.walk(data_dir, 'folder', return_basename=True,
+                          pattern=fn_pattern, re_pattern=re_pattern)
+    # suffix = encrypt_md5('='.join(folders) + token, digit=4)
+    suffix = '({})'.format('-'.join([fn[:2] for fn in folders])) + token
     return 'PR-r{}-{}.tfd'.format(radius, suffix)
 
 
   @classmethod
-  def _check_fn_pattern(cls, fn_pattern: str):
+  def _check_fn_pattern(cls, fn_pattern: Optional[str]):
+    if fn_pattern is None: return None
     assert isinstance(fn_pattern, str)
-    if fn_pattern[0] != '*': fn_pattern = '*' + fn_pattern
     if fn_pattern[-1] != '*': fn_pattern = fn_pattern + '*'
     return fn_pattern
 

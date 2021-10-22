@@ -7,24 +7,29 @@ from tframe import console
 from tframe.utils.misc import date_string
 from tframe.utils.organizer.task_tools import update_job_dir
 
+from tframe.layers.hyper.dual_conv import DualConv2D
+from pr.architectures.gad import Gad
+
 
 # -----------------------------------------------------------------------------
 # Define model here
 # -----------------------------------------------------------------------------
-model_name = 'acorn'
-id = 0
+model_name = 'gad'
+id = 8
 def model():
   th = core.th
+
+  # Create a Naphtali and modify model mark
+  gad = Gad()
   model = m.get_container()
 
-  def add_conv(filters):
-    return model.add(m.m.Conv2D(
-      filters, th.kernel_size, use_bias=False, dilation_rate=th.dilations,
-      use_batchnorm=th.use_batchnorm, activation=th.activation))
+  # Add dual layer at the top if required
+  if th.use_dual_conv:
+    model.add(DualConv2D(m.get_hyper_channels(), th.prior_size,
+                         filter_generator=m.konjac.dual_base))
 
-  for n in th.archi_string.split('-'):
-    add_conv(int(n))
-
+  # Add Naphtali
+  gad.add_to(model)
   return m.finalize(model)
 
 
@@ -32,6 +37,7 @@ def main(_):
   console.start('{} on 2D Phase Retrieval task'.format(model_name.upper()))
 
   th = core.th
+  th.rehearse = False
   # ---------------------------------------------------------------------------
   # 0. date set setup
   # ---------------------------------------------------------------------------
@@ -46,18 +52,20 @@ def main(_):
   th.prefix = '{}_'.format(date_string())
 
   th.allow_growth = False
-  th.gpu_memory_fraction = 0.7
+  th.gpu_memory_fraction = 0.3
   # ---------------------------------------------------------------------------
   # 2. model setup
   # ---------------------------------------------------------------------------
   th.model = model
 
-  th.kernel_size = 3
-  th.activation = 'relu'
-  th.archi_string = '-'.join(['8'] * 25)
-  th.dilations = 1
+  th.use_dual_conv = False
+  th.dual_setup()
 
-  th.use_batchnorm = False
+  th.kernel_size = 10
+  th.dilations = 10
+  th.archi_string = '32-32-24-24-8'
+  th.activation = 'relu'
+
   # ---------------------------------------------------------------------------
   # 3. trainer setup
   # ---------------------------------------------------------------------------
@@ -68,16 +76,10 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------
-  th.suffix = ''
-  if th.feature_type != 1: th.suffix += '_ft{}'.format(th.feature_type)
-  if th.random_rotate: th.suffix += '_rot'
-
-  tail = 'k{}-{}-{}'.format(th.kernel_size, th.archi_string, th.activation)
-  if th.dilations != 1: tail += f'-dil{th.dilations}'
-  th.mark = '{}({})'.format(model_name, tail)
+  th.mark = model_name
+  if th.use_dual_conv: th.mark += '(DC)'
   th.gather_summ_name = th.prefix + summ_name + th.suffix + '.sum'
 
-  # th.rehearse = True
   core.activate()
 
 
@@ -85,3 +87,7 @@ if __name__ == '__main__':
   console.suppress_logging()
   tf.app.run()
 
+
+"""
+Best V-WMAE after 10 epochs: 0.023
+"""

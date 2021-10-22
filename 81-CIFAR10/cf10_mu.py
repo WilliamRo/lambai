@@ -6,7 +6,7 @@ from tframe.layers.normalization import BatchNormalization
 from tframe.layers.preprocess import Normalize
 
 from tframe.layers.common import Dropout
-from tframe.layers.normalization import BatchNormalization
+from tframe.layers.normalization import BatchNormalization, LayerNormalization
 from tframe.layers.convolutional import Conv2D
 from tframe.layers.pooling import MaxPool2D, AveragePooling2D
 from tframe.layers.highway import LinearHighway

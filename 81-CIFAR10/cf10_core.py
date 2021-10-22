@@ -60,9 +60,15 @@ th.centralize_data = True
 th.val_batch_size = 2000
 th.eval_batch_size = 2000
 
-th.evaluate_train_set = True
-th.evaluate_val_set = True
-th.evaluate_test_set = True
+th.evaluate_train_set = False
+th.evaluate_val_set = False
+th.evaluate_test_set = False
+
+th.validate_train_set = True
+th.validate_test_set = True
+
+th.class_indices = '3,5'
+th.export_tensors_upon_validation = True
 
 
 def activate(visualize_false=False):
@@ -77,7 +83,8 @@ def activate(visualize_false=False):
 
   # Train or evaluate
   if th.train: model.train(
-    train_set, validation_set=val_set, test_set=test_set, trainer_hub=th)
+    train_set, validation_set=val_set, test_set=test_set, trainer_hub=th,
+    evaluate=du.evaluate)
   else: model.evaluate_image_sets(
     train_set, val_set, test_set, visualize_last_false_set=visualize_false)
 

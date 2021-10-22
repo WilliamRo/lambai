@@ -6,21 +6,24 @@ from tframe import tf
 from tframe import console
 from tframe.utils.misc import date_string
 from tframe.utils.organizer.task_tools import update_job_dir
-
+from tframe.layers.hyper.dual_conv import DualConv2D
 
 # -----------------------------------------------------------------------------
 # Define model here
 # -----------------------------------------------------------------------------
-model_name = 'unet'
-id = 5
+model_name = 'dnet'
+id = 2
+
 def model() -> core.Predictor:
   th = core.th
   model = m.get_container()
 
+  # Add dual layer
+  model.add(DualConv2D(m.get_hyper_channels(), th.prior_size,
+                       filter_generator=m.konjac.dual_base))
+
   # Add U-Net body
-  unet = m.get_unet()
-  unet.add_to(model)
-  model.mark += f'({unet})'
+  m.get_unet().add_to(model)
   return m.finalize(model)
 
 
@@ -30,49 +33,11 @@ def main(_):
   th = core.th
 
   # ---------------------------------------------------------------------------
-  # -1. test
-  # ---------------------------------------------------------------------------
-  if 0:
-    th.train = [{False}]
-    th.feature_type = [{1}]
-
-    th.prefix = [{'0622_'}]
-    # th.bridges = [{'4'}]
-    th.contraction_kernel_size = [{5}]
-
-    th.visualize_tensors = True
-    th.eval_rotation = False
-
-    th.use_duc = [{True}]
-    th.use_dual_conv = [{False}]
-
-  # ---------------------------------------------------------------------------
   # 0. date set setup
   # ---------------------------------------------------------------------------
-  # th.feature_type = 1
-  # th.win_size = 512
-  # th.win_num = 1
-  #
-  # th.fn_pattern = '05-'
-  # th.fn_pattern = '0[45]-'
-  #
-  # indices = '1'
-  # indices = '1,2'
-  # th.train_indices = indices
-  # th.val_indices = indices
-  # th.test_indices = indices
-  #
-  # th.int_para_1 = -10
-  # th.train_config = 'a{}'.format(th.int_para_1)
-  # th.val_config = '{}a'.format(th.int_para_1)
-  #
-  # th.train_config = 't5'
-  # th.val_config = th.train_config
-  #
-  # th.test_config = '-5t'
-  # # th.val_config = th.test_config
-
   th.data_setup('alpha')
+
+  th.visualize_tensors = True
   # ---------------------------------------------------------------------------
   # 1. folder/file names and device
   # ---------------------------------------------------------------------------
@@ -80,20 +45,26 @@ def main(_):
   summ_name = model_name
   th.prefix = '{}_'.format(date_string())
 
-  th.random_rotate = False
-
   th.allow_growth = False
-  th.gpu_memory_fraction = 0.75
+  th.gpu_memory_fraction = 0.4
   # ---------------------------------------------------------------------------
   # 2. model setup
   # ---------------------------------------------------------------------------
   th.model = model
 
-  th.filters = 16
-  th.kernel_size = 3
-  th.unet_setup(f=th.filters, cks=th.kernel_size, duc=False, act='relu')
+  # Dual-conv configs
+  th.use_dual_conv = True
+  th.use_prior = th.use_dual_conv
+  th.prior_size = 25
+  th.prior_key = 'dual'
+  th.kon_rs_str = '0.5'
+  th.kon_rs = [float(s) for s in th.kon_rs_str.split(',')]
+  th.kon_omega = 10
+  th.kon_rad = 0.9
+  th.n2o = 10.0
 
-  th.bridges = '-'
+  # U-Net configs
+  th.unet_setup(f=8, cks=3, duc=False)
   # ---------------------------------------------------------------------------
   # 3. trainer setup
   # ---------------------------------------------------------------------------
@@ -104,31 +75,12 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------
-  # th.print_cycle = 1
-  # th.train_probe_ids = '0'
-  # # th.val_probe_ids = '0'
-  # th.test_probe_ids = '0'
-  #
-  # th.epoch_per_probe = 10
-  #
-  # th.suffix = '_tl' + ''.join(th.train_indices.split(','))
-  # th.suffix += '(' + th.train_config + ')'
-  # th.suffix += '_' + th.loss_string.replace(':', '')
-  #
-  # th.script_suffix = ''
-  # th.suffix += th.script_suffix
-  # if th.feature_type != 1: th.suffix += '_ft{}'.format(th.feature_type)
-  # if th.random_rotate: th.suffix += '_rotate'
-
-  tail = ''
-  th.mark = '{}{}'.format(model_name, tail)
+  th.mark = model_name + th.dual_suffix()
   th.gather_summ_name = th.prefix + summ_name + '.sum'
 
-  # th.allow_activation = False
   core.activate()
 
 
 if __name__ == '__main__':
   console.suppress_logging()
   tf.app.run()
-

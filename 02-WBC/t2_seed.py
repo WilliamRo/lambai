@@ -4,6 +4,7 @@ import wbc_mu as m
 import tensorflow as tf
 
 from tframe import console
+from tframe.utils.organizer.task_tools import update_job_dir
 from tframe.utils.misc import date_string
 
 from tframe.nets.classic.conv_nets.lenet import LeNet
@@ -22,8 +23,11 @@ def model(th):
   conv_list, fc_list = LeNet.parse_archi_string(th.archi_string)
 
   # Add conv layers
-  for filters in conv_list: model.add(m.Conv2D(
-      filters, th.kernel_size, th.strides, activation=th.activation))
+  for i, filters in enumerate(conv_list):
+    model.add(m.Conv2D(filters, th.kernel_size, th.strides))
+    if i > 0 and th.use_batchnorm:
+      model.add(m.BatchNormalization())
+    model.add(m.Activation(th.activation))
   # Add flatten layer
   model.add(m.Flatten())
   # Add fully-connected layers
@@ -53,7 +57,7 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 1. folder/file names and device
   # ---------------------------------------------------------------------------
-  th.job_dir += '/{:02d}_{}'.format(id, model_name)
+  update_job_dir(id, model_name)
   summ_name = model_name
   th.prefix = '{}_'.format(date_string())
   th.suffix = ''
@@ -66,27 +70,31 @@ def main(_):
   # ---------------------------------------------------------------------------
   th.model = model
   th.archi_string = '12-16-24-32=32-16'
+  th.archi_string = m.get_archi_string()
   th.kernel_size = 5
   th.strides = 3
-  th.activation = 'tanh'
+  th.activation = 'relu'
+
+  th.use_batchnorm = False
 
   th.use_wise_man = True
   # ---------------------------------------------------------------------------
   # 3. trainer setup
   # ---------------------------------------------------------------------------
-  th.epoch = 100
-  th.batch_size = 32
+  th.epoch = 1000
+  th.batch_size = 32  # TODO: try less than 32
 
   th.optimizer = tf.train.AdamOptimizer
-  th.learning_rate = 0.003
+  th.learning_rate = 0.0003   # TODO: not stable
 
-  th.patience = 7
+  th.patience = 5         # TODO: try larger than 10
   th.early_stop_metric = 'f1'
 
   th.train = True
   # ---------------------------------------------------------------------------
   # 4. display, summary and note setup
   # ---------------------------------------------------------------------------
+  th.validate_test_set = True
   th.gather_summ_name = th.prefix + summ_name + th.suffix + '.sum'
 
   # ---------------------------------------------------------------------------
@@ -104,6 +112,17 @@ if __name__ == '__main__':
 
 """
 Best HPs:
+batch_size: 32
+lr: 0.0003 (Adam)
+patience: 10
+use_wise_man: True
+archi_string: 12-16-24-32=32-16
+augmentation: 'flip|rotate'
+activation: relu
+centralize_data: True
+kernel_size: 5
+pad_mode: constant
+strides: 3
 
 """
 

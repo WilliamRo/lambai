@@ -101,6 +101,17 @@ class PhaseSet(DataSet):
           th.prior_size, angle=angle, omega=th.kon_omega, rs=th.kon_rs,
           fmt=th.prior_format)
         for ig in self.interferograms])
+    elif th.prior_key == 'dual':
+      # shape = [?, 2, 2], prior[k, 0] is center, prior[k, 1] is unit vector
+      self.prior = np.stack([ig.get_fourier_dual_basis(peak_and_uv=True)
+                             for ig in self.interferograms])
+
+      # TODO: to be cleared
+      # self.prior = np.real(np.stack([
+      #   np.stack(ig.get_fourier_dual_basis(
+      #     th.prior_size, omega=th.kon_omega,
+      #     rs=th.kon_rs, rotundity=th.rotundity), axis=-1)
+      #   for ig in self.interferograms]))
     else: raise KeyError
 
   def reset_feature(self, feature_type):
@@ -137,22 +148,9 @@ class PhaseSet(DataSet):
     self.targets = self.targets / truncate_at
 
   def view(self):
-    from tframe.data.images.image_viewer import ImageViewer
+    from lambo import DaVinci
 
     ds = self[:]
-    # Process targets
-    for i, y in enumerate(self.targets):
-      # y = y - np.min(y)
-      y_max = np.max(y)
-      ds.targets[i] = y / y_max
-      # Rescale predicted results if necessary
-      if self.PREDICTED_KEY in self.data_dict:
-        pred = self.data_dict[self.PREDICTED_KEY][i]
-        ds.data_dict[self.PREDICTED_KEY][i] = pred / np.max(pred)
-      if self.DELTA_KEY in self.data_dict:
-        delta = self.data_dict[self.DELTA_KEY][i]
-        ds.data_dict[self.DELTA_KEY][i] = delta / np.max(delta)
-
     # Set features accordingly
     x = self.features
     assert len(x.shape) == 4 and x.shape[-1] in (1, 2)
@@ -160,28 +158,44 @@ class PhaseSet(DataSet):
       horizontal_list = ['targets', 'features']
     else:
       horizontal_list = ['targets', 'features[0]', 'features[1]']
-      x0, x1 = x[:, :, :, 0], x[:, :, :, 1]
-      x0, x1 = x0 - np.min(x0), x1 - np.min(x1)
-      ds.data_dict['features[0]'] = x0 / np.max(x0)
-      ds.data_dict['features[1]'] = x1 / np.max(x1)
+      ds.data_dict['features[0]'] = x[:, :, :, 0]
+      ds.data_dict['features[1]'] = x[:, :, :, 1]
 
-    if self.DELTA_KEY in self.data_dict:
-      horizontal_list.append(self.DELTA_KEY)
-    if self.PREDICTED_KEY in self.data_dict:
-      horizontal_list.append(self.PREDICTED_KEY)
-    if self.PRIOR in self.data_dict:
-      horizontal_list.append(self.PRIOR)
+    # Fill horizontal_keys accordingly
+    for key in (self.DELTA_KEY, self.PREDICTED_KEY, self.PRIOR):
+      if key in self.data_dict: horizontal_list.append(key)
 
-    viewer = ImageViewer(
-      ds, horizontal_list=horizontal_list, color_map='gist_earth')
-    viewer.show()
+    # Visualize using DaVinci
+    da = DaVinci(self.name)
+    da._color_bar = True
+    da.objects = [self[i] for i in range(self.size)]
+
+    def get_plotter(key: str = key):
+      def _plotter(x: DataSet):
+        im: np.ndarray = x[key]
+        if im.shape[0] == 1: im = im[0]
+        if im.shape[-1] == 1: im = im[:, :, 0]
+
+        # Set color limit according
+        if key == 'features': clim = [None, None]
+        else: clim = [f(x['targets']) for f in (np.min, np.max)]
+        da._color_limits = clim
+
+        da.imshow_pro(im)
+        da.title = key + f' - {self.name}'
+      return _plotter
+
+    # Add plotters
+    for key in horizontal_list: da.add_plotter(get_plotter(key=key))
+
+    da.show()
 
   def view_aberration(self):
     from lambo.gui.vinci.vinci import DaVinci
 
     da = DaVinci('Aberration Viewer')
     da.keep_3D_view_angle = True
-    da.z_lim = (-50, 30)
+    da.z_lim_tuple = (-50, 30)
     da.objects = self.interferograms
 
     def _plot_aberration(x, ax, bg=False, plot3d=False):
@@ -216,26 +230,37 @@ class PhaseSet(DataSet):
     For example, 'a', 'a3', '-5t', '2t3'
     """
     # Check format of config_str
-    r = re.match(r'^-?\d*([at])-?\d*$', config_str)
+    r = re.match(r'^-?(?:0\.\d*)?\d*([at])-?(?:0\.\d*)?\d*$', config_str)
     assert r is not None
+
+    # Define some utilities
+    def parse_index(s: str, total: int, is_begin: bool):
+      if s == '': return 0 if is_begin else total
+      n = float(s)
+      sign = np.sign(n)
+      n *= sign
+      if n < 1: n = int(total * n)
+      assert int(n) == n
+      return int(sign * n)
 
     # Get begin and end
     sep = r.group(1)
     begin, end = config_str.split(sep)
-    begin = int(begin) if begin else 0
 
     # Get subset
     if sep == 't':
       # Case (1) get samples from each trial
       indices = []
       for g in self.groups.values():
-        _end = int(end) if end else len(g)
-        indices.extend(g[begin:_end])
+        _begin = parse_index(begin, len(g), is_begin=True)
+        _end = parse_index(end, len(g), is_begin=False)
+        indices.extend(g[_begin:_end])
       subset = self[indices]
     else:
       assert sep == 'a'
       # Case (2) otherwise get samples for whole set
-      end = int(end) if end else self.size
+      begin = parse_index(begin, self.size, is_begin=True)
+      end = parse_index(end, self.size, is_begin=False)
       subset = self[begin:end]
 
     # Set name if necessary
@@ -302,6 +327,10 @@ class PhaseSet(DataSet):
         if th.prior_key == 'dettol':
           priors.append(ig.get_fourier_prior_stack(
             th.prior_size, angle, th.kon_omega, th.kon_rs))
+        elif th.prior_key == 'dual':
+          priors.append(np.real(np.stack(ig.get_fourier_dual_basis(
+            th.prior_size, th.kon_omega, th.kon_rs,
+            angle=angle, rotundity=th.rotundity), axis=-1)))
         else: priors.append(ig.get_fourier_prior(th.prior_size, angle))
 
     # Get dataset
@@ -325,7 +354,7 @@ class PhaseSet(DataSet):
     plt.ylabel('Weighted MAE')
     plt.show()
 
-  def evaluate_model(self, model):
+  def evaluate_model(self, model, view=True):
     from tframe import Predictor
 
     assert isinstance(model, Predictor)
@@ -345,18 +374,17 @@ class PhaseSet(DataSet):
       wmaes.append(wmae)
     self.properties[self.EVAL_DETAILS] = details
     self.properties[self.WMAE] = wmaes
-    self.view()
+    if view: self.view()
+    return y
 
-  def snapshot(self, model, index=0, over_trial=False, suffix='-final'):
+  def snapshot(self, model, index=0, over_trial=False, step='final-'):
     indices = [index]
     if over_trial: indices = [g[index] for g in self.groups.values()]
-    for i in indices:
-      self._snapshot(
-        model, i, save_input=False, save_ground_truth=True,
-        pred_suffix=suffix)
+    for i in indices: self._snapshot(
+      model, i, save_input=False, save_ground_truth=True, step=step)
 
   def _snapshot(self, model, index=0, folder_path=None, save_input=False,
-                save_ground_truth=True, pred_suffix=''):
+                save_ground_truth=True, step=''):
     from tframe import Predictor
     from pr_core import th
     import os
@@ -377,11 +405,25 @@ class PhaseSet(DataSet):
 
     metric_str = '({:.4f})'.format(self.wmae(gt, y))
     for name, flag, img in zip(
-        ('input', 'ground-truth', 'predicted' + metric_str + pred_suffix),
+        ('input', 'ground-truth', step + 'predicted' + metric_str),
         (save_input, save_ground_truth, True), (x, gt, y)):
       if not flag: continue
       path = os.path.join(folder_path, name + suffix)
       if not os.path.exists(path): plt.imsave(path, img)
+
+  def dump_package(self, model):
+    from tframe import Predictor
+    from tframe import context
+    from pr_core import th
+    import os,  pickle
+
+    if not th.use_dual_conv: return
+    assert isinstance(model, Predictor)
+
+    path = os.path.join(model.agent.ckpt_dir, 'misc.dict')
+    with open(path, 'wb') as f:
+      pickle.dump(context.note.misc, f, pickle.HIGHEST_PROTOCOL)
+    console.show_status(f'note.misc dumped to `{path}`')
 
   @staticmethod
   def wmae(truth: np.ndarray, pred: np.ndarray):
@@ -414,6 +456,7 @@ class PhaseSet(DataSet):
 
         # Rotate prior if used (at this time prior is not cropped yet)
         if p is not None:
+          assert not th.use_dual_conv  # TODO:
           # Retrieve the interferogram
           ig = batch.interferograms[i]
           p = ig.get_fourier_prior(th.prior_size, angle)
@@ -469,9 +512,31 @@ class PhaseSet(DataSet):
         assert isinstance(data_set, PhaseSet)
         for g in data_set.groups.values(): data_set._snapshot(
           trainer.model, g[i], save_ground_truth=True,
-          pred_suffix='-{:.1f}'.format(trainer.total_rounds))
+          step='{:06.1f}-'.format(trainer.total_rounds))
 
-    return 'Snapshot saved to checkpoint folder.'
+    message = 'Snapshot saved to checkpoint folder'
+    if not th.use_dual_conv: return message
+
+    # Pupil logic:
+
+    # Take down theta, r, and radius
+    from tframe import context
+
+    STEP, PACKAGE = 'STEP', 'PACKAGE'
+    # Initialize if necessary
+    if STEP not in context.note.misc:
+      for key in (STEP, PACKAGE): context.note.misc[key] = []
+
+    # Record step
+    context.note.misc[STEP].append(trainer.total_rounds)
+    package = trainer.session.run(context.get_collection_by_key('dual'))
+    context.note.misc[PACKAGE].append(package)
+
+    _, d, r = package
+    console.show_info(f'd: [{np.min(d):.3f}, {np.max(d):.3f}], '
+                      f'r: [{np.min(r):.3f}, {np.max(r):.3f}]')
+
+    return message + '. Pupil shape exported.'
 
   # endregion: APIs
 
