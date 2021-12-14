@@ -23,9 +23,9 @@ for _ in range(DIR_DEPTH):
 # =============================================================================
 from tframe import console
 from tframe import Predictor
-from pet.pet_configs import PetConfig as Hub
+from fb.fb_config import FBConfig as Hub
 
-import pet_du as du
+import fb_du as du
 
 
 # -----------------------------------------------------------------------------
@@ -33,6 +33,7 @@ import pet_du as du
 # -----------------------------------------------------------------------------
 th = Hub(as_global=True)
 th.config_dir()
+th.developer_code = ''
 
 # -----------------------------------------------------------------------------
 # Device configuration
@@ -43,10 +44,8 @@ th.gpu_memory_fraction = 0.30
 # -----------------------------------------------------------------------------
 # Set information about the data set
 # -----------------------------------------------------------------------------
-th.centralize_data = True
-
-th.val_size = 2000
-th.test_size = 2000
+th.fb_data_size = 500
+th.val_size = 100
 
 # -----------------------------------------------------------------------------
 # Set common trainer configs
@@ -57,21 +56,12 @@ th.patience = 5
 th.print_cycle = 5
 th.validation_per_round = 2
 
-th.val_batch_size = 100
-th.eval_batch_size = 100
-th.val_progress_bar = True
-
-th.evaluate_train_set = False
-th.evaluate_val_set = False
-th.evaluate_test_set = True
-
 th.export_tensors_upon_validation = True
 
 
 def activate():
   # Load data
-  train_set, val_set, test_set = du.load_data(th.data_dir)
-  if th.centralize_data: th.data_mean = train_set.feature_mean
+  train_set, val_set = du.load_data()
 
   # Build model
   assert callable(th.model)
@@ -85,12 +75,14 @@ def activate():
     return
 
   # Train or evaluate
-  if th.train: model.train(
-    train_set, validation_set=val_set, test_set=test_set, trainer_hub=th)
+  if th.train:
+    model.train(train_set, validation_set=val_set, trainer_hub=th)
+    if th.visualize_after_training:
+      model.agent.load()
+      val_set.evaluate_model(model, visualize=True)
   else:
-    model.evaluate_model(train_set, batch_size=th.eval_batch_size)
-    model.evaluate_model(val_set, batch_size=th.eval_batch_size)
-    model.evaluate_model(test_set, batch_size=th.eval_batch_size)
+    train_set.evaluate_model(model)
+    val_set.evaluate_model(model, visualize=True)
 
   # End
   model.shutdown()

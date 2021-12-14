@@ -238,10 +238,10 @@ class PRAgent(DataAgent):
 if __name__ == '__main__':
   from pr_core import th
 
-  fn_pattern = '71'
+  fn_pattern = '04'
 
   ps = PRAgent.load_as_tframe_data(
-    th.data_dir, th.radius, fn_pattern=fn_pattern)
+    th.data_dir, th.radius, feature_type=1, fn_pattern=fn_pattern)
 
   ps.view()
 

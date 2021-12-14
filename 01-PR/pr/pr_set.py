@@ -153,8 +153,8 @@ class PhaseSet(DataSet):
     ds = self[:]
     # Set features accordingly
     x = self.features
-    assert len(x.shape) == 4 and x.shape[-1] in (1, 2)
-    if x.shape[-1] == 1:
+    assert len(x.shape) == 3 or len(x.shape) == 4 and x.shape[-1] in (1, 2)
+    if len(x.shape) == 3 or x.shape[-1] == 1:
       horizontal_list = ['targets', 'features']
     else:
       horizontal_list = ['targets', 'features[0]', 'features[1]']

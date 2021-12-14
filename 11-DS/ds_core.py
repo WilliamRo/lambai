@@ -23,9 +23,9 @@ for _ in range(DIR_DEPTH):
 # =============================================================================
 from tframe import console
 from tframe import Predictor
-from pet.pet_configs import PetConfig as Hub
+from tframe import DefaultHub as Hub
 
-import pet_du as du
+import ds_du as du
 
 
 # -----------------------------------------------------------------------------
@@ -43,10 +43,6 @@ th.gpu_memory_fraction = 0.30
 # -----------------------------------------------------------------------------
 # Set information about the data set
 # -----------------------------------------------------------------------------
-th.centralize_data = True
-
-th.val_size = 2000
-th.test_size = 2000
 
 # -----------------------------------------------------------------------------
 # Set common trainer configs
@@ -61,17 +57,12 @@ th.val_batch_size = 100
 th.eval_batch_size = 100
 th.val_progress_bar = True
 
-th.evaluate_train_set = False
-th.evaluate_val_set = False
-th.evaluate_test_set = True
-
 th.export_tensors_upon_validation = True
 
 
 def activate():
   # Load data
   train_set, val_set, test_set = du.load_data(th.data_dir)
-  if th.centralize_data: th.data_mean = train_set.feature_mean
 
   # Build model
   assert callable(th.model)
@@ -88,9 +79,7 @@ def activate():
   if th.train: model.train(
     train_set, validation_set=val_set, test_set=test_set, trainer_hub=th)
   else:
-    model.evaluate_model(train_set, batch_size=th.eval_batch_size)
-    model.evaluate_model(val_set, batch_size=th.eval_batch_size)
-    model.evaluate_model(test_set, batch_size=th.eval_batch_size)
+    pass
 
   # End
   model.shutdown()

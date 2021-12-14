@@ -4,4 +4,5 @@ scripts in this project can be run properly outside IDEs such as PyCharm.
 """
 folders = [
   'roma'
+  'tframe/talos'
 ]

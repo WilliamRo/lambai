@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 from lambo import DaVinci
 from tframe.data.shadow import DataShadow
-from pet_set import PetSet
+from pet.pet_set import PetSet
 
 
 class PetViewer(DaVinci):
@@ -22,12 +22,14 @@ class PetViewer(DaVinci):
   # region: Plotters
 
   def show_pet(self, x: int):
-    im = self.data.features[x].data
-    title = f'Pawpolarity: {self.data.targets[x]}'
+    im = self.data[x].features[0]
+    title = (f'[{im.shape[0]}x{im.shape[1]}]' 
+             f' Pawpplarity: {self.data.targets[x]}')
     self.imshow(x=im, ax=self.axes, title=title)
 
-  def histogram(self, ax: plt.Axes, bins=101, density=True):
+  def histogram(self, ax: plt.Axes, bins=100, density=True):
     data = [self.data.targets[i] for i in self.objects]
+    data = np.array(data).flatten()
     ax.hist(data, bins=bins, density=density, alpha=0.7)
     ax.set_aspect('auto')
     ax.set_title('Pawpularity Histogram')
@@ -42,7 +44,7 @@ class PetViewer(DaVinci):
 
   def _filter(self, key, v1, v2):
     if key is None:
-      self.objects = list(range(len(self.data.features)))
+      self.objects = list(range(self.data.size))
       return
 
     if key in ('p', 'pawpularity', 'score'):
@@ -62,11 +64,12 @@ class PetViewer(DaVinci):
 
   def compare_hist(self):
 
-    def histogram(ax: plt.Axes, bins=101, density=True, key=None):
+    def histogram(ax: plt.Axes, bins=100, density=True, key=None):
       # Overlap two histograms
       for v in (0, 1):
         p = [self.data.targets[i] for i in self.objects
              if self.data[key][i] == v]
+        p = np.array(p).flatten()
         ax.hist(p, bins=bins, density=density, alpha=0.5)
 
       # Finalize
@@ -75,8 +78,24 @@ class PetViewer(DaVinci):
       ax.legend([f'{key} = 0', f'{key} = 1'])
 
     for key in self.data.meta_keys:
-      self.add_plotter(lambda ax, bins=101, density=True, key=key: histogram(
+      self.add_plotter(lambda ax, bins=100, density=True, key=key: histogram(
         ax, bins, density, key))
+
+  def show_size_hist(self):
+    assert self.data.sizes is not None
+
+    def size_hist(ax: plt.Axes, density=True):
+      heights = [s[0] for s in self.data.sizes]
+      widths = [s[1] for s in self.data.sizes]
+      ax.hist(heights, density=density, alpha=0.5)
+      ax.hist(widths, density=density, alpha=0.5)
+
+      # Finalize
+      ax.set_aspect('auto')
+      ax.set_title('Size Distribution')
+      ax.legend(['Height', 'Width'])
+
+    self.add_plotter(size_hist)
 
   # endregion: Public Methods
 
