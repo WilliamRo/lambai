@@ -26,10 +26,10 @@ def load_data() -> [FBSet, FBSet]:
 if __name__ == '__main__':
   from fb_core import th
 
-  th.set_data('b')
+  th.set_data('g')
 
-  th.developer_code += '-dup'
+  # th.developer_code += '-dup'
 
   train_set, val_set = load_data()
-  train_set.visualize()
+  val_set.visualize()
 

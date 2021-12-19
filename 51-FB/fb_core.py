@@ -44,8 +44,8 @@ th.gpu_memory_fraction = 0.30
 # -----------------------------------------------------------------------------
 # Set information about the data set
 # -----------------------------------------------------------------------------
-th.fb_data_size = 500
-th.val_size = 100
+th.fb_data_size = 100
+th.val_size = 10
 
 # -----------------------------------------------------------------------------
 # Set common trainer configs
@@ -62,6 +62,7 @@ th.export_tensors_upon_validation = True
 def activate():
   # Load data
   train_set, val_set = du.load_data()
+  if 'beta' in th.developer_code: val_set = train_set
 
   # Build model
   assert callable(th.model)
@@ -78,7 +79,7 @@ def activate():
   if th.train:
     model.train(train_set, validation_set=val_set, trainer_hub=th)
     if th.visualize_after_training:
-      model.agent.load()
+      # model.agent.load()
       val_set.evaluate_model(model, visualize=True)
   else:
     train_set.evaluate_model(model)

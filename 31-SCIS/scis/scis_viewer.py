@@ -54,7 +54,7 @@ class SCISViewer(DaVinci):
         # Get boxes
         boxes = [c.box for c in self.data.meta[x].cells]
         for i, box in enumerate(boxes):
-          box.show_rect(color=['r', 'g', 'b'][i % 3], ax=ax, margin=1)
+          box.show_rect(color=['r', 'g', 'b'][i % 3], ax=ax)
 
     return _show_image
 

@@ -142,17 +142,21 @@ class FBSet(DataSet):
     if visualize: self.visualize(preds)
 
   @staticmethod
-  def calculate_AP(target_boxes, pred_boxes, thresholds=None):
+  def calculate_AP(target_boxes, pred_boxes, thresholds=None,
+                   with_confidence=False):
     from fb_core import th
 
     if thresholds is None: thresholds = np.arange(0.5, 1.0, 0.05)
     APs = []
     for gt, pd in zip(target_boxes, pred_boxes):
       pd = [b for b in pd if b.confidence >= th.min_confidence]
-      if len(pd) == 0: return 0.0
+      if len(pd) == 0:
+        APs.append(0.0)
+        continue
       check_type(gt, list, Box)
       check_type(pd, list, Box)
-      APs.append(Box.calc_avg_precision(gt, pd, thresholds))
+      APs.append(Box.calc_avg_precision(
+        gt, pd, thresholds, multiply_confidence=with_confidence))
     return np.average(APs)
 
   # endregion: Probing

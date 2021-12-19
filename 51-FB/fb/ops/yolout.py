@@ -105,26 +105,25 @@ class YOLOut(Layer, NeuroBase):
   def set_converter():
     from fb_core import th
     # th.data_converter = YOLOut.data_set_converter  # Deprecated
-    th.dynamic_ground_truth_generator = YOLOut.generate_ground_truth
+    th.dynamic_ground_truth_generator = YOLOut.set_dynamic_targets
     th.target_shape = [None, th.yolo_S, th.yolo_S, None, th.yolo_D]
 
   @staticmethod
-  def generate_ground_truth(model, batch):
+  def generate_ground_truth(pred_tensor, batch, return_delta=False):
     # Sanity check
     from fb_core import th
     from fb.fb_set import FBSet
-    from tframe import Predictor
     from fb.ops.yolo_helper import YOLOImage
-    assert isinstance(model, Predictor) and isinstance(batch, FBSet)
+    assert isinstance(batch, FBSet)
 
-    # Get prediction
-    pred_tensor = model.predict(batch)
+    # Convert model output to boxes arranged in grid
     dict_list = YOLOut.pred_converter(pred_tensor, return_dicts=True)
 
     # Initialize the ground-truth as model output, shape = [?, S, S, B, D]
     target_tensor = pred_tensor.copy()
     # Init all confidence to 0.0
     target_tensor[:, :, :, :, -1] = 0.0
+    delta_list = []
 
     # Set target in a brutal-force way
     S = th.yolo_S
@@ -132,6 +131,7 @@ class YOLOut(Layer, NeuroBase):
         zip(batch.boxes, dict_list)):
       # Arrange targets in grid_dict
       target_dict = YOLOImage(target_boxes).grid
+      delta = []
       for i, j in [(i, j) for i in range(S) for j in range(S)]:
         targets = target_dict[(i, j)]
         if len(targets) == 0: continue
@@ -151,12 +151,34 @@ class YOLOut(Layer, NeuroBase):
               # Set the hook
               dr, dc, h, w = YOLOImage.convert_box_to_rchw(box, i, j)
               iou = ious[index]
-              target_tensor[im_index, i, j, index] = [dr, dc, h, w, iou]
+
+              # (*) Calculate sum-absolute difference
+              gt = np.array([dr, dc, h, w, iou])
+              d = np.sum(np.abs(gt - pred_tensor[im_index, i, j, index]))
+              delta.append(d)
+
+              # Set target
+              target_tensor[im_index, i, j, index] = gt
               # Go to next target
               break
 
+      # (*) For current image, add-up all delta
+      delta_list.append(sum(delta))
+
+    if return_delta: return delta_list
+    return target_tensor
+
+  @staticmethod
+  def set_dynamic_targets(model, batch):
+    # Sanity check
+    from fb.fb_set import FBSet
+    from tframe import Predictor
+    assert isinstance(model, Predictor) and isinstance(batch, FBSet)
+
+    # Get prediction if not provided
+    pred_tensor = model.predict(batch)
     # Set and return
-    batch.targets = target_tensor
+    batch.targets = YOLOut.generate_ground_truth(pred_tensor, batch)
     return batch
 
   # region: Deprecated
@@ -196,15 +218,20 @@ if __name__ == '__main__':
   from fb.fb_agent import FBAgent
   from fb_core import th
 
-  th.yolo_S, th.yolo_B = 3, 1
+  th.yolo_S, th.yolo_B = 3, 2
 
-  th.set_data('b')
-  th.developer_code += '-dup'
+  th.set_data('g')
+  # th.developer_code += '-dup'
 
-  data_set = FBAgent.load()
-  data_set = YOLOut.data_set_converter(data_set, True, report_B_prime=True)
+  # data_set = FBAgent.load()
+  # data_set = YOLOut.data_set_converter(data_set, True, report_B_prime=True)
 
   # Sanity check for inverse mappings
-  preds = YOLOut.pred_converter(data_set.targets)
+  # preds = YOLOut.pred_converter(data_set.targets)
+  # data_set.visualize(preds)
 
-  data_set.visualize(preds)
+  import fb_du as du
+  train_set, val_set = du.load_data()
+  val_set = YOLOut.data_set_converter(val_set, True, report_B_prime=True)
+  preds = YOLOut.pred_converter(val_set.targets)
+  val_set.visualize(preds)

@@ -22,16 +22,15 @@ def model():
   model = m.get_container()
 
   # Construct body
-  # m.add_feature_extractor(
-  #   model, channels=16, n_blocks=3, flatten=True)
-
-  model.add(m.Flatten())
+  m.add_feature_extractor(
+    model, channels=16, n_blocks=3, flatten=True)
+  # model.add(m.Flatten())
 
   model.add(YOLOut())
 
   # Build model
-  model.build(loss=yoloq.get_loss(), metric=yoloq.get_metric(),
-              batch_metric='AP')
+  model.build(loss=yoloq.get_loss(),
+              metric=[yoloq.get_metric('APC')], batch_metric='APC')
   return model
 
 
@@ -45,10 +44,8 @@ def main(_):
   # ---------------------------------------------------------------------------
   th.pred_converter = YOLOut.pred_converter
 
-  token = 'b'
+  token = 'g'
   th.set_data(token)
-
-  th.developer_code += '-dup'
   # ---------------------------------------------------------------------------
   # 1. folder/file names and device
   # ---------------------------------------------------------------------------
@@ -65,22 +62,25 @@ def main(_):
   th.kernel_size = 3
 
   th.yolo_S = 3
-  th.yolo_B = 1
+  th.yolo_B = 2
+
+  th.yolo_noob = 0.01
 
   # ---------------------------------------------------------------------------
   # 3. trainer setup
   # ---------------------------------------------------------------------------
-  th.epoch = 1000
+  th.epoch = 10000
 
-  th.batch_size = 8
-  th.validation_per_round = 2
+  th.batch_size = 32
+  th.validation_per_round = 1
 
   th.optimizer = tf.train.AdamOptimizer
   # th.optimizer = tf.train.GradientDescentOptimizer
-  th.learning_rate = 0.00003
+  th.learning_rate = 0.0003
   # th.lr_decay_method = 'cos'
 
-  th.patience = 5
+  th.patience = 500
+  th.save_model_at_the_end = True
   th.early_stop = True
   th.print_cycle = 1
   # ---------------------------------------------------------------------------
@@ -90,7 +90,7 @@ def main(_):
   th.visualize_after_training = True
   th.save_model = True
 
-  th.overwrite = False
+  th.overwrite = True
   # ---------------------------------------------------------------------------
   # 5. other stuff and activate
   # ---------------------------------------------------------------------------
