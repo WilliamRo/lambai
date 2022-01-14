@@ -79,18 +79,20 @@ def main(_):
   th.learning_rate = 0.0003
   # th.lr_decay_method = 'cos'
 
-  th.patience = 500
-  th.save_model_at_the_end = True
+  th.patience = 50
+  # th.save_model_at_the_end = True
   th.early_stop = True
   th.print_cycle = 1
   # ---------------------------------------------------------------------------
   # 4. summary and note setup
   # ---------------------------------------------------------------------------
-  th.train = True
+  th.train = False
+  th.fb_max_boxes = 2
+
   th.visualize_after_training = True
   th.save_model = True
 
-  th.overwrite = True
+  th.overwrite = False
   # ---------------------------------------------------------------------------
   # 5. other stuff and activate
   # ---------------------------------------------------------------------------

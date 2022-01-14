@@ -5,7 +5,7 @@ sys.path.append('../')
 
 
 from tframe.utils.script_helper import Helper
-from pr.pr_configs import PRConfig
+from spr.pr_configs import PRConfig
 
 
 Helper.register_flags(PRConfig)

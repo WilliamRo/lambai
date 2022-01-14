@@ -23,10 +23,27 @@ class YOLOut(Layer, NeuroBase):
     return f'(S{S}B{B}D{D})'
 
 
+  def _split_activate_merge(self, x: tf.Tensor):
+    from fb_core import th
+
+    self.is_nucleus = False
+    _, S, _S, B, D = x.shape.as_list()
+    assert S == _S == th.yolo_S and B == th.yolo_B and D == 5
+
+    # Split
+    p, c = tf.split(x, (4, 1), axis=-1)
+    # Activate
+    p, c = tf.nn.tanh(p), tf.nn.sigmoid(c)
+    # Concatenate
+    return tf.concat([p, c], axis=-1)
+
+
   def _link(self, x: tf.Tensor):
     from fb_core import th
 
     # Make sure that the features are flattened
+    if len(x.shape) == 5: return self._split_activate_merge(x)
+
     assert len(x.shape) == 2
 
     # Calculate the output without class probabilities
@@ -44,12 +61,12 @@ class YOLOut(Layer, NeuroBase):
     c_reshape = tf.reshape(c, shape=[-1, S, S, B, 1], name='confidence')
     output = tf.concat([p_reshape, c_reshape], axis=-1, name='output')
 
-    if 'dup' in th.developer_code:
-      with tf.variable_scope('Dummy'):
-        v = tf.get_variable('v', shape=[1, S, S, B, 5], dtype=tf.float32,
-                            initializer=tf.zeros_initializer(), trainable=True)
-        output = v + 0.0 * output
-        return output
+    # if 'dup' in th.developer_code:
+    #   with tf.variable_scope('Dummy'):
+    #     v = tf.get_variable('v', shape=[1, S, S, B, 5], dtype=tf.float32,
+    #                         initializer=tf.zeros_initializer(), trainable=True)
+    #     output = v + 0.0 * output
+    #     return output
 
     return output
 
@@ -67,6 +84,7 @@ class YOLOut(Layer, NeuroBase):
     """
     from fb_core import th
     # Sanity check
+    if th.auto_bound: preds = np.minimum(np.maximum(preds, -1.0), 1.0)
     assert np.max(abs(preds)) <= 1.0
     assert th.yolo_D == 5
 
@@ -186,7 +204,7 @@ class YOLOut(Layer, NeuroBase):
   @staticmethod
   def data_set_converter(data_set, is_training: bool, report_B_prime=False):
     """Create targets in data_set according to YOLO setting.
-       targets = [batch_size, S, S, B_prime, 4]
+       targets = [batch_size, S, S, B_prime, 5]
        TODO: this method has been deprecated
     """
     if not is_training: return data_set
@@ -221,6 +239,7 @@ if __name__ == '__main__':
   th.yolo_S, th.yolo_B = 3, 2
 
   th.set_data('g')
+  th.fb_max_boxes = 5
   # th.developer_code += '-dup'
 
   # data_set = FBAgent.load()

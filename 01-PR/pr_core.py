@@ -122,6 +122,7 @@ def activate():
     # Dump note.misc
     train_set.dump_package(model)
   else:
+    train_set.snapshot(model, 0, over_trial=True)
     data_set = test_set
     if th.visualize_tensors:
       if th.eval_rotation:

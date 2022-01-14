@@ -44,10 +44,10 @@ if __name__ == '__main__':
   from pr_core import th
 
   th.train_indices = '1'
-  th.val_indices = '1'
+  th.val_indices = '2'
   th.test_indices = '1'
   th.fn_pattern = '0[45]-'
-  th.fn_pattern = '01-'
+  # th.fn_pattern = '01-'
   # th.fn_pattern = '*62-'
 
   th.feature_type = 1
@@ -68,8 +68,9 @@ if __name__ == '__main__':
   assert isinstance(val_set, PhaseSet)
   assert isinstance(test_set, PhaseSet)
   # test_set.view_aberration()
-  # train_set.view()
-  test_set.view()
+  train_set.view()
+  # val_set.view()
+  # test_set.view()
 
   # win_num = 10
   # win_size = 512

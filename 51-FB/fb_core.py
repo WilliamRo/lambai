@@ -79,7 +79,7 @@ def activate():
   if th.train:
     model.train(train_set, validation_set=val_set, trainer_hub=th)
     if th.visualize_after_training:
-      # model.agent.load()
+      model.agent.load()
       val_set.evaluate_model(model, visualize=True)
   else:
     train_set.evaluate_model(model)

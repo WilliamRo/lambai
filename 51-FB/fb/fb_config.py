@@ -27,10 +27,18 @@ class FBConfig(SmartTrainerHub):
 
   visualize_after_training = Flag.boolean(True, '...')
 
+  floor_height = Flag.integer(1, 'Floor height', is_key=None)
+
+  auto_bound = Flag.boolean(False, 'Whether to bound automatically',
+                            is_key=None)
+
   def set_data(self, token='alpha'):
     from roma import console
 
     if token in ('alpha', 'a'):
+      self.fb_data_size = 100
+      self.val_size = 10
+
       self.fb_img_size = 64
       self.fb_min_size = 10
       self.fb_max_size = 20
