@@ -403,9 +403,12 @@ class PhaseSet(DataSet):
     if folder_path is None: folder_path = model.agent.ckpt_dir
     suffix = '-{}-{}.png'.format(self.name, index)
 
-    metric_str = '({:.4f})'.format(self.wmae(gt, y))
+    # Get metrics
+    val_dict = model.validate_model(self[index], allow_sum=False)
+
+    metric_str = '-'.join([f'{k.name}{v:.4f}' for k, v in val_dict.items()])
     for name, flag, img in zip(
-        ('input', 'ground-truth', step + 'predicted' + metric_str),
+        ('input', 'ground-truth', step + metric_str),
         (save_input, save_ground_truth, True), (x, gt, y)):
       if not flag: continue
       path = os.path.join(folder_path, name + suffix)

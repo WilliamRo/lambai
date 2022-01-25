@@ -172,17 +172,10 @@ class Naphtali(ConvNet):
         order = int(np.log2(th.dilations))
         for o in range(1, order + 1): configs.append((2 ** o, n // order))
       # elif th.nap_token == 'gamma':
-      #   pass
+      #  pass
       else: raise KeyError
 
       block = self._multi_dilation(i, th.kernel_size, configs)
-
-      # if th.nap_token == 'alpha':
-      #   block = self._block_alpha(i, n, th.kernel_size, th.dilations)
-      # elif 'beta' in th.nap_token:
-      #   block = self._block_beta(i, n, th.kernel_size, th.dilations)
-      # elif 'gamma' in th.nap_token:
-      #   block = self._block_gamma(i, n, th.kernel_size, th.dilations)
 
       # Append or extend layer list
       if isinstance(block, list): layers.extend(block)

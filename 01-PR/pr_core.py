@@ -61,16 +61,18 @@ th.test_indices = '4'
 # -----------------------------------------------------------------------------
 th.alpha = 0
 th.suffix = ''
+# th.edge_cut = 50
 
 th.epoch = 50000
 th.early_stop = True
+th.save_model = True
 th.patience = 5
-# th.export_tensors_upon_validation = True
 th.sample_num = 3
 
-th.print_cycle = 1
+th.print_cycle = 5
 th.updates_per_round = 30
 th.validation_per_round = 1
+th.export_tensors_upon_validation = True
 
 th.val_batch_size = 1
 th.val_progress_bar = True
@@ -107,7 +109,7 @@ def activate():
 
   # Train or evaluate
   th.probe_cycle = th.updates_per_round * th.epoch_per_probe
-  th.note_cycle = th.probe_cycle
+  # th.note_cycle = th.probe_cycle
 
   # ! Uncomment the line below to export 'predicted angle'
   from tframe import context
@@ -116,11 +118,11 @@ def activate():
   if th.train:
     model.train(train_set, validation_set=val_set, test_set=test_set,
                 trainer_hub=th, probe=du.PhaseSet.probe)
-    train_set.snapshot(model, 0, over_trial=True)
+    # train_set.snapshot(model, 0, over_trial=True)
     # val_set.snapshot(model, 0)
-    test_set.snapshot(model, 0, over_trial=True)
+    # test_set.snapshot(model, 0, over_trial=True)
     # Dump note.misc
-    train_set.dump_package(model)
+    # train_set.dump_package(model)
   else:
     train_set.snapshot(model, 0, over_trial=True)
     data_set = test_set
@@ -139,6 +141,7 @@ def activate():
     else:
       # train_set.evaluate_model(model)
       # val_set.evaluate_model(model)
+      # model.evaluate_model(data_set, batch_size=1)
       data_set.evaluate_model(model)
 
   # End

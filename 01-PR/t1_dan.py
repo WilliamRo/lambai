@@ -33,20 +33,9 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 0. date set setup
   # ---------------------------------------------------------------------------
-  th.feature_type = 1
-  th.win_size = 512
-  th.win_num = 1
+  token = 'beta'
 
-  th.fn_pattern = '0[45]-'
-
-  indices = '1,2'
-  th.train_indices = indices
-  th.val_indices = indices
-  th.test_indices = indices
-
-  th.train_config = 't10'
-  th.val_config = th.train_config
-  th.test_config = '-5t'
+  th.data_setup(token)
   # ---------------------------------------------------------------------------
   # 1. folder/file names and device
   # ---------------------------------------------------------------------------
@@ -58,7 +47,7 @@ def main(_):
   th.random_rotate = False
 
   th.allow_growth = False
-  th.gpu_memory_fraction = 0.5
+  th.gpu_memory_fraction = 0.8
   # ---------------------------------------------------------------------------
   # 2. model setup
   # ---------------------------------------------------------------------------
@@ -74,50 +63,30 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 3. trainer setup
   # ---------------------------------------------------------------------------
-  th.loss_string = 'wmae:0.0001'
-  # th.loss_string = 'mae'
-
-  th.batch_size = 8
-
-  th.optimizer = 'adam'
-  th.learning_rate = 0.0001
-
-  th.patience = 20
-  th.early_stop = True
-  th.save_model = True
+  # th.loss_string = 'wmae:0.0001'
+  # # th.loss_string = 'mae'
+  #
+  # th.batch_size = 8
+  #
+  # th.optimizer = 'adam'
+  # th.learning_rate = 0.0001
+  #
+  # th.patience = 20
+  # th.early_stop = True
+  # th.save_model = True
 
   # Commander Center
   th.eval_rotation = False
   th.train = True
   th.overwrite = True
+
+  th.trainer_setup(token)
+  th.batch_size = 4
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------
-  th.epoch_per_probe = 10
-
-  th.train_probe_ids = '0'
-  # th.val_probe_ids = '0'
-  th.test_probe_ids = '0'
-
-  # Making configuration string
-  config_str = 'b{}-f{}-ks{}'.format(th.num_blocks, th.filters, th.kernel_size)
-  config_str += '-ft{}-{}'.format(th.feature_type, th.loss_string.split(':')[0])
-  if th.random_rotate: config_str += '-rot'
-
-  th.mark = '{}({})'.format(model_name, config_str)
+  th.mark = '{}'.format(model_name)
   th.gather_summ_name = th.prefix + summ_name + '.sum'
-
-  # For test
-  if 0:
-    th.train = False
-    th.feature_type = 1
-
-    th.prefix = '0611_'
-    th.filters = 32
-    th.num_blocks = 5
-
-    # th.visualize_tensors = True
-    th.eval_rotation = False
 
   # th.rehearse = True
   core.activate()

@@ -22,27 +22,16 @@ gpu_id = 0
 
 s.register('gather_summ_name', summ_name + summ_suffix + '.sum')
 s.register('gpu_id', gpu_id)
-s.register('gpu_memory_fraction', 0.8)
+s.register('gpu_memory_fraction', 0.75)
 # -----------------------------------------------------------------------------
 # Set up your models and run
 # -----------------------------------------------------------------------------
 s.register('train', True)
-# s.register('feature_type', 9)
+s.register('rehearse', False)
+s.register('win_size', 512)
+s.register('batch_size', 8, 16)
+s.register('loss_string', 'xmae')
+s.register('alpha', 0, 0.3, 0.5, 0.7)
+s.constrain({'alpha': 1.0}, {'loss_string': 'wmae:0.0001'})
 
-s.register('archi_string', '32-32-24-16-8')
-s.register('nap_token', 'alpha', 'beta')
-s.register('batch_size', 16)
-# s.register('lr', 0.0001)
-s.register('loss_string', 'mbe', 'gbe')
-s.register('data_token', 'epsilon')
-# s.register('alpha', 0.0, 0.5, 1.0)
-# s.register('epoch', 200)
-# s.register('kernel_size', 10)
-# s.register('dilations', 8)
-# s.register('global_activation', 'relu', 'sigmoid')
-# s.register('input_projection', s.true_and_false)
-s.register('input_projection', True)
-
-# s.configure_engine(greater_is_better=False)
-# s.run(rehearsal=True)
-s.run(times=1, add_script_suffix=True)
+s.run(times=2, add_script_suffix=True)

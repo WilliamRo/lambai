@@ -93,7 +93,7 @@ def main(_):
   th.kernel_size = 3
   th.unet_setup(f=th.filters, cks=th.kernel_size, duc=False, act='relu')
 
-  th.bridges = '-'
+  th.bridges = 'a'
   # ---------------------------------------------------------------------------
   # 3. trainer setup
   # ---------------------------------------------------------------------------
@@ -104,22 +104,6 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------
-  # th.print_cycle = 1
-  # th.train_probe_ids = '0'
-  # # th.val_probe_ids = '0'
-  # th.test_probe_ids = '0'
-  #
-  # th.epoch_per_probe = 10
-  #
-  # th.suffix = '_tl' + ''.join(th.train_indices.split(','))
-  # th.suffix += '(' + th.train_config + ')'
-  # th.suffix += '_' + th.loss_string.replace(':', '')
-  #
-  # th.script_suffix = ''
-  # th.suffix += th.script_suffix
-  # if th.feature_type != 1: th.suffix += '_ft{}'.format(th.feature_type)
-  # if th.random_rotate: th.suffix += '_rotate'
-
   tail = ''
   th.mark = '{}{}'.format(model_name, tail)
   th.gather_summ_name = th.prefix + summ_name + '.sum'

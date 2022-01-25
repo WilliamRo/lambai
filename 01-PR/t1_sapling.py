@@ -38,7 +38,10 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 0. date set setup
   # ---------------------------------------------------------------------------
-  th.data_setup('alpha')
+  th.data_token = 'epsilon'
+  # th.train_config = '2a3'  # 2a3|4a5|39a40 for eta
+  th.train_config = 'a1'  # 0,1,2,3,4,5,7 for epsilon
+  th.data_setup(th.data_token)
 
   th.visualize_tensors = True
   th.rehearse = False
@@ -50,7 +53,7 @@ def main(_):
   th.prefix = '{}_'.format(date_string())
 
   th.allow_growth = False
-  th.gpu_memory_fraction = 0.3
+  th.gpu_memory_fraction = 0.8
   # ---------------------------------------------------------------------------
   # 2. model setup
   # ---------------------------------------------------------------------------
@@ -58,19 +61,14 @@ def main(_):
   th.use_dual_conv = False
   th.dual_setup()
 
-  th.kernel_size = 3
-  th.archi_string = '8-8-4-4-2-2'
-
-  # th.kernel_size = 3
-  # th.num_blocks = 3
-  # th.filters = 8
-  # th.archi_string = '-'.join([str(th.filters) for _ in range(th.num_blocks)])
+  th.kernel_size = 9
+  th.archi_string = '32-32-24-16-8'
 
   th.dilations = 8
 
   th.activation = 'relu'
   th.input_projection = True
-  th.nap_token = 'alpha'
+  th.nap_token = 'beta'
 
   # Easy set
   if th.activation is not None:
@@ -80,15 +78,22 @@ def main(_):
   # 3. trainer setup
   # ---------------------------------------------------------------------------
   th.train = True
-  th.overwrite = True
+  th.overwrite = True  # TODO
+  th.visualize_tensors = False
 
-  th.trainer_setup('alpha')
-  # th.batch_size = 1   # TODO: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  th.trainer_setup('beta')
+  th.batch_size = 8
+  th.loss_string = 'gbe'
+  # th.loss_string = 'mbe'
+  th.patience = 10  # TODO
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------
   th.mark = model_name
   if th.use_dual_conv: th.mark += '(DC)'
+  th.mark += f'(bs{th.batch_size}-{th.data_token})'
+  th.mark += f'-{th.loss_string[:3]}'
+  if 'xmae' in th.loss_string: th.mark += f'-a{th.alpha}'
   th.gather_summ_name = th.prefix + summ_name + th.suffix + '.sum'
 
   core.activate()

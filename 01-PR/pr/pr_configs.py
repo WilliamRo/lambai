@@ -35,6 +35,8 @@ class PRConfig(SmartTrainerHub):
 
   win_size = Flag.integer(None, 'Random window size', is_key=None)
 
+  edge_cut = Flag.integer(0, 'Dataset edge cut', is_key=None)
+
   # Encoder-Decoder related
   half_height = Flag.integer(
     None, 'Times of contracting/expanding', is_key=None)
@@ -91,6 +93,9 @@ class PRConfig(SmartTrainerHub):
     '-', 'Naphtali global activation', is_key=None)
   nap_merge = Flag.string('concat', 'Naphtali merge method', is_key=None)
   nap_token = Flag.string('alpha', 'Naphtali block type', is_key=None)
+  ash_token = Flag.string('alpha', 'Ashaer block type', is_key=None)
+
+  data_token = Flag.string(None, 'Data token', is_key=None)
 
   # final_activation = Flag.
 
@@ -130,13 +135,68 @@ class PRConfig(SmartTrainerHub):
       th.train_config = 't5'
       th.val_config = self.train_config
       th.test_config = '-5t'
+
+      th.train_probe_ids = '0'
+      th.test_probe_ids = '0'
+      th.probe_cycle = 10
+    elif token == 'beta':
+      # 05-beads #3: single image of 6 beads
+      th.fn_pattern = '05-'
+      th.train_indices = th.val_indices = th.test_indices = '1'
+      th.train_config = th.val_config = '2a3'
+      th.test_config = 'a'
+
+      th.train_probe_ids = '0'
+      th.test_probe_ids = '4'
+    elif token == 'gamma':
+      th.fn_pattern = '05-'
+      th.train_indices = th.val_indices = th.test_indices = '1'
+      th.train_config = th.val_config = '4a5'
+      th.test_config = 'a'
+
+      th.train_probe_ids = '0'
+      th.test_probe_ids = '2'
+    elif token == 'delta':
+      th.fn_pattern = '04-'
+      th.train_indices = th.val_indices = th.test_indices = '1'
+      th.train_config = th.val_config = 'a1'
+      th.test_config = 'a'
+
+      th.train_probe_ids = '0'
+      th.test_probe_ids = '2'
+      th.win_num = 4
+    elif token == 'epsilon':
+      th.fn_pattern = '03-'
+      th.train_indices = th.val_indices = th.test_indices = '1'
+      th.val_config = th.train_config
+      th.test_config = 'a'
+
+      th.test_probe_ids = '0,1,2,3,4,5,7'
+    elif token == 'zeta':
+      # Train on RBC 001 - sparse
+      th.fn_pattern = '04-'
+      th.train_indices = th.val_indices = th.test_indices = '1'
+      th.train_config = th.val_config = 'a1'
+      th.test_config = 'a'
+      th.train_probe_ids = '0'
+      th.test_probe_ids = '6'
+    elif token == 'eta':
+      # Train on dense bead - sparse
+      th.fn_pattern = '05-'
+      th.train_indices = th.val_indices = th.test_indices = '1'
+      th.val_config = th.train_config
+      th.test_config = 'a'
+
+      th.test_probe_ids = '2,4,39'
+
+      # th.edge_cut = 8
     else: raise NotImplementedError
     console.show_status(f'Applied data setup {token}.', 'yellow')
 
   def trainer_setup(self, token='alpha'):
     from pr_core import th
     if token == 'alpha':
-      th.loss_string = 'xmae' if 0 < th.alpha < 1 else 'wmae:0.0001'
+      th.loss_string = 'xmae' if 0 <= th.alpha < 1 else 'wmae:0.0001'
 
       th.epoch = 50000
       th.updates_per_round = 30
@@ -155,10 +215,24 @@ class PRConfig(SmartTrainerHub):
       th.print_cycle = 1
       th.train_probe_ids = '0'
       th.test_probe_ids = '0'
+    elif token == 'beta':
+      # th.loss_string = 'xmae' if 0 < th.alpha < 1 else 'wmae:0.0001'
+      th.loss_string = 'xmae'
+      th.alpha = 0.0
 
-      # th.script_suffix = ''
-      # if th.suffix is None: th.suffix = ''
-      # th.suffix += th.script_suffix
+      th.epoch = 50000
+      th.updates_per_round = 30
+      th.batch_size = 16
+      th.validation_per_round = 1
+
+      th.optimizer = 'adam'
+      th.learning_rate = 0.0001
+
+      th.patience = 5
+      th.epoch_per_probe = 5
+
+      th.print_cycle = 5
+      pass
     else: raise NotImplementedError
     console.show_status(f'Applied trainer setup {token}.', 'yellow')
 

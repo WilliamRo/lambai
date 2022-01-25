@@ -43,6 +43,12 @@ class PRAgent(DataAgent):
       data_dir, radius=radius, fn_pattern=fn_pattern, re_pattern=re_pattern,
       feature_type=feature_type)
 
+    # Cut edge if required
+    if th.edge_cut > 0:
+      P = th.edge_cut
+      data_set.features = data_set.features[:, P:-P, P:-P]
+      data_set.targets = data_set.targets[:, P:-P, P:-P]
+
     # Do some preprocess
     # if feature_type in (2, 3, 9): data_set.reset_feature(feature_type)
     data_set.add_channel()

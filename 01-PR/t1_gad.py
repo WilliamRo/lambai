@@ -41,7 +41,8 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 0. date set setup
   # ---------------------------------------------------------------------------
-  th.data_setup('alpha')
+  token = 'beta'
+  th.data_setup(token)
 
   th.visualize_tensors = True
   # ---------------------------------------------------------------------------
@@ -52,7 +53,7 @@ def main(_):
   th.prefix = '{}_'.format(date_string())
 
   th.allow_growth = False
-  th.gpu_memory_fraction = 0.3
+  th.gpu_memory_fraction = 0.7
   # ---------------------------------------------------------------------------
   # 2. model setup
   # ---------------------------------------------------------------------------
@@ -61,7 +62,7 @@ def main(_):
   th.use_dual_conv = False
   th.dual_setup()
 
-  th.kernel_size = 10
+  th.kernel_size = 7
   th.dilations = 10
   th.archi_string = '32-32-24-24-8'
   th.activation = 'relu'
@@ -72,12 +73,14 @@ def main(_):
   th.train = True
   th.overwrite = True
 
-  th.trainer_setup('alpha')
+  th.trainer_setup(token)
+  th.batch_size = 4
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------
   th.mark = model_name
   if th.use_dual_conv: th.mark += '(DC)'
+  th.mark += f'({token})'
   th.gather_summ_name = th.prefix + summ_name + th.suffix + '.sum'
 
   core.activate()

@@ -68,7 +68,7 @@ flags_to_ignore = (
   'use_sig_curve',
   'tanh_coef',
   'log_size',
-  'loss_string',
+  # 'loss_string',
   'train_complete_set',
   'xtx_sample_len_pct',
   'all_in_one',

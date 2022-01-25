@@ -1,3 +1,4 @@
+import numpy as np
 import tensorflow as tf
 
 from tframe import context
@@ -36,24 +37,50 @@ def get_container():
 
 
 def get_loss():
-  if 'xmae' not in th.loss_string: return th.loss_string
   from tframe.core.quantity import Quantity
 
-  def kernel(y_true: tf.Tensor, y_predict: tf.Tensor):
-    st, sp = [tf.reduce_sum(t) for t in (y_true, y_predict)]
+  def diff_kernel(y_true: tf.Tensor, y_predict: tf.Tensor):
+    assert len(y_true.shape) == 4
+    reduce_axis = list(range(1, len(y_true.shape)))
+
+    # Define similarity ratio
+    _min = tf.minimum(y_true, y_predict)
+    _max = tf.maximum(y_true, y_predict)
+    sr = _min / tf.maximum(_max, 1e-6)
+    tp = tf.reduce_sum(sr * y_true, axis=reduce_axis)
+    st, sp = [tf.reduce_sum(t, axis=reduce_axis) for t in (y_true, y_predict)]
+
+    # Calculate F1 score
+    f1 = 2 * tp / (st + sp)
+    return 1 - f1
+
+
+  def xmae_kernel(y_true: tf.Tensor, y_predict: tf.Tensor):
+    assert len(y_true.shape) == 4
+    reduce_axis = list(range(1, len(y_true.shape)))
+    st, sp = [tf.reduce_sum(t, axis=reduce_axis) for t in (y_true, y_predict)]
     delta = tf.abs(y_true - y_predict)
 
-    assert 0 < th.alpha < 1
-
     # (1) penalize FN
-    loss_fn = tf.reduce_sum(delta * y_true) / st
+    loss_fn = tf.reduce_sum(delta * y_true, axis=reduce_axis) / st
 
     # (2) penalize FP
-    loss_fp = tf.reduce_sum(delta * y_predict) / sp
+    loss_fp = tf.reduce_sum(delta * y_predict, axis=reduce_axis) / sp
 
-    return th.alpha * loss_fn + (1.0 - th.alpha) * loss_fp
+    if 0 < th.alpha < 1:
+      return th.alpha * loss_fn + (1.0 - th.alpha) * loss_fp
+    else:
+      assert th.alpha == 0.0
+      return (loss_fp + loss_fn) / loss_fp * loss_fn
 
-  return Quantity(kernel, name='XMAE')
+  if 'xmae' in th.loss_string and 0 <= th.alpha < 1:
+    kernel, name = xmae_kernel, 'XMAE'
+  elif 'f1' in th.loss_string:
+    kernel, name = diff_kernel, 'MBE'
+  else: return th.loss_string
+
+  return Quantity(kernel, tf_summ_method=tf.reduce_mean,
+                  np_summ_method=np.mean, name=name)
 
 
 def finalize(model, squish=True):
@@ -62,7 +89,8 @@ def finalize(model, squish=True):
     model.add(m.Conv2D(1, 1, use_bias=False, activation='sigmoid'))
 
   # Build model
-  metrics = ['wmae:0.0', 'mae']
+  # metrics = ['wmae:0.0']
+  metrics = ['mbe', 'wmae:0.0', 'ssim', 'mae']
   # if th.loss_function is not 'mae': metrics.append('mae')
   # else: metrics.append('wmae:0.0')
   model.build(loss=get_loss(), metric=metrics)

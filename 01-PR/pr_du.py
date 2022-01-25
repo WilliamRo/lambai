@@ -44,24 +44,22 @@ if __name__ == '__main__':
   from pr_core import th
 
   th.train_indices = '1'
-  th.val_indices = '2'
+  th.val_indices = '1'
   th.test_indices = '1'
-  th.fn_pattern = '0[45]-'
-  # th.fn_pattern = '01-'
+
+  # th.fn_pattern = '0[45]-'
+  th.fn_pattern = '05-'
+  # th.fn_pattern = '02-'
   # th.fn_pattern = '*62-'
 
   th.feature_type = 1
 
-  # th.train_indices = '4'
-  # th.val_indices = '4'
-  # th.test_indices = '4'
-  # th.train_config = ':10'
+  # th.train_config = '2a3'
+  # th.train_config = '39a40'
   # th.val_config = '10:15'
   # th.test_config = '15:'
 
-  # th.pr_dev_code = 'dev.0'
-  # th.prior_size = 12
-  # th.use_prior = True
+  th.edge_cut = 8
 
   train_set, val_set, test_set = load_data()
   assert isinstance(train_set, PhaseSet)
@@ -69,6 +67,7 @@ if __name__ == '__main__':
   assert isinstance(test_set, PhaseSet)
   # test_set.view_aberration()
   train_set.view()
+  # train_set.test_window(512, 10)
   # val_set.view()
   # test_set.view()
 
