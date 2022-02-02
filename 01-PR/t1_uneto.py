@@ -29,14 +29,16 @@ def main(_):
 
   th = core.th
   th.rehearse = False
+  th.developer_code = 'jan29'
   # ---------------------------------------------------------------------------
   # 0. date set setup
   # ---------------------------------------------------------------------------
   th.win_size = 512
 
-  th.data_token = 'epsilon'
-  # th.train_config = '2a3'  # 2a3|4a5|39a40 for eta
-  th.train_config = 'a1'  # 0,1,2,3,4,5,7 for epsilon
+  # th.data_token = 'epsilon'
+  th.data_token = 'eta'  # TODO
+  th.train_config = '2a3'  # 2a3|4a5|39a40 for eta
+  # th.train_config = '1a2'  # 0,3,7 for epsilon
   th.data_setup(th.data_token)
   # ---------------------------------------------------------------------------
   # 1. folder/file names and device
@@ -44,7 +46,7 @@ def main(_):
   update_job_dir(id, model_name)
   summ_name = model_name
   th.prefix = '{}_'.format(date_string())
-  th.suffix = '_x00'
+  th.suffix = '_test10'
 
   th.random_rotate = False
 
@@ -66,15 +68,23 @@ def main(_):
   th.train = True
   th.overwrite = True
 
+  th.optimizer = 'adam'
+  th.learning_rate = 0.0001
+
   th.trainer_setup('beta')
   th.batch_size = 16
 
   th.patience = 10  # TODO
-  th.loss_string = 'mbe'
-  # th.loss_string = 'gbe'
+  # th.loss_string = 'mbe'
+  th.loss_string = 'BER'
   # th.loss_string = 'f1'
   # th.loss_string = 'mae'
-  # th.loss_string = 'wmae:0.0001'
+  # th.epoch_per_probe = 1
+
+  # For model comparison
+  th.validate_test_set = True
+  # th.probe_cycle = [{1}]
+  # th.epoch = 10
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------
@@ -82,6 +92,7 @@ def main(_):
   th.mark = '{}{}'.format(model_name, tail)
   th.mark += f'-{th.loss_string[:3]}-lr{th.learning_rate}'
   if 'xmae' in th.loss_string: th.mark += f'-a{th.alpha}'
+  th.mark += f'-{th.train_config}'
   th.gather_summ_name = th.prefix + summ_name + '.sum'
 
   # th.allow_activation = False

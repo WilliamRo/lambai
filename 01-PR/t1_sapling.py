@@ -35,12 +35,13 @@ def main(_):
 
   th = core.th
   # th.rehearse = True
+  th.developer_code = 'jan29'
   # ---------------------------------------------------------------------------
   # 0. date set setup
   # ---------------------------------------------------------------------------
-  th.data_token = 'epsilon'
-  # th.train_config = '2a3'  # 2a3|4a5|39a40 for eta
-  th.train_config = 'a1'  # 0,1,2,3,4,5,7 for epsilon
+  th.data_token = 'eta'
+  th.train_config = '4a5'  # 2a3|4a5|39a40 for eta
+  # th.train_config = 'a1'  # 0,1,2,3,4,5,7 for epsilon
   th.data_setup(th.data_token)
 
   th.visualize_tensors = True
@@ -52,7 +53,7 @@ def main(_):
   summ_name = model_name
   th.prefix = '{}_'.format(date_string())
 
-  th.allow_growth = False
+  th.allow_growth = True
   th.gpu_memory_fraction = 0.8
   # ---------------------------------------------------------------------------
   # 2. model setup
@@ -78,14 +79,16 @@ def main(_):
   # 3. trainer setup
   # ---------------------------------------------------------------------------
   th.train = True
-  th.overwrite = True  # TODO
+  th.overwrite = True  #
   th.visualize_tensors = False
 
   th.trainer_setup('beta')
-  th.batch_size = 8
-  th.loss_string = 'gbe'
+  th.batch_size = 12
+  th.loss_string = 'ber'
   # th.loss_string = 'mbe'
   th.patience = 10  # TODO
+
+  th.validate_test_set = True
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------

@@ -96,6 +96,7 @@ class PRConfig(SmartTrainerHub):
   ash_token = Flag.string('alpha', 'Ashaer block type', is_key=None)
 
   data_token = Flag.string(None, 'Data token', is_key=None)
+  group_indices = Flag.whatever([], '...')
 
   # final_activation = Flag.
 
@@ -160,11 +161,11 @@ class PRConfig(SmartTrainerHub):
       th.fn_pattern = '04-'
       th.train_indices = th.val_indices = th.test_indices = '1'
       th.train_config = th.val_config = 'a1'
-      th.test_config = 'a'
+      th.test_config = 'a2'
 
       th.train_probe_ids = '0'
-      th.test_probe_ids = '2'
-      th.win_num = 4
+      th.test_probe_ids = '1'
+      # th.win_num = 4
     elif token == 'epsilon':
       th.fn_pattern = '03-'
       th.train_indices = th.val_indices = th.test_indices = '1'
@@ -172,6 +173,7 @@ class PRConfig(SmartTrainerHub):
       th.test_config = 'a'
 
       th.test_probe_ids = '0,1,2,3,4,5,7'
+      th.group_indices = [0, 1, 2, 3, 4, 5, 7]
     elif token == 'zeta':
       # Train on RBC 001 - sparse
       th.fn_pattern = '04-'
@@ -188,6 +190,10 @@ class PRConfig(SmartTrainerHub):
       th.test_config = 'a'
 
       th.test_probe_ids = '2,4,39'
+      th.group_indices = [2, 4, 39]
+      if 'jan29' in th.developer_code:
+        th.test_probe_ids = '1,3,14'
+        th.group_indices = [1, 3, 14]
 
       # th.edge_cut = 8
     else: raise NotImplementedError
@@ -216,10 +222,6 @@ class PRConfig(SmartTrainerHub):
       th.train_probe_ids = '0'
       th.test_probe_ids = '0'
     elif token == 'beta':
-      # th.loss_string = 'xmae' if 0 < th.alpha < 1 else 'wmae:0.0001'
-      th.loss_string = 'xmae'
-      th.alpha = 0.0
-
       th.epoch = 50000
       th.updates_per_round = 30
       th.batch_size = 16
@@ -232,7 +234,10 @@ class PRConfig(SmartTrainerHub):
       th.epoch_per_probe = 5
 
       th.print_cycle = 5
-      pass
+    elif token == 'gamma':
+      th.epoch = 400
+      th.early_stop = False
+      th.epoch_per_probe = 10
     else: raise NotImplementedError
     console.show_status(f'Applied trainer setup {token}.', 'yellow')
 

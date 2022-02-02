@@ -183,6 +183,9 @@ class PhaseSet(DataSet):
 
         da.imshow_pro(im)
         da.title = key + f' - {self.name}'
+        if self.EVAL_DETAILS in self.properties:
+          detail = self.properties[self.EVAL_DETAILS][da.object_cursor]
+          da.title += f' | {detail}'
       return _plotter
 
     # Add plotters
@@ -362,16 +365,27 @@ class PhaseSet(DataSet):
 
     # Predict
     y = model.predict(self, batch_size=1, verbose=True)
+
+    # Get metrics
+    val_dict_list = []
+    for i in range(self.size): val_dict_list.append(
+      model.validate_model(self[i], allow_sum=False))
+
     self.data_dict[self.PREDICTED_KEY] = y
     self.data_dict[self.DELTA_KEY] = np.abs(y - self.targets)
     # Put details
     details, wmaes = [], []
-    for truth, pred in zip(self.targets, y):
+    for i, (truth, pred) in enumerate(zip(self.targets, y)):
       wmae = self.wmae(truth, pred)
-      detail = 'WMAE = {:.5f}'.format(wmae)
-      detail += ', range(y) = [{:.3f}, {:.3f}]'.format(np.min(truth), np.max(truth))
-      details.append(detail)
       wmaes.append(wmae)
+
+      # detail = 'WMAE = {:.5f}'.format(wmae)
+      # detail += ', range(y) = [{:.3f}, {:.3f}]'.format(np.min(truth),
+      #                                                  np.max(truth))
+      # details.append(detail)
+      details.append(
+        '-'.join([f'{k.name}{v:.4f}' for k, v in val_dict_list[i].items()]))
+
     self.properties[self.EVAL_DETAILS] = details
     self.properties[self.WMAE] = wmaes
     if view: self.view()

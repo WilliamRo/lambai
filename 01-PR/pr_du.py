@@ -29,6 +29,11 @@ def load_data() -> [PhaseSet, PhaseSet, PhaseSet]:
 
   # Return datasets
   train_set, val_set, test_set = datasets
+
+  # Do something special
+  if 'jan29' in th.developer_code:
+    test_set = test_set[list(range(1, 15)) + [39]]
+
   return train_set, val_set, test_set
 
 
@@ -48,7 +53,7 @@ if __name__ == '__main__':
   th.test_indices = '1'
 
   # th.fn_pattern = '0[45]-'
-  th.fn_pattern = '05-'
+  th.fn_pattern = '01-'
   # th.fn_pattern = '02-'
   # th.fn_pattern = '*62-'
 
@@ -59,17 +64,18 @@ if __name__ == '__main__':
   # th.val_config = '10:15'
   # th.test_config = '15:'
 
-  th.edge_cut = 8
+  # th.edge_cut = 8
+  # th.developer_code = 'jan29'
 
   train_set, val_set, test_set = load_data()
   assert isinstance(train_set, PhaseSet)
   assert isinstance(val_set, PhaseSet)
   assert isinstance(test_set, PhaseSet)
   # test_set.view_aberration()
-  train_set.view()
+  # train_set.view()
   # train_set.test_window(512, 10)
   # val_set.view()
-  # test_set.view()
+  test_set.view()
 
   # win_num = 10
   # win_size = 512

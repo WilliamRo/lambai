@@ -118,9 +118,9 @@ def activate():
   if th.train:
     model.train(train_set, validation_set=val_set, test_set=test_set,
                 trainer_hub=th, probe=du.PhaseSet.probe)
-    # train_set.snapshot(model, 0, over_trial=True)
-    # val_set.snapshot(model, 0)
-    # test_set.snapshot(model, 0, over_trial=True)
+
+    for i in th.group_indices: test_set.snapshot(model, i)
+
     # Dump note.misc
     # train_set.dump_package(model)
   else:

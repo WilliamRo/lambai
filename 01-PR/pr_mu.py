@@ -90,7 +90,7 @@ def finalize(model, squish=True):
 
   # Build model
   # metrics = ['wmae:0.0']
-  metrics = ['mbe', 'wmae:0.0', 'ssim', 'mae']
+  metrics = ['BA', 'wmae:0.0', 'ssim', 'mae']
   # if th.loss_function is not 'mae': metrics.append('mae')
   # else: metrics.append('wmae:0.0')
   model.build(loss=get_loss(), metric=metrics)
