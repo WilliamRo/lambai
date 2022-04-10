@@ -89,6 +89,11 @@ def main(_):
   th.patience = 10  # TODO
 
   th.validate_test_set = True
+
+
+  th.learning_rate = 0
+  th.batch_size = 1
+  th.updates_per_round = 1
   # ---------------------------------------------------------------------------
   # 4. other stuff and activate
   # ---------------------------------------------------------------------------

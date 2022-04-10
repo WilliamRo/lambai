@@ -53,7 +53,7 @@ if __name__ == '__main__':
   th.test_indices = '1'
 
   # th.fn_pattern = '0[45]-'
-  th.fn_pattern = '01-'
+  th.fn_pattern = '03-'
   # th.fn_pattern = '02-'
   # th.fn_pattern = '*62-'
 

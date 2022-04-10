@@ -44,7 +44,7 @@ def main(_):
   # ---------------------------------------------------------------------------
   th.pred_converter = YOLOut.pred_converter
 
-  token = 'g'
+  token = 'a'
   th.set_data(token)
   # ---------------------------------------------------------------------------
   # 1. folder/file names and device
@@ -52,7 +52,7 @@ def main(_):
   update_job_dir(id, model_name)
   summ_name = model_name
   th.prefix = '{}_'.format(date_string())
-  th.suffix = '_demo'
+  th.suffix = '_0'
   th.visible_gpu_id = 0
 
   # ---------------------------------------------------------------------------
@@ -86,8 +86,8 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 4. summary and note setup
   # ---------------------------------------------------------------------------
-  th.train = False
-  th.fb_max_boxes = 2
+  th.train = True
+  # th.fb_max_boxes = 2
 
   th.visualize_after_training = True
   th.save_model = True

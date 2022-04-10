@@ -57,7 +57,7 @@ def main(_):
   # ---------------------------------------------------------------------------
   th.model = model
 
-  th.filters = 16
+  th.filters = 8
   th.kernel_size = 3
   th.unet_setup(f=th.filters, cks=th.kernel_size, duc=False, act='relu')
 

@@ -51,7 +51,7 @@ def main(_):
   summ_name = model_name
   th.prefix = '{}_'.format(date_string())
   th.visible_gpu_id = 0
-  th.suffix = '_04'
+  th.suffix = '_00'
 
   # ---------------------------------------------------------------------------
   # 2. model setup
@@ -88,6 +88,7 @@ def main(_):
   # ---------------------------------------------------------------------------
   # 4. summary and note setup
   # ---------------------------------------------------------------------------
+  th.train = False
   th.train = True
 
   th.visualize_after_training = True
